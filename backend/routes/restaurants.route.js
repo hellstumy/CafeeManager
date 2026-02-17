@@ -40,6 +40,15 @@ router.patch('/:id', authMiddleware, async (req, res) => {
       'SELECT * FROM restaurants WHERE id = $1 AND owner_id = $2',
       [id, req.user.id]
     )
+    const chekOwner = await query('SELECT * FROM users WHERE id = $1', [
+      req.user.id,
+    ])
+    if (chekOwner.rows[0].role !== 'owner') {
+      return res.status(403).json({
+        message:
+          'Forbidden: You do not have permission to edit this restaurant',
+      })
+    }
     if (check.rows.length === 0) {
       return res.status(404).json({ message: 'Restaurant not found' })
     }
@@ -55,6 +64,9 @@ router.patch('/:id', authMiddleware, async (req, res) => {
     res.status(500).json({ error: 'Failed to update restaurant' })
   }
 })
+
+// TODO: Создать БД и роут для оффициантов
+
 router.delete('/:id', authMiddleware, async (req, res) => {
   const { id } = req.params
   try {
@@ -63,6 +75,15 @@ router.delete('/:id', authMiddleware, async (req, res) => {
       'SELECT * FROM restaurants WHERE id = $1 AND owner_id = $2',
       [id, req.user.id]
     )
+    const chekOwner = await query('SELECT * FROM users WHERE id = $1', [
+      req.user.id,
+    ])
+    if (chekOwner.rows[0].role !== 'owner') {
+      return res.status(403).json({
+        message:
+          'Forbidden: You do not have permission to delete this restaurant',
+      })
+    }
     if (check.rows.length === 0) {
       return res.status(404).json({ message: 'Restaurant not found' })
     }
