@@ -88,6 +88,9 @@ The backend API provides the following routes:
 - `routes/restaurants.route.js`: Manages restaurant-specific data.
 - `routes/tables.routes.js`: Manages table information and status.
 
+Detailed route docs with expected request/response JSON:
+- `backend/ROUTES.md`
+
 ## Project Structure
 
 ```
