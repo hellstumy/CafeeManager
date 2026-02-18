@@ -61,7 +61,22 @@ router.get('/', async (req, res) => {
 })
 
 // Category
-router.post('/caregory', async (req, res) => {
+router.get('/category/:restID', async (req, res) => {
+  const restID = req.params.restID
+  try {
+    const result = await query(
+      `
+      SELECT * from categories WHERE restaurant_id = $1
+      `,
+      [restID]
+    )
+    res.status(200).send(result.rows)
+  } catch (err) {
+    console.log(err)
+    res.status(500).send('Server Error')
+  }
+})
+router.post('/category', async (req, res) => {
   const { restaurant_id, name, position } = req.body
   try {
     const result = await query(
@@ -74,7 +89,7 @@ router.post('/caregory', async (req, res) => {
     res.status(500).send('Server Error')
   }
 })
-router.patch('/caregory/:id', async (req, res) => {
+router.patch('/category/:id', async (req, res) => {
   const id = req.params.id
   const { name, position, is_active } = req.body
   try {
@@ -92,7 +107,7 @@ router.patch('/caregory/:id', async (req, res) => {
     res.status(500).send('Server Error')
   }
 })
-router.delete('/caregory/:id', async (req, res) => {
+router.delete('/category/:id', async (req, res) => {
   const id = req.params.id
   try {
     await query(`DELETE FROM categories WHERE id = $1`, [id])

@@ -89,7 +89,10 @@ The backend API provides the following routes:
 - `routes/tables.routes.js`: Manages table information and status.
 
 Detailed route docs with expected request/response JSON:
+
 - `backend/ROUTES.md`
+  More about Data Base:
+- `backend/Tables.md`
 
 ## Project Structure
 
