@@ -5,8 +5,11 @@ import menu from '../assets/icons/menu.svg'
 import orders from '../assets/icons/orders.svg'
 import qrcode from '../assets/icons/qrcode.svg'
 import restaurants from '../assets/icons/Restaurants.svg'
+import { usePages } from '../store/store'
 
 export default function Sidebar() {
+  const selectPage = usePages((state) => state.selectPage)
+  const setSelectPage = usePages((state) => state.setSelectPage)
   return (
     <aside>
       <div className="aside_head">
@@ -15,26 +18,41 @@ export default function Sidebar() {
       </div>
       <nav>
         <ul className="nav_ul">
-          <button className="nav_btn nav_active">
+          <button
+            onClick={() => setSelectPage('dashboard')}
+            className={`nav_btn ${selectPage === 'dashboard' ? 'nav_active' : ''}`}
+          >
             <img src={dashboard} alt="" />
             Dashboard
           </button>
-          <button className="nav_btn">
+          <button
+            onClick={() => setSelectPage('restaurants')}
+            className={`nav_btn ${selectPage === 'restaurants' ? 'nav_active' : ''}`}
+          >
             <img src={restaurants} alt="" />
             Restaurants
           </button>
         </ul>
         <ul className="nav_ul">
           Restaurant
-          <button className="nav_btn">
+          <button
+            onClick={() => setSelectPage('menu')}
+            className={`nav_btn ${selectPage === 'menu' ? 'nav_active' : ''}`}
+          >
             <img src={menu} alt="" />
             Menu
           </button>
-          <button className="nav_btn">
+          <button
+            onClick={() => setSelectPage('tables')}
+            className={`nav_btn ${selectPage === 'tables' ? 'nav_active' : ''}`}
+          >
             <img src={qrcode} alt="" />
             Tables
           </button>
-          <button className="nav_btn">
+          <button
+            onClick={() => setSelectPage('orders')}
+            className={`nav_btn ${selectPage === 'orders' ? 'nav_active' : ''}`}
+          >
             <img src={orders} alt="" />
             Orders
           </button>

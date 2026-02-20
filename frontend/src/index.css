@@ -14,9 +14,23 @@ main {
 }
 .main_container {
   padding: 24px 32px;
+  flex: 1;
 }
 button {
   border: none;
   background: none;
   cursor: pointer;
+  transition: all 0.3s ease-in;
+}
+h1 {
+  color: #f8fafc;
+  font-size: 30px;
+  font-style: normal;
+  font-weight: 600;
+}
+.subtitle {
+  color: #94a3b8;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
 }
