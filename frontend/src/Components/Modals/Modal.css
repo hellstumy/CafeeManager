@@ -1,0 +1,275 @@
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  padding: 24px;
+  border-radius: 8px;
+  border: 1px solid rgba(148, 163, 184, 0.12);
+  background: #0f172a;
+  box-shadow:
+    0 10px 15px -3px rgba(0, 0, 0, 0.1),
+    0 4px 6px -4px rgba(0, 0, 0, 0.1);
+
+  max-height: 80vh; /* максимум 80% высоты экрана */
+  overflow-y: auto; /* включаем вертикальную прокрутку */
+  scrollbar-width: thin; /* Firefox */
+  scrollbar-color: #14b8a6 #0f172a; /* Firefox: thumb и track */
+}
+
+/* Chrome, Edge, Safari */
+.modal-content::-webkit-scrollbar {
+  width: 8px; /* ширина скролла */
+}
+
+.modal-content::-webkit-scrollbar-track {
+  background: #0f172a; /* цвет дорожки */
+  border-radius: 8px;
+}
+
+.modal-content::-webkit-scrollbar-thumb {
+  background-color: #14b8a6; /* цвет ползунка */
+  border-radius: 8px;
+  border: 2px solid #0f172a; /* отступы от краев */
+}
+
+.modal-content::-webkit-scrollbar-thumb:hover {
+  background-color: #0bc5ea; /* светлее при наведении */
+}
+.modal-content h2 {
+  color: #f8fafc;
+  font-size: 18px;
+  font-weight: 600;
+}
+.modal-title {
+  gap: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 33px;
+}
+.modal-title button {
+  font-size: 24px;
+  color: #fff;
+}
+.modal-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 32px;
+}
+.form-p {
+  color: #f8fafc;
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 8px;
+}
+.form-input {
+  border-radius: 6px;
+  border: 1px solid rgba(0, 0, 0, 0);
+  background: #334155;
+  box-shadow: 0 0 0 0.243px rgba(20, 184, 166, 0.04);
+  padding: 9px 12px;
+  width: 100%;
+  color: #f8fafc;
+  font-size: 14px;
+  transition: all 0.2s ease-in-out;
+  outline: none;
+}
+
+/* hover */
+.form-input:hover {
+  box-shadow: 0 0 0 1px rgba(20, 184, 166, 0.2);
+}
+
+/* focus*/
+.form-input:focus {
+  border: 1px solid #14b8a6; /* акцентный цвет */
+  box-shadow: 0 0 0 2px rgba(20, 184, 166, 0.3);
+  background: #334155;
+}
+
+/* disabled */
+.form-input:disabled {
+  background: #1e293b;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+/* placeholder */
+.form-input::placeholder {
+  color: #94a3b8;
+  font-size: 14px;
+}
+.form-textArea {
+  border-radius: 6px;
+  border: 1px solid rgba(0, 0, 0, 0);
+  background: #334155;
+  box-shadow: 0 0 0 0.243px rgba(20, 184, 166, 0.04);
+  padding: 9px 12px;
+  width: 100%;
+  min-height: 100px;
+  color: #f8fafc;
+  font-size: 14px;
+  resize: vertical;
+  transition: all 0.2s ease-in-out;
+  outline: none;
+  font-family: inherit;
+}
+
+/* hover */
+.form-textArea:hover {
+  box-shadow: 0 0 0 1px rgba(20, 184, 166, 0.2);
+}
+
+/* focus */
+.form-textArea:focus {
+  border: 1px solid #14b8a6;
+  box-shadow: 0 0 0 2px rgba(20, 184, 166, 0.3);
+  background: #334155;
+}
+
+/* disabled */
+.form-textArea:disabled {
+  background: #1e293b;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+/* placeholder */
+.form-textArea::placeholder {
+  color: #94a3b8;
+  font-size: 14px;
+}
+
+.form-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+.form-cancel {
+  color: #f8fafc;
+  text-align: center;
+  font-size: 14px;
+  font-weight: 500;
+  padding: 8px 16px;
+  border-radius: 6px;
+  border: 1px solid rgba(148, 163, 184, 0.12);
+  background: #0f172a;
+}
+.form-accept {
+  color: #fff;
+  text-align: center;
+  font-size: 14px;
+  font-weight: 500;
+  padding: 8px 16px;
+  border-radius: 6px;
+  background: #0d9488;
+}
+.working-hours {
+  display: flex;
+  flex-direction: column;
+  gap: 4px; /* компактно между днями */
+  margin-top: 12px;
+}
+
+.day-hours {
+  display: flex;
+  align-items: center;
+  gap: 6px; /* между названием, input и checkbox */
+}
+
+.day-name {
+  width: 80px; /* фиксированная ширина для выравнивания */
+  font-weight: 500;
+  color: #f8fafc;
+}
+
+.time-input {
+  width: 70px;
+  padding: 6px;
+}
+
+.closed-label {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  color: #f8fafc;
+}
+.form-select {
+  border-radius: 6px;
+  border: 1px solid rgba(0, 0, 0, 0);
+  background: #334155;
+  box-shadow: 0 0 0 0.243px rgba(20, 184, 166, 0.04);
+  width: 100%;
+  color: #f8fafc;
+  font-size: 14px;
+  outline: none;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+
+  height: 38px; /* точно совпадает с input */
+  display: flex;
+  align-items: center; /* вертикальное центрирование текста */
+  padding: 0 12px; /* только по горизонтали */
+
+  background-image: url("data:image/svg+xml,%3Csvg fill='white' height='12' viewBox='0 0 24 24' width='12' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  background-size: 12px;
+}
+
+/* hover */
+.form-select:hover {
+  box-shadow: 0 0 0 1px rgba(20, 184, 166, 0.2);
+}
+
+/* focus */
+.form-select:focus {
+  border: 1px solid #14b8a6;
+  box-shadow: 0 0 0 2px rgba(20, 184, 166, 0.3);
+}
+.form-cont {
+  display: flex;
+
+  align-items: flex-end;
+  gap: 12px;
+}
+.qr_container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 34px;
+  margin-bottom: 45px;
+  border-radius: 16px;
+  border: 2px solid rgba(148, 163, 184, 0.12);
+  background: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0) 0%,
+    rgba(0, 0, 0, 0) 100%
+  );
+  box-shadow:
+    0 20px 25px -5px rgba(0, 0, 0, 0.1),
+    0 8px 10px -6px rgba(0, 0, 0, 0.1);
+}
+.qr_container img {
+  max-width: 224px;
+  margin-bottom: 24px;
+}
+.table_num {
+  color: #f8fafc;
+  text-align: center;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 500;
+}

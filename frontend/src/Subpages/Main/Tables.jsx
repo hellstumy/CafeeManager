@@ -1,11 +1,13 @@
 import Table from '../../Components/Table'
-
+import { useState } from 'react'
+import AddTableModal from '../../Components/Modals/AddTableModal'
 export default function Tables() {
+  const [isAddTableOpen, setIsAddTableOpen] = useState(false)
   return (
     <div className="table-page">
       <div className="table-title">
         <h1>Tables Management</h1>
-        <button>Add Table</button>
+        <button onClick={() => setIsAddTableOpen(true)}>Add Table</button>
       </div>
       <p className="subtitle">Manage tables and QR codes</p>
       <div className="tables_stats">
@@ -27,6 +29,10 @@ export default function Tables() {
         <Table />
         <Table />
       </div>
+      <AddTableModal
+        isOpen={isAddTableOpen}
+        onClose={() => setIsAddTableOpen(false)}
+      />
     </div>
   )
 }

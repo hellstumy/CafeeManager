@@ -1,6 +1,10 @@
+import { useState } from 'react'
 import delbutton from '../assets/icons/delete.svg'
 import qrimg from '../assets/icons/qrcode.svg'
+import QRCodeModal from './Modals/QRCodeModal'
+
 export default function Table() {
+  const [isQRCodeOpen, setIsQRCodeOpen] = useState(false)
   return (
     <div className="table_card">
       <div className="table-card_title">
@@ -20,9 +24,13 @@ export default function Table() {
           <span class="slider"></span>
         </label>
       </div>
-      <button className="view_qr">
+      <button onClick={() => setIsQRCodeOpen(true)} className="view_qr">
         <img src={qrimg} alt="qr" /> View QR
       </button>
+      <QRCodeModal
+        isOpen={isQRCodeOpen}
+        onClose={() => setIsQRCodeOpen(false)}
+      />
     </div>
   )
 }
