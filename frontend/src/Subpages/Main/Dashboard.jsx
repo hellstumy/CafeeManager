@@ -54,7 +54,6 @@ export default function Dashboard() {
       <div className="dashboard_restaurants">
         <div className="dash_rest-title">
           <h2>Your Restaurants</h2>
-          <button>Add Restaurant</button>
         </div>
         <div className="dashboard_restaurants-cards">
           <DashCard />

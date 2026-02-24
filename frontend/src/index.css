@@ -16,6 +16,9 @@ main {
   padding: 24px 32px;
   flex: 1;
 }
+.client-page {
+  padding: 24px, 0;
+}
 button {
   border: none;
   background: none;
