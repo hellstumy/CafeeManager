@@ -3,8 +3,16 @@ import active from '../../assets/icons/active.svg'
 import avg from '../../assets/icons/avg.svg'
 import people from '../../assets/icons/people.svg'
 import salary from '../../assets/icons/salary.svg'
-
+import { getRestaurant } from '../../api/api'
+import { useEffect, useState } from 'react'
 export default function Dashboard() {
+  const [restaurants, setRestaurants] = useState([])
+  useEffect(() => {
+    getRestaurant().then((data) => {
+      setRestaurants(data)
+      console.log(data)
+    })
+  }, [])
   return (
     <div className="dashboard">
       <h1>Dashboard</h1>
@@ -56,9 +64,9 @@ export default function Dashboard() {
           <h2>Your Restaurants</h2>
         </div>
         <div className="dashboard_restaurants-cards">
-          <DashCard />
-          <DashCard />
-          <DashCard />
+          {restaurants.map((r) => (
+            <DashCard key={r.id} r={r} />
+          ))}
         </div>
       </div>
     </div>

@@ -5,11 +5,21 @@ import menu from '../assets/icons/menu.svg'
 import orders from '../assets/icons/orders.svg'
 import qrcode from '../assets/icons/qrcode.svg'
 import restaurants from '../assets/icons/Restaurants.svg'
-import { usePages } from '../store/store'
+import { usePages, useSelectedRest } from '../store/store'
+import { logout } from '../api/api'
+import { useNavigate } from 'react-router-dom'
 
 export default function Sidebar() {
   const selectPage = usePages((state) => state.selectPage)
   const setSelectPage = usePages((state) => state.setSelectPage)
+  const selectedRest = useSelectedRest((state) => state.selectedRest)
+
+  const navigate = useNavigate()
+  const handleLogout = async () => {
+    logout()
+    navigate('/login')
+  }
+
   return (
     <aside>
       <div className="aside_head">
@@ -33,7 +43,10 @@ export default function Sidebar() {
             Restaurants
           </button>
         </ul>
-        <ul className="nav_ul">
+        <ul
+          style={selectedRest === null ? { display: 'none' } : {}}
+          className="nav_ul"
+        >
           Restaurant
           <button
             onClick={() => setSelectPage('menu')}
@@ -64,7 +77,7 @@ export default function Sidebar() {
           <p className="aside_name">John Doe</p>
           <p className="aside_mail">mail@mail.com</p>
         </div>
-        <button>
+        <button onClick={() => handleLogout()}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="16"

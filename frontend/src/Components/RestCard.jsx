@@ -1,6 +1,9 @@
 import { useEffect, useRef, useState } from 'react'
 import Restaurant from '../assets/icons/Restaurants.svg'
-export default function RestCard() {
+import { usePages, useSelectedRest } from '../store/store'
+export default function RestCard({ r }) {
+  const setSelectedRest = useSelectedRest((state) => state.setSelectedRest)
+  const setSelectPage = usePages((state) => state.setSelectPage)
   const [isSettingsOpen, setIsSettingsOpen] = useState(false)
   const settingsRef = useRef(null)
 
@@ -11,10 +14,18 @@ export default function RestCard() {
       }
     }
 
-    document.addEventListener('mousedown', handleClickOutside)
-    return () => document.removeEventListener('mousedown', handleClickOutside)
+    document.addEventListener('click', handleClickOutside)
+    return () => document.removeEventListener('click', handleClickOutside)
   }, [])
 
+  const openMenu = async () => {
+    await setSelectedRest(r.id)
+    await setSelectPage('menu')
+  }
+  const openOrders = async () => {
+    await setSelectedRest(r.id)
+    await setSelectPage('orders')
+  }
   return (
     <div className="restaurant_card">
       <div className="rest_card-head">
@@ -26,7 +37,7 @@ export default function RestCard() {
             aria-label="Additional settings"
             onClick={() => setIsSettingsOpen((prev) => !prev)}
           >
-          &#8942;
+            &#8942;
           </button>
           {isSettingsOpen && (
             <div className="rest-card-subsetting">
@@ -43,11 +54,11 @@ export default function RestCard() {
           )}
         </div>
       </div>
-      <h3 className="restaurant-name">Downtown Bistro</h3>
-      <p className="rest_info-p">Modern bistro with European cuisine</p>
+      <h3 className="restaurant-name">{r.name}</h3>
+      <p className="rest_info-p">{r.description}</p>
       <div>
-        <p className="rest_info-p">123 Main St, City</p>
-        <p className="rest_info-p">+1 (555) 123-4567</p>
+        <p className="rest_info-p">{r.address}</p>
+        <p className="rest_info-p">{r.phone}</p>
       </div>
       <div className="rest-stats">
         <p className="rest_info-p">
@@ -58,8 +69,12 @@ export default function RestCard() {
         </p>
       </div>
       <div className="rest-buttons">
-        <button className="rest-btn">Menu</button>
-        <button className="rest-btn">Orders</button>
+        <button onClick={() => openMenu()} className="rest-btn">
+          Menu
+        </button>
+        <button onClick={() => openOrders()} className="rest-btn">
+          Orders
+        </button>
       </div>
     </div>
   )

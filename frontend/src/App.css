@@ -1124,6 +1124,11 @@ input:checked + .slider:before {
   opacity: 0.85;
 }
 
+.auth-error {
+  color: #fca5a5;
+  font-size: 13px;
+}
+
 @media (max-width: 540px) {
   .auth-page {
     align-items: flex-start;

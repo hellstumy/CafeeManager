@@ -1,6 +1,8 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { createSwapy } from 'swapy'
 import OrderItem from '../../Components/OrderItem'
+import { getOrders, updateOrderStatus, deleteOrder } from '../../api/api'
+import { useSelectedRest } from '../../store/store'
 
 const COLUMNS = [
   { id: 'pending', title: 'Pending' },
@@ -8,58 +10,19 @@ const COLUMNS = [
   { id: 'completed', title: 'Completed' },
 ]
 
-const ORDERS = [
-  {
-    id: 'order-1247',
-    number: '#1247',
-    table: 'Table 12',
-    items: ['1x Croissant', '2x Cappuccino'],
-    price: '$24.50',
-  },
-  {
-    id: 'order-1248',
-    number: '#1248',
-    table: 'Table 4',
-    items: ['1x Caesar Salad', '1x Latte'],
-    price: '$18.00',
-  },
-  {
-    id: 'order-1249',
-    number: '#1249',
-    table: 'Takeaway',
-    items: ['2x Espresso', '1x Cheesecake'],
-    price: '$14.50',
-  },
-  {
-    id: 'order-1250',
-    number: '#1250',
-    table: 'Table 9',
-    items: ['1x Pancakes', '1x Americano'],
-    price: '$16.00',
-  },
-  {
-    id: 'order-1251',
-    number: '#1251',
-    table: 'Table 2',
-    items: ['1x Burger', '1x Cola'],
-    price: '$21.00',
-  },
-]
-
-const INITIAL_COLUMN_ITEMS = {
-  pending: ['order-1247', 'order-1250'],
-  inprogress: ['order-1248'],
-  completed: ['order-1249', 'order-1251'],
-}
-
 export default function Order() {
   const swapy = useRef(null)
   const container = useRef(null)
   const [slotItemMap, setSlotItemMap] = useState([])
+  const [orders, setOrders] = useState([])
+  const selectedRest = useSelectedRest((state) => state.selectedRest)
 
   const orderById = useMemo(
-    () => Object.fromEntries(ORDERS.map((order) => [order.id, order])),
-    []
+    () =>
+      Object.fromEntries(
+        orders.map((order) => [String(order.order_id), order])
+      ),
+    [orders]
   )
 
   function slotIndex(slotId) {
@@ -102,22 +65,38 @@ export default function Order() {
   }
 
   useEffect(() => {
-    const initial = COLUMNS.flatMap((column) => {
-      const items = INITIAL_COLUMN_ITEMS[column.id] ?? []
-      const slots = items.map((itemId, index) => ({
-        slot: `${column.id}-${index}`,
-        item: itemId,
-      }))
-      slots.push({ slot: `${column.id}-${items.length}`, item: '' })
-      return slots
+    getOrders(selectedRest).then((data) => {
+      setOrders(data.orders)
+
+      const initial = COLUMNS.flatMap((column) => {
+        const columnOrders = data.orders.filter(
+          (order) => order.status === column.id
+        )
+        const slots = columnOrders.map((order, index) => ({
+          slot: `${column.id}-${index}`,
+          item: String(order.order_id),
+        }))
+        slots.push({ slot: `${column.id}-${columnOrders.length}`, item: '' })
+        return slots
+      })
+
+      setSlotItemMap(initial)
     })
-    setSlotItemMap(initial)
-  }, [])
+  }, [selectedRest])
 
   const totalOrders = useMemo(
     () => slotItemMap.filter((entry) => Boolean(entry.item)).length,
     [slotItemMap]
   )
+
+  async function handleDelete(orderId) {
+    await deleteOrder(orderId)
+    setSlotItemMap((prev) =>
+      prev.map((entry) =>
+        entry.item === orderId ? { ...entry, item: '' } : entry
+      )
+    )
+  }
 
   useEffect(() => {
     if (container.current && slotItemMap.length > 0) {
@@ -127,7 +106,19 @@ export default function Order() {
       })
 
       swapy.current.onSwap((event) => {
-        setSlotItemMap(normalizeSlotItemMap(event.newSlotItemMap.asArray))
+        const newMap = normalizeSlotItemMap(event.newSlotItemMap.asArray)
+
+        newMap.forEach((entry) => {
+          if (!entry.item) return
+          const column = COLUMNS.find((col) =>
+            entry.slot.startsWith(`${col.id}-`)
+          )
+          if (column) {
+            updateOrderStatus(entry.item, column.id)
+          }
+        })
+
+        setSlotItemMap(newMap)
       })
     }
 
@@ -148,7 +139,28 @@ export default function Order() {
           <p className="subtitle">Live order management</p>
         </div>
         <div className="order-buttons">
-          <button>
+          <button
+            onClick={() =>
+              getOrders(selectedRest).then((data) => {
+                setOrders(data.orders)
+                const refreshed = COLUMNS.flatMap((column) => {
+                  const columnOrders = data.orders.filter(
+                    (order) => order.status === column.id
+                  )
+                  const slots = columnOrders.map((order, index) => ({
+                    slot: `${column.id}-${index}`,
+                    item: String(order.order_id),
+                  }))
+                  slots.push({
+                    slot: `${column.id}-${columnOrders.length}`,
+                    item: '',
+                  })
+                  return slots
+                })
+                setSlotItemMap(refreshed)
+              })
+            }
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="16"
@@ -207,8 +219,11 @@ export default function Order() {
                       key={slotId}
                     >
                       {order && (
-                        <div className="order-item" data-swapy-item={order.id}>
-                          <OrderItem order={order} />
+                        <div
+                          className="order-item"
+                          data-swapy-item={order.order_id}
+                        >
+                          <OrderItem order={order} onDelete={handleDelete} />
                         </div>
                       )}
                     </div>
