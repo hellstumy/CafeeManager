@@ -102,6 +102,9 @@ export async function getMenu(restaurantId) {
 }
 
 // Categories
+export async function getCategory(restaurantId) {
+  return request(`/menu/category/${restaurantId}`)
+}
 export async function createCategory(categoryData) {
   return request('/menu/category', {
     method: 'POST',

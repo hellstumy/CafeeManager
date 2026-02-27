@@ -5,6 +5,7 @@ import people from '../../assets/icons/people.svg'
 import salary from '../../assets/icons/salary.svg'
 import { getRestaurant } from '../../api/api'
 import { useEffect, useState } from 'react'
+import DashLoader from '../../Ui/Skeleton/DashLoader'
 export default function Dashboard() {
   const [restaurants, setRestaurants] = useState([])
   useEffect(() => {
@@ -64,9 +65,11 @@ export default function Dashboard() {
           <h2>Your Restaurants</h2>
         </div>
         <div className="dashboard_restaurants-cards">
-          {restaurants.map((r) => (
-            <DashCard key={r.id} r={r} />
-          ))}
+          {restaurants.length === 0 ? (
+            <DashLoader />
+          ) : (
+            restaurants.map((r) => <DashCard key={r.id} r={r} />)
+          )}
         </div>
       </div>
     </div>

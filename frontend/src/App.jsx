@@ -17,7 +17,7 @@ function App() {
           <Route path="/login" element={<LoginRegister />} />
 
           {/* Публичный роут (клиентское меню по QR) */}
-          <Route path="/client/:qrToken" element={<ClientPage />} />
+          <Route path="/menu/:qrToken" element={<ClientPage />} />
 
           {/* Защищенный роут (только для авторизованных) */}
           <Route

@@ -23,7 +23,7 @@ export default function Tables() {
       <div className="tables_stats">
         <div className="table-stat_card">
           <p className="table-stat_title">Total Tables</p>
-          <h5 className="table-stat_value">1</h5>
+          <h5 className="table-stat_value">{tables.length}</h5>
         </div>
         <div className="table-stat_card">
           <p className="table-stat_title">Active Tables</p>

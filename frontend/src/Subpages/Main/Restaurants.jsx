@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import RestCard from '../../Components/RestCard'
 import AddRestaurantModal from '../../Components/Modals/AddRestaurantModal'
 import { getRestaurant } from '../../api/api'
+import RestLoader from '../../Ui/Skeleton/RestLoader'
 export default function Restaurants() {
   const [isAddItemOpen, setIsAddItemOpen] = useState(false)
   const [restaurants, setRestaurants] = useState([])
@@ -19,9 +20,11 @@ export default function Restaurants() {
       </div>
       <p className="subtitle">Manage your restaurant locations</p>
       <div className="restaurants_list">
-        {restaurants.map((r) => (
-          <RestCard key={r.id} r={r} />
-        ))}
+        {restaurants.length === 0 ? (
+          <RestLoader />
+        ) : (
+          restaurants.map((r) => <RestCard key={r.id} r={r} />)
+        )}
       </div>
       <AddRestaurantModal
         isOpen={isAddItemOpen}
