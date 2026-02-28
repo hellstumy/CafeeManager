@@ -6,12 +6,27 @@ import RestLoader from '../../Ui/Skeleton/RestLoader'
 export default function Restaurants() {
   const [isAddItemOpen, setIsAddItemOpen] = useState(false)
   const [restaurants, setRestaurants] = useState([])
-  useEffect(() => {
+
+  const fetchRestaurants = () => {
     getRestaurant().then((data) => {
       setRestaurants(data)
       console.log(data)
     })
+  }
+
+  useEffect(() => {
+    fetchRestaurants()
   }, [])
+
+  const handleRestaurantCreated = (restaurant) => {
+    if (restaurant) {
+      setRestaurants((prev) => [...prev, restaurant])
+      return
+    }
+
+    fetchRestaurants()
+  }
+
   return (
     <div className="restaurants-page">
       <div className="restaurant_title">
@@ -29,6 +44,7 @@ export default function Restaurants() {
       <AddRestaurantModal
         isOpen={isAddItemOpen}
         onClose={() => setIsAddItemOpen(false)}
+        onCreated={handleRestaurantCreated}
       />
     </div>
   )

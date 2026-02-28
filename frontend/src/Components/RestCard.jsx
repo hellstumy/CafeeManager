@@ -1,12 +1,20 @@
 import { useEffect, useRef, useState } from 'react'
 import Restaurant from '../assets/icons/Restaurants.svg'
 import { usePages, useSelectedRest } from '../store/store'
+import { deleteRestaurant } from '../api/api'
 export default function RestCard({ r }) {
   const setSelectedRest = useSelectedRest((state) => state.setSelectedRest)
   const setSelectPage = usePages((state) => state.setSelectPage)
   const [isSettingsOpen, setIsSettingsOpen] = useState(false)
   const settingsRef = useRef(null)
-
+  const handleDelete = () => {
+    try {
+      deleteRestaurant(r.id)
+    } catch (err) {
+      console.log(err)
+      alert(`Some error. Please try again later`)
+    }
+  }
   useEffect(() => {
     function handleClickOutside(event) {
       if (settingsRef.current && !settingsRef.current.contains(event.target)) {
@@ -26,6 +34,11 @@ export default function RestCard({ r }) {
     await setSelectedRest(r.id)
     await setSelectPage('orders')
   }
+  const openEditRestaurant = async () => {
+    await setSelectedRest(r.id)
+    await setSelectPage('restaurant-edit')
+    setIsSettingsOpen(false)
+  }
   return (
     <div className="restaurant_card">
       <div className="rest_card-head">
@@ -41,13 +54,13 @@ export default function RestCard({ r }) {
           </button>
           {isSettingsOpen && (
             <div className="rest-card-subsetting">
-              <button type="button" onClick={() => setIsSettingsOpen(false)}>
+              <button type="button" onClick={() => openEditRestaurant()}>
                 Settings
               </button>
-              <button type="button" onClick={() => setIsSettingsOpen(false)}>
+              <button type="button" onClick={() => openMenu()}>
                 Edit Menu
               </button>
-              <button type="button" onClick={() => setIsSettingsOpen(false)}>
+              <button type="button" onClick={() => handleDelete()}>
                 Delete
               </button>
             </div>

@@ -13,11 +13,17 @@ export default function Menu() {
   const [activeCategory, setActiveCategory] = useState(null)
   const selectedRest = useSelectedRest((state) => state.selectedRest)
 
-  useEffect(() => {
+  const fetchMenu = () => {
+    if (!selectedRest) return
+
     getMenu(selectedRest).then((data) => {
       setMenu(data)
       setCategories(data.categories)
     })
+  }
+
+  useEffect(() => {
+    fetchMenu()
   }, [selectedRest])
 
   const allItems = categories.flatMap((category) =>
@@ -62,7 +68,9 @@ export default function Menu() {
 
       <div className="menu_list">
         {displayedItems.length > 0 ? (
-          displayedItems.map((item) => <MenuCard key={item.id} item={item} />)
+          displayedItems.map((item) => (
+            <MenuCard key={item.id} item={item} onItemUpdated={fetchMenu} />
+          ))
         ) : (
           <p>No items found</p>
         )}

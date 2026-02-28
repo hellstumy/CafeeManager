@@ -2,10 +2,18 @@ import menuIMG from '../assets/menuIMG.png'
 import delbtn from '../assets/icons/delete.svg'
 import { useState } from 'react'
 import EditMenuItemModal from './Modals/EditMenuItemModal'
-
-export default function MenuCard({ item }) {
+import { deleteMenuItem } from '../api/api'
+export default function MenuCard({ item, onItemUpdated }) {
   const [isEditMenuItemOpen, setIsEditMenuItemOpen] = useState(false)
-
+  const handleDelete = () => {
+    try {
+      deleteMenuItem(item.id)
+      alert('Item deleted sucessfull')
+    } catch (err) {
+      console.log(err)
+      alert('Error. Please try again later!')
+    }
+  }
   return (
     <div className="menu-card">
       <img
@@ -21,9 +29,8 @@ export default function MenuCard({ item }) {
         </p>
         <div className="menu-item_setting">
           <button onClick={() => setIsEditMenuItemOpen(true)}>Edit</button>
-          <button>Hide</button>
           <button>
-            <img src={delbtn} alt="delete" />
+            <img onClick={() => handleDelete()} src={delbtn} alt="delete" />
           </button>
         </div>
       </div>
@@ -31,6 +38,7 @@ export default function MenuCard({ item }) {
         isOpen={isEditMenuItemOpen}
         onClose={() => setIsEditMenuItemOpen(false)}
         item={item}
+        onUpdated={onItemUpdated}
       />
     </div>
   )

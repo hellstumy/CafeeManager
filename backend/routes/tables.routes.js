@@ -39,7 +39,21 @@ router.get('/', authMiddleware, async (req, res) => {
     res.status(500).json({ error: 'Server Error' })
   }
 })
-
+// Get table by QR
+router.get('/table/:qr', async (req, res) => {
+  const qr = req.params.qr
+  try {
+    const result = await query(
+      `
+      SELECT id ,restaurant_id, table_number FROM tables WHERE qr_code_token = $1`,
+      [qr]
+    )
+    res.status(200).send(result.rows[0])
+  } catch (err) {
+    console.error(err)
+    res.status(500).json({ error: 'Server Error' })
+  }
+})
 // POST создать столик с QR-кодом
 router.post('/', authMiddleware, async (req, res) => {
   const { restaurant_id, table_number, seats } = req.body

@@ -86,13 +86,17 @@ export async function createRestaurant(restaurantData) {
   })
 }
 
-export async function updateRestaurant(restaurantData) {
-  return request('/restaurants', {
+export async function updateRestaurant(id, restaurantData) {
+  return request(`/restaurants/${id}`, {
     method: 'PATCH',
     body: JSON.stringify(restaurantData),
   })
 }
-
+export async function deleteRestaurant(restID) {
+  return request(`/restaurants/${restID}`, {
+    method: 'DELETE',
+  })
+}
 // ========================
 // MENU
 // ========================
