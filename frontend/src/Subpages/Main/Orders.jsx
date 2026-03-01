@@ -3,6 +3,7 @@ import { createSwapy } from 'swapy'
 import OrderItem from '../../Components/OrderItem'
 import { getOrders, updateOrderStatus, deleteOrder } from '../../api/api'
 import { useSelectedRest } from '../../store/store'
+import OrderLoader from '../../Ui/Skeleton/OrderLoader'
 
 const COLUMNS = [
   { id: 'pending', title: 'Pending' },
@@ -15,6 +16,7 @@ export default function Order() {
   const container = useRef(null)
   const [slotItemMap, setSlotItemMap] = useState([])
   const [orders, setOrders] = useState([])
+  const [isLoading, setIsLoading] = useState(true)
   const selectedRest = useSelectedRest((state) => state.selectedRest)
 
   const orderById = useMemo(
@@ -64,24 +66,48 @@ export default function Order() {
     })
   }
 
-  useEffect(() => {
-    getOrders(selectedRest).then((data) => {
-      setOrders(data.orders)
-
-      const initial = COLUMNS.flatMap((column) => {
-        const columnOrders = data.orders.filter(
-          (order) => order.status === column.id
-        )
-        const slots = columnOrders.map((order, index) => ({
-          slot: `${column.id}-${index}`,
-          item: String(order.order_id),
-        }))
-        slots.push({ slot: `${column.id}-${columnOrders.length}`, item: '' })
-        return slots
-      })
-
-      setSlotItemMap(initial)
+  function buildSlotItemMapFromOrders(orderList) {
+    return COLUMNS.flatMap((column) => {
+      const columnOrders = orderList.filter((order) => order.status === column.id)
+      const slots = columnOrders.map((order, index) => ({
+        slot: `${column.id}-${index}`,
+        item: String(order.order_id),
+      }))
+      slots.push({ slot: `${column.id}-${columnOrders.length}`, item: '' })
+      return slots
     })
+  }
+
+  function loadOrders(withLoading = false) {
+    if (!selectedRest) {
+      setOrders([])
+      setSlotItemMap([])
+      setIsLoading(false)
+      return
+    }
+
+    if (withLoading) {
+      setIsLoading(true)
+    }
+
+    getOrders(selectedRest).then((data) => {
+      const list = data.orders || []
+      setOrders(list)
+      setSlotItemMap(buildSlotItemMapFromOrders(list))
+    }).finally(() => {
+      if (withLoading) {
+        setIsLoading(false)
+      }
+    })
+  }
+
+  useEffect(() => {
+    if (!selectedRest) return
+
+    loadOrders(true)
+    const intervalId = setInterval(() => loadOrders(false), 7000)
+
+    return () => clearInterval(intervalId)
   }, [selectedRest])
 
   const totalOrders = useMemo(
@@ -91,9 +117,14 @@ export default function Order() {
 
   async function handleDelete(orderId) {
     await deleteOrder(orderId)
+    setOrders((prev) =>
+      prev.filter((order) => String(order.order_id) !== String(orderId))
+    )
     setSlotItemMap((prev) =>
-      prev.map((entry) =>
-        entry.item === orderId ? { ...entry, item: '' } : entry
+      normalizeSlotItemMap(
+        prev.map((entry) =>
+          entry.item === orderId ? { ...entry, item: '' } : entry
+        )
       )
     )
   }
@@ -107,6 +138,23 @@ export default function Order() {
 
       swapy.current.onSwap((event) => {
         const newMap = normalizeSlotItemMap(event.newSlotItemMap.asArray)
+        const nextStatusByOrderId = Object.fromEntries(
+          newMap
+            .filter((entry) => entry.item)
+            .map((entry) => [
+              entry.item,
+              COLUMNS.find((col) => entry.slot.startsWith(`${col.id}-`))?.id,
+            ])
+            .filter(([, status]) => Boolean(status))
+        )
+
+        setOrders((prev) =>
+          prev.map((order) => {
+            const nextStatus = nextStatusByOrderId[String(order.order_id)]
+            if (!nextStatus || nextStatus === order.status) return order
+            return { ...order, status: nextStatus }
+          })
+        )
 
         newMap.forEach((entry) => {
           if (!entry.item) return
@@ -139,28 +187,7 @@ export default function Order() {
           <p className="subtitle">Live order management</p>
         </div>
         <div className="order-buttons">
-          <button
-            onClick={() =>
-              getOrders(selectedRest).then((data) => {
-                setOrders(data.orders)
-                const refreshed = COLUMNS.flatMap((column) => {
-                  const columnOrders = data.orders.filter(
-                    (order) => order.status === column.id
-                  )
-                  const slots = columnOrders.map((order, index) => ({
-                    slot: `${column.id}-${index}`,
-                    item: String(order.order_id),
-                  }))
-                  slots.push({
-                    slot: `${column.id}-${columnOrders.length}`,
-                    item: '',
-                  })
-                  return slots
-                })
-                setSlotItemMap(refreshed)
-              })
-            }
-          >
+          <button onClick={() => loadOrders(true)}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="16"
@@ -207,28 +234,34 @@ export default function Order() {
           <div className="status-column" key={column.id}>
             <h4>{column.title}</h4>
             <div className="status-container">
-              {slotItemMap
-                .filter((entry) => entry.slot.startsWith(`${column.id}-`))
-                .sort((a, b) => slotIndex(a.slot) - slotIndex(b.slot))
-                .map(({ slot: slotId, item: orderId }) => {
-                  const order = orderId ? orderById[orderId] : null
-                  return (
-                    <div
-                      className="status-slot"
-                      data-swapy-slot={slotId}
-                      key={slotId}
-                    >
-                      {order && (
-                        <div
-                          className="order-item"
-                          data-swapy-item={order.order_id}
-                        >
-                          <OrderItem order={order} onDelete={handleDelete} />
-                        </div>
-                      )}
-                    </div>
-                  )
-                })}
+              {isLoading ? (
+                Array.from({ length: 2 }).map((_, index) => (
+                  <OrderLoader key={`${column.id}-${index}`} />
+                ))
+              ) : (
+                slotItemMap
+                  .filter((entry) => entry.slot.startsWith(`${column.id}-`))
+                  .sort((a, b) => slotIndex(a.slot) - slotIndex(b.slot))
+                  .map(({ slot: slotId, item: orderId }) => {
+                    const order = orderId ? orderById[orderId] : null
+                    return (
+                      <div
+                        className="status-slot"
+                        data-swapy-slot={slotId}
+                        key={slotId}
+                      >
+                        {order && (
+                          <div
+                            className="order-item"
+                            data-swapy-item={order.order_id}
+                          >
+                            <OrderItem order={order} onDelete={handleDelete} />
+                          </div>
+                        )}
+                      </div>
+                    )
+                  })
+              )}
             </div>
           </div>
         ))}

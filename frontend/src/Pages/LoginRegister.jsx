@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { registerUser, loginUser } from '../api/api'
 import { useAuth } from '../context/AuthContext'
+import Loader from '../Components/Loader'
 
 export default function LoginRegister() {
   const [activeTab, setActiveTab] = useState('login')
@@ -127,8 +128,15 @@ export default function LoginRegister() {
               />
             </label>
 
-            <button className="auth-submit" type="submit">
-              {isLoginLoading ? 'Signing In...' : 'Sign In'}
+            <button className="auth-submit" disabled={isLoginLoading} type="submit">
+              {isLoginLoading ? (
+                <>
+                  <Loader inline label="" size="sm" />
+                  Signing In...
+                </>
+              ) : (
+                'Sign In'
+              )}
             </button>
             {loginError ? <p className="auth-error">{loginError}</p> : null}
           </form>

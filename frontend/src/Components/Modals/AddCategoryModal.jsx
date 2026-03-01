@@ -3,7 +3,7 @@ import { createCategory } from '../../api/api'
 import { useState } from 'react'
 import { useSelectedRest } from '../../store/store'
 
-export default function AddCategoryModal({ isOpen, onClose }) {
+export default function AddCategoryModal({ isOpen, onClose, onCreated }) {
   const [name, setName] = useState('')
   const selectedRest = useSelectedRest((state) => state.selectedRest)
   if (!isOpen) return null
@@ -12,7 +12,8 @@ export default function AddCategoryModal({ isOpen, onClose }) {
     e.preventDefault()
 
     try {
-      await createCategory({ restaurant_id: selectedRest, name })
+      const created = await createCategory({ restaurant_id: selectedRest, name })
+      onCreated?.(created)
       onClose()
       setName('')
     } catch (err) {

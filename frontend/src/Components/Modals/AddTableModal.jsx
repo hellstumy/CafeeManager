@@ -2,19 +2,21 @@ import { useState } from 'react'
 import { useSelectedRest } from '../../store/store'
 import './Modal.css'
 import { createTable } from '../../api/api'
-export default function AddTableModal({ isOpen, onClose }) {
+
+export default function AddTableModal({ isOpen, onClose, onCreated }) {
   const selectedRest = useSelectedRest((state) => state.selectedRest)
-  const [table_number, setTableNumber] = useState()
-  const [seats, setSeats] = useState()
+  const [table_number, setTableNumber] = useState('')
+  const [seats, setSeats] = useState('')
   if (!isOpen) return null
   const handleCreate = async (e) => {
     e.preventDefault()
     try {
-      await createTable({
+      const created = await createTable({
         restaurant_id: selectedRest,
         table_number,
         seats,
       })
+      onCreated?.(created?.table || null)
       setTableNumber('')
       setSeats('')
       onClose()
@@ -53,7 +55,9 @@ export default function AddTableModal({ isOpen, onClose }) {
           </label>
 
           <div className="form-buttons">
-            <button className="form-cancel">Cancel</button>
+            <button className="form-cancel" onClick={onClose} type="button">
+              Cancel
+            </button>
             <button type="submit" className="form-accept">
               Create table
             </button>

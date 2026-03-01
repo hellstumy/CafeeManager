@@ -6,13 +6,15 @@ import salary from '../../assets/icons/salary.svg'
 import { getRestaurant } from '../../api/api'
 import { useEffect, useState } from 'react'
 import DashLoader from '../../Ui/Skeleton/DashLoader'
+
 export default function Dashboard() {
   const [restaurants, setRestaurants] = useState([])
+  const [isLoading, setIsLoading] = useState(true)
+
   useEffect(() => {
     getRestaurant().then((data) => {
-      setRestaurants(data)
-      console.log(data)
-    })
+      setRestaurants(data || [])
+    }).finally(() => setIsLoading(false))
   }, [])
   return (
     <div className="dashboard">
@@ -65,10 +67,14 @@ export default function Dashboard() {
           <h2>Your Restaurants</h2>
         </div>
         <div className="dashboard_restaurants-cards">
-          {restaurants.length === 0 ? (
-            <DashLoader />
-          ) : (
+          {isLoading ? (
+            Array.from({ length: 3 }).map((_, index) => (
+              <DashLoader key={index} />
+            ))
+          ) : restaurants.length > 0 ? (
             restaurants.map((r) => <DashCard key={r.id} r={r} />)
+          ) : (
+            <p className="subtitle">No restaurants yet</p>
           )}
         </div>
       </div>

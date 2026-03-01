@@ -3,15 +3,17 @@ import RestCard from '../../Components/RestCard'
 import AddRestaurantModal from '../../Components/Modals/AddRestaurantModal'
 import { getRestaurant } from '../../api/api'
 import RestLoader from '../../Ui/Skeleton/RestLoader'
+
 export default function Restaurants() {
   const [isAddItemOpen, setIsAddItemOpen] = useState(false)
   const [restaurants, setRestaurants] = useState([])
+  const [isLoading, setIsLoading] = useState(true)
 
   const fetchRestaurants = () => {
+    setIsLoading(true)
     getRestaurant().then((data) => {
-      setRestaurants(data)
-      console.log(data)
-    })
+      setRestaurants(data || [])
+    }).finally(() => setIsLoading(false))
   }
 
   useEffect(() => {
@@ -27,6 +29,10 @@ export default function Restaurants() {
     fetchRestaurants()
   }
 
+  const handleRestaurantDeleted = (restaurantId) => {
+    setRestaurants((prev) => prev.filter((restaurant) => restaurant.id !== restaurantId))
+  }
+
   return (
     <div className="restaurants-page">
       <div className="restaurant_title">
@@ -35,10 +41,14 @@ export default function Restaurants() {
       </div>
       <p className="subtitle">Manage your restaurant locations</p>
       <div className="restaurants_list">
-        {restaurants.length === 0 ? (
-          <RestLoader />
+        {isLoading ? (
+          Array.from({ length: 3 }).map((_, index) => <RestLoader key={index} />)
+        ) : restaurants.length > 0 ? (
+          restaurants.map((r) => (
+            <RestCard key={r.id} onDeleted={handleRestaurantDeleted} r={r} />
+          ))
         ) : (
-          restaurants.map((r) => <RestCard key={r.id} r={r} />)
+          <p className="subtitle">No restaurants yet</p>
         )}
       </div>
       <AddRestaurantModal

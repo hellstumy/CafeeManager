@@ -3,18 +3,29 @@ import { useEffect, useState } from 'react'
 import AddTableModal from '../../Components/Modals/AddTableModal'
 import { getTables } from '../../api/api'
 import { useSelectedRest } from '../../store/store'
+import TableLoader from '../../Ui/Skeleton/TableLoader'
+
 export default function Tables() {
   const [isAddTableOpen, setIsAddTableOpen] = useState(false)
   const [tables, setTables] = useState([])
+  const [isLoading, setIsLoading] = useState(true)
   const selectedRest = useSelectedRest((state) => state.selectedRest)
 
-  useEffect(() => {
-    if (!selectedRest) return
+  const fetchTables = () => {
+    if (!selectedRest) {
+      setTables([])
+      setIsLoading(false)
+      return
+    }
 
+    setIsLoading(true)
     getTables(selectedRest).then((data) => {
-      setTables(data.tables)
-      console.log(data.tables)
-    })
+      setTables(data.tables || [])
+    }).finally(() => setIsLoading(false))
+  }
+
+  useEffect(() => {
+    fetchTables()
   }, [selectedRest])
 
   const handleStatusChanged = (updatedTable) => {
@@ -23,6 +34,23 @@ export default function Tables() {
         table.id === updatedTable.id ? { ...table, ...updatedTable } : table
       )
     )
+  }
+
+  const handleTableCreated = (table) => {
+    if (!table?.id) {
+      fetchTables()
+      return
+    }
+
+    setTables((prevTables) => {
+      const exists = prevTables.some((item) => item.id === table.id)
+      if (exists) return prevTables
+      return [...prevTables, table]
+    })
+  }
+
+  const handleTableDeleted = (tableId) => {
+    setTables((prevTables) => prevTables.filter((table) => table.id !== tableId))
   }
 
   const activeTables = tables.filter((table) => table.is_active).length
@@ -53,13 +81,25 @@ export default function Tables() {
         </div>
       </div>
       <div className="table_list">
-        {tables.map((t) => (
-          <Table key={t.id} t={t} onStatusChanged={handleStatusChanged} />
-        ))}
+        {isLoading ? (
+          Array.from({ length: 6 }).map((_, index) => <TableLoader key={index} />)
+        ) : tables.length > 0 ? (
+          tables.map((t) => (
+            <Table
+              key={t.id}
+              onDeleted={handleTableDeleted}
+              onStatusChanged={handleStatusChanged}
+              t={t}
+            />
+          ))
+        ) : (
+          <p className="subtitle">No tables yet</p>
+        )}
       </div>
       <AddTableModal
         isOpen={isAddTableOpen}
         onClose={() => setIsAddTableOpen(false)}
+        onCreated={handleTableCreated}
       />
     </div>
   )

@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from 'react'
+import Loader from '../../Components/Loader'
 import { getRestaurant, updateRestaurant } from '../../api/api'
 import { usePages, useSelectedRest } from '../../store/store'
 import '../../Components/Modals/Modal.css'
@@ -153,7 +154,7 @@ export default function EditRestaurant() {
   }
 
   if (isLoading) {
-    return <p className="subtitle">Loading restaurant...</p>
+    return <Loader label="Loading restaurant..." />
   }
 
   if (!selectedRest || !restaurant) {

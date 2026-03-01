@@ -157,7 +157,9 @@ export async function deleteMenuItem(id) {
 export async function getTables(restaurantId) {
   return request(`/tables?restaurant_id=${restaurantId}`)
 }
-
+export async function getOneTable(qr_token) {
+  return request(`/tables/table/${qr_token}`)
+}
 export async function createTable(tableData) {
   return request('/tables', {
     method: 'POST',

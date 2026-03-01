@@ -3,12 +3,19 @@ import delbtn from '../assets/icons/delete.svg'
 import { useState } from 'react'
 import EditMenuItemModal from './Modals/EditMenuItemModal'
 import { deleteMenuItem } from '../api/api'
-export default function MenuCard({ item, onItemUpdated }) {
+
+export default function MenuCard({ item, onItemUpdated, onItemDeleted }) {
   const [isEditMenuItemOpen, setIsEditMenuItemOpen] = useState(false)
-  const handleDelete = () => {
+  const imageSrc =
+    (typeof item?.image_url === 'string' && item.image_url.trim()) ||
+    (typeof item?.img_url === 'string' && item.img_url.trim()) ||
+    (typeof item?.image === 'string' && item.image.trim()) ||
+    menuIMG
+
+  const handleDelete = async () => {
     try {
-      deleteMenuItem(item.id)
-      alert('Item deleted sucessfull')
+      await deleteMenuItem(item.id)
+      onItemDeleted?.(item.id)
     } catch (err) {
       console.log(err)
       alert('Error. Please try again later!')
@@ -18,7 +25,11 @@ export default function MenuCard({ item, onItemUpdated }) {
     <div className="menu-card">
       <img
         className="menu-item_cover"
-        src={item?.image || menuIMG}
+        onError={(e) => {
+          e.currentTarget.onerror = null
+          e.currentTarget.src = menuIMG
+        }}
+        src={imageSrc}
         alt={item?.name}
       />
       <div className="menu-item-info">
@@ -28,9 +39,11 @@ export default function MenuCard({ item, onItemUpdated }) {
           ${item?.price} <span>{item?.categoryName}</span>
         </p>
         <div className="menu-item_setting">
-          <button onClick={() => setIsEditMenuItemOpen(true)}>Edit</button>
-          <button>
-            <img onClick={() => handleDelete()} src={delbtn} alt="delete" />
+          <button onClick={() => setIsEditMenuItemOpen(true)} type="button">
+            Edit
+          </button>
+          <button onClick={handleDelete} type="button">
+            <img src={delbtn} alt="delete" />
           </button>
         </div>
       </div>

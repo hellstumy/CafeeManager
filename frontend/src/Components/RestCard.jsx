@@ -2,14 +2,18 @@ import { useEffect, useRef, useState } from 'react'
 import Restaurant from '../assets/icons/Restaurants.svg'
 import { usePages, useSelectedRest } from '../store/store'
 import { deleteRestaurant } from '../api/api'
-export default function RestCard({ r }) {
+
+export default function RestCard({ r, onDeleted }) {
   const setSelectedRest = useSelectedRest((state) => state.setSelectedRest)
   const setSelectPage = usePages((state) => state.setSelectPage)
   const [isSettingsOpen, setIsSettingsOpen] = useState(false)
   const settingsRef = useRef(null)
-  const handleDelete = () => {
+
+  const handleDelete = async () => {
     try {
-      deleteRestaurant(r.id)
+      await deleteRestaurant(r.id)
+      onDeleted?.(r.id)
+      setIsSettingsOpen(false)
     } catch (err) {
       console.log(err)
       alert(`Some error. Please try again later`)
@@ -60,7 +64,7 @@ export default function RestCard({ r }) {
               <button type="button" onClick={() => openMenu()}>
                 Edit Menu
               </button>
-              <button type="button" onClick={() => handleDelete()}>
+              <button type="button" onClick={handleDelete}>
                 Delete
               </button>
             </div>

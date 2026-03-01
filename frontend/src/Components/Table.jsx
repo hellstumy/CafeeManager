@@ -4,7 +4,8 @@ import qrimg from '../assets/icons/qrcode.svg'
 import QRCodeModal from './Modals/QRCodeModal'
 import { deleteTable } from '../api/api'
 import { updateTable } from '../api/api'
-export default function Table({ t, onStatusChanged }) {
+
+export default function Table({ t, onStatusChanged, onDeleted }) {
   const [isQRCodeOpen, setIsQRCodeOpen] = useState(false)
   const [isActive, setIsActive] = useState(t.is_active)
   const [isUpdating, setIsUpdating] = useState(false)
@@ -13,9 +14,10 @@ export default function Table({ t, onStatusChanged }) {
     setIsActive(t.is_active)
   }, [t.is_active])
 
-  const handleDelete = () => {
+  const handleDelete = async () => {
     try {
-      deleteTable(t.id)
+      await deleteTable(t.id)
+      onDeleted?.(t.id)
     } catch (err) {
       console.log(err)
       alert('Error, Please try later!')

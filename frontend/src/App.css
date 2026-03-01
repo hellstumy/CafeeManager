@@ -1,3 +1,61 @@
+/* Loader */
+.loader-wrap {
+  min-height: 260px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+}
+
+.loader-wrap-inline {
+  min-height: 0;
+  width: auto;
+  display: inline-flex;
+  gap: 0;
+}
+
+.loader-wrap-full {
+  min-height: 100vh;
+}
+
+.loader-orbit {
+  border-radius: 999px;
+  border: 3px solid rgba(148, 163, 184, 0.22);
+  border-top-color: #14b8a6;
+  border-right-color: #22d3ee;
+  animation: loader-spin 0.85s linear infinite;
+  box-shadow: 0 0 0 1px rgba(20, 184, 166, 0.08);
+}
+
+.loader-orbit-sm {
+  width: 14px;
+  height: 14px;
+  border-width: 2px;
+}
+
+.loader-orbit-md {
+  width: 42px;
+  height: 42px;
+}
+
+.loader-label {
+  color: #cbd5e1;
+  font-size: 14px;
+  font-weight: 500;
+  text-align: center;
+}
+
+@keyframes loader-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 /* Dashboard */
 .dashboard {
   display: flex;
@@ -996,6 +1054,10 @@ input:checked + .slider:before {
   color: #fff;
   font-size: 14px;
   font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
   border-radius: 8px;
   background: #0d9488;
   padding: 10px 14px;
@@ -1028,6 +1090,12 @@ input:checked + .slider:before {
   color: #94a3b8;
   font-size: 14px;
 }
+.cart-count {
+  color: #fff;
+  font-size: 12px;
+  text-align: center;
+  font-weight: 600;
+}
 
 @media (max-width: 760px) {
   .cart-card {
@@ -1054,8 +1122,16 @@ input:checked + .slider:before {
   justify-content: center;
   padding: 24px;
   background:
-    radial-gradient(circle at top left, rgba(20, 184, 166, 0.15), transparent 45%),
-    radial-gradient(circle at bottom right, rgba(56, 189, 248, 0.12), transparent 45%),
+    radial-gradient(
+      circle at top left,
+      rgba(20, 184, 166, 0.15),
+      transparent 45%
+    ),
+    radial-gradient(
+      circle at bottom right,
+      rgba(56, 189, 248, 0.12),
+      transparent 45%
+    ),
     #0f172a;
 }
 
@@ -1146,6 +1222,10 @@ input:checked + .slider:before {
   color: #fff;
   font-size: 14px;
   font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
   border-radius: 8px;
   background: #0d9488;
   padding: 11px 14px;
@@ -1153,6 +1233,11 @@ input:checked + .slider:before {
 
 .auth-submit:hover {
   opacity: 0.85;
+}
+
+.auth-submit:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
 }
 
 .auth-error {

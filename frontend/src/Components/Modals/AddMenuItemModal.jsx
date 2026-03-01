@@ -3,7 +3,7 @@ import './Modal.css'
 import { createMenuItem, getCategory } from '../../api/api'
 import { useEffect, useState } from 'react'
 
-export default function AddMenuItemModal({ isOpen, onClose }) {
+export default function AddMenuItemModal({ isOpen, onClose, onCreated }) {
   const [categories, setCategories] = useState([])
   const selectedRest = useSelectedRest((state) => state.selectedRest)
 
@@ -27,7 +27,7 @@ export default function AddMenuItemModal({ isOpen, onClose }) {
     e.preventDefault()
 
     try {
-      await createMenuItem({
+      const created = await createMenuItem({
         restaurant_id: selectedRest,
         category_id: selectedCategory,
         name,
@@ -36,6 +36,7 @@ export default function AddMenuItemModal({ isOpen, onClose }) {
         price: Number(price),
       })
 
+      onCreated?.(created)
       setName('')
       setDescription('')
       setImg_url('')

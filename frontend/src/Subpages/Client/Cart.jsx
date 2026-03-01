@@ -1,60 +1,83 @@
 import CartCard from '../../Components/CartCard'
+import Loader from '../../Components/Loader'
 
-export default function Cart() {
+function formatMoney(value) {
+  return `$${Number(value || 0).toFixed(2)}`
+}
+
+export default function Cart({
+  items,
+  subtotal,
+  serviceFee,
+  total,
+  onBackToMenu,
+  onRemoveItem,
+  onUpdateQty,
+  onUpdateNote,
+  onCheckout,
+  isSubmitting,
+  submitError,
+  submitSuccess,
+}) {
   return (
     <div className="cart-page">
-      <button className="cart-back-btn" type="button">
+      <button className="cart-back-btn" onClick={onBackToMenu} type="button">
         &#8592; Back to Menu
       </button>
       <h1>Your Cart</h1>
 
-      <div className="cart-list">
-        <CartCard
-          category="Coffee"
-          itemTotal="$9.00"
-          priceEach="$4.50"
-          quantity="2"
-          title="Cappuccino"
-        />
-        <CartCard
-          category="Breakfast"
-          itemTotal="$3.20"
-          note="Warm it up, please"
-          priceEach="$3.20"
-          quantity="1"
-          title="Croissant"
-        />
-        <CartCard
-          category="Breakfast"
-          itemTotal="$3.20"
-          note="Warm it up, please"
-          priceEach="$3.20"
-          quantity="1"
-          title="Croissant"
-        />
-        <CartCard
-          category="Breakfast"
-          itemTotal="$3.20"
-          note="Warm it up, please"
-          priceEach="$3.20"
-          quantity="1"
-          title="Croissant"
-        />
-      </div>
+      {items.length === 0 ? (
+        <div className="cart-empty">
+          <h3>Cart is empty</h3>
+          <p>Add items from the menu to place an order.</p>
+        </div>
+      ) : (
+        <div className="cart-list">
+          {items.map((item) => (
+            <CartCard
+              category={item.categoryName}
+              imageUrl={item.image_url}
+              itemTotal={formatMoney(item.quantity * Number(item.price))}
+              key={item.id}
+              note={item.note}
+              onNoteChange={(value) => onUpdateNote(item.id, value)}
+              onQuantityChange={(value) => onUpdateQty(item.id, value)}
+              onRemove={() => onRemoveItem(item.id)}
+              priceEach={formatMoney(item.price)}
+              quantity={item.quantity}
+              title={item.name}
+            />
+          ))}
+        </div>
+      )}
 
       <div className="cart-total">
         <h3>Order Summary</h3>
         <p>
-          Subtotal <span>$12.20</span>
+          Subtotal <span>{formatMoney(subtotal)}</span>
         </p>
         <p>
-          Service Fee <span>$1.50</span>
+          Service Fee <span>{formatMoney(serviceFee)}</span>
         </p>
         <p className="cart-total-line">
-          Total <span>$13.70</span>
+          Total <span>{formatMoney(total)}</span>
         </p>
-        <button className="checkout-btn" type="button">
-          Checkout
+        {submitError && <p>{submitError}</p>}
+        {submitSuccess && <p>{submitSuccess}</p>}
+        <button
+          className="checkout-btn"
+          disabled={items.length === 0 || isSubmitting}
+          onClick={onCheckout}
+          type="button"
+        >
+          {isSubmitting ? (
+            <>
+              <Loader inline label="" size="sm" />
+              Submitting...
+            </>
+          ) : (
+            'Checkout'
+          )}
         </button>
       </div>
     </div>
