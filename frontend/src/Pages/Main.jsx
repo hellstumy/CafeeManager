@@ -1,4 +1,5 @@
 import Sidebar from '../Components/Sidebar'
+import { useState } from 'react'
 import Dashboard from '../Subpages/Main/Dashboard'
 import Restaurants from '../Subpages/Main/Restaurants'
 import Menu from '../Subpages/Main/Menu'
@@ -9,11 +10,20 @@ import { usePages } from '../store/store'
 
 export default function Main() {
   const selectPage = usePages((state) => state.selectPage)
+  const [isSidebarOpen, setIsSidebarOpen] = useState(true)
+
   return (
     <>
       <main>
-        <Sidebar />
+        <Sidebar className={isSidebarOpen ? '' : 'sidebar-hidden'} />
         <div className="main_container">
+          <button
+            className="sidebar-toggle"
+            onClick={() => setIsSidebarOpen((prev) => !prev)}
+            type="button"
+          >
+            {isSidebarOpen ? 'Hide Sidebar' : 'Show Sidebar'}
+          </button>
           {selectPage === 'dashboard' && <Dashboard />}
           {selectPage === 'restaurants' && <Restaurants />}
           {selectPage === 'menu' && <Menu />}

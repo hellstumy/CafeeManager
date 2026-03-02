@@ -3,8 +3,11 @@ import { useNavigate } from 'react-router-dom'
 import { registerUser, loginUser } from '../api/api'
 import { useAuth } from '../context/AuthContext'
 import Loader from '../Components/Loader'
+import { getCurrentUser } from '../api/api'
+import { useCurrentUser } from '../store/store'
 
 export default function LoginRegister() {
+  const setCurrentUser = useCurrentUser((state) => state.setCurrentUser)
   const [activeTab, setActiveTab] = useState('login')
   const [loginError, setLoginError] = useState('')
   const [isLoginLoading, setIsLoginLoading] = useState(false)
@@ -32,7 +35,9 @@ export default function LoginRegister() {
         throw new Error('Token was not returned')
       }
 
-      login(response.token, response.user ?? null)
+      await login(response.token, response.user ?? null)
+      const data = await getCurrentUser()
+      setCurrentUser(data?.user ?? data ?? null)
       navigate('/main', { replace: true })
     } catch (err) {
       setLoginError(err.message || 'Login failed. Please try again.')
@@ -128,7 +133,11 @@ export default function LoginRegister() {
               />
             </label>
 
-            <button className="auth-submit" disabled={isLoginLoading} type="submit">
+            <button
+              className="auth-submit"
+              disabled={isLoginLoading}
+              type="submit"
+            >
               {isLoginLoading ? (
                 <>
                   <Loader inline label="" size="sm" />

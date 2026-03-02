@@ -1,19 +1,45 @@
 import menuIMG from '../assets/menuIMG.png'
+import { useEffect, useRef, useState } from 'react'
 
 function formatMoney(value) {
   return `$${Number(value || 0).toFixed(2)}`
 }
 
 export default function ClientCard({ item, categoryName, onAdd }) {
+  const [isAdded, setIsAdded] = useState(false)
+  const resetTimerRef = useRef(null)
+
+  useEffect(() => {
+    return () => {
+      if (resetTimerRef.current) {
+        clearTimeout(resetTimerRef.current)
+      }
+    }
+  }, [])
+
   const imageSrc =
     typeof item.image_url === 'string' && item.image_url.trim()
       ? item.image_url
       : menuIMG
 
+  function handleAddClick() {
+    onAdd(item)
+    setIsAdded(true)
+
+    if (resetTimerRef.current) {
+      clearTimeout(resetTimerRef.current)
+    }
+
+    resetTimerRef.current = setTimeout(() => {
+      setIsAdded(false)
+    }, 900)
+  }
+
   return (
     <div className="client-card">
       <img
         alt={item.name}
+        className="client-card_img"
         onError={(e) => {
           e.currentTarget.onerror = null
           e.currentTarget.src = menuIMG
@@ -29,8 +55,12 @@ export default function ClientCard({ item, categoryName, onAdd }) {
         </p>
         <div className="client-card_other">
           <p className="clirnt-price">{formatMoney(item.price)}</p>
-          <button className="add-Btn" onClick={() => onAdd(item)} type="button">
-            Add
+          <button
+            className={`add-Btn ${isAdded ? 'add-Btn-added' : ''}`}
+            onClick={handleAddClick}
+            type="button"
+          >
+            {isAdded ? 'Added' : 'Add'}
           </button>
         </div>
       </div>

@@ -682,26 +682,33 @@ input:checked + .slider:before {
 }
 
 .menu_list {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 26px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+  gap: 20px;
 }
 
 .menu-card {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
   border-radius: 12px;
   border: 1px solid rgba(148, 163, 184, 0.12);
   background: #1e293b;
+  overflow: hidden;
 }
 
 .menu-item_cover {
-  border-radius: 12px;
-  max-width: 398px;
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+  display: block;
 }
 .menu-item-info {
   display: flex;
   flex-direction: column;
   gap: 9px;
   padding: 15px;
+  flex: 1;
 }
 .menu-item_name {
   color: #f8fafc;
@@ -713,27 +720,35 @@ input:checked + .slider:before {
   color: #94a3b8;
   font-size: 14px;
   font-weight: 400;
+  line-height: 1.45;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 .menu-price {
   color: #f8fafc;
-  font-size: 24px;
+  font-size: 22px;
   font-weight: 600;
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-start;
+  gap: 12px;
+  margin-top: auto;
 }
 .menu-price span {
+  flex-shrink: 0;
   font-size: 12px;
   font-weight: 500;
   padding: 2px 8px;
   border-radius: 6px;
   border: 1px solid rgba(148, 163, 184, 0.12);
-  margin-block: 16px;
 }
 .menu-item_setting {
   display: flex;
-  margin-bottom: 16px;
+  gap: 8px;
+  margin-top: 10px;
 }
 .menu-item_setting button {
   color: #f8fafc;
@@ -806,40 +821,50 @@ input:checked + .slider:before {
 }
 
 .client-menu_list {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 16px;
-  align-items: center;
-  justify-content: center;
-  max-width: 900px;
+  align-items: stretch;
+  width: min(1000px, 100%);
+  padding: 0 12px;
 }
 
 .client-card {
   display: flex;
   flex-direction: column;
-  max-width: 414px;
+  width: 100%;
+  min-height: 100%;
   border-radius: 12px;
   border: 1px solid rgba(148, 163, 184, 0.12);
   background: #1e293b;
+  overflow: hidden;
 }
-.client-card img {
-  border-radius: 12px;
-  max-width: 414px;
+.client-card_img {
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+  display: block;
 }
 .client-card_info {
   padding: 15px;
-  padding-bottom: 30px;
+  padding-bottom: 18px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
 }
 
 .client-card_title {
   display: flex;
+  align-items: flex-start;
   justify-content: space-between;
+  gap: 10px;
   color: #f8fafc;
   font-size: 18px;
   font-weight: 600;
   margin-bottom: 9px;
 }
 .client-card_title span {
+  flex-shrink: 0;
   font-size: 14px;
   font-weight: 500;
   padding: 2px 8px;
@@ -851,10 +876,18 @@ input:checked + .slider:before {
   font-size: 14px;
   font-weight: 400;
   margin-bottom: 10px;
+  line-height: 1.4;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 .client-card_other {
   display: flex;
+  align-items: center;
   justify-content: space-between;
+  gap: 12px;
+  margin-top: auto;
 }
 .clirnt-price {
   color: #f8fafc;
@@ -863,12 +896,26 @@ input:checked + .slider:before {
 }
 
 .add-Btn {
+  min-width: 88px;
   color: #fff;
   font-size: 14px;
   font-weight: 500;
   padding: 6px 12px;
   border-radius: 6px;
   background: #0d9488;
+  transition:
+    transform 0.16s ease,
+    background-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.add-Btn:active {
+  transform: scale(0.96);
+}
+
+.add-Btn-added {
+  background: #16a34a;
+  box-shadow: 0 0 0 2px rgba(22, 163, 74, 0.25);
 }
 
 /* Client cart */
@@ -1253,5 +1300,208 @@ input:checked + .slider:before {
 
   .auth-form {
     padding: 14px;
+  }
+}
+
+@media (max-width: 1200px) {
+  .dash_info {
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    gap: 16px;
+  }
+
+  .dash_card {
+    flex: 1 1 260px;
+  }
+
+  .dashboard_restaurants-card {
+    width: calc(50% - 12px);
+  }
+
+  .tables_stats {
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    gap: 16px;
+  }
+
+  .table-stat_card {
+    width: calc(50% - 8px);
+  }
+
+  .order-main {
+    flex-wrap: wrap;
+  }
+
+  .status-column {
+    min-width: 280px;
+    flex: 1 1 280px;
+  }
+}
+
+@media (max-width: 992px) {
+  .restaurant_title,
+  .table-title,
+  .menu-title {
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .menu-title_buttons {
+    width: 100%;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .dashboard_restaurants-card,
+  .table-stat_card {
+    width: 100%;
+  }
+
+  .table_card {
+    width: calc(50% - 8px);
+  }
+
+  .restaurant_card,
+  .menu-card {
+    width: 100%;
+  }
+
+  .menu-item_cover,
+  .client-card_img {
+    width: 100%;
+    max-width: 100%;
+    object-fit: cover;
+  }
+
+  .order-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 14px;
+  }
+
+  .order-buttons {
+    flex-wrap: wrap;
+  }
+
+  .order-price {
+    gap: 16px;
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
+
+  .status-column {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .client-head-title {
+    width: 100%;
+    gap: 16px;
+    justify-content: space-between;
+  }
+
+  .client-filter {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 768px) {
+  .dash_info {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .dash_card div {
+    gap: 16px;
+    justify-content: space-between;
+    margin-bottom: 20px;
+  }
+
+  .dash_rest-title,
+  .restaurant_title,
+  .table-title,
+  .menu-title {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .restaurant_title button,
+  .table-title button,
+  .menu-title_buttons button {
+    width: 100%;
+  }
+
+  .categoies_list {
+    display: flex;
+    width: 100%;
+    overflow-x: auto;
+    white-space: nowrap;
+    margin-block: 20px;
+  }
+
+  .restaurants_list,
+  .menu_list,
+  .table_list,
+  .dashboard_restaurants-cards {
+    gap: 16px;
+  }
+
+  .restaurant_card,
+  .menu-card,
+  .table_card,
+  .client-card {
+    width: 100%;
+    max-width: 100%;
+    flex: 1 1 100%;
+  }
+
+  .table-stat_card {
+    height: auto;
+    min-height: 110px;
+  }
+
+  .order-header {
+    padding: 16px;
+    margin-bottom: 20px;
+  }
+
+  .order-buttons {
+    width: 100%;
+  }
+
+  .client-head-title {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .client-menu_list {
+    width: 100%;
+    grid-template-columns: 1fr;
+    padding: 0 8px;
+  }
+}
+
+@media (max-width: 576px) {
+  .order-header h3 {
+    font-size: 24px;
+  }
+
+  .table-number {
+    font-size: 18px;
+    padding: 8px 14px;
+  }
+
+  .client-li {
+    padding: 6px 12px;
+  }
+
+  .client-card_title {
+    font-size: 16px;
+    gap: 10px;
+  }
+
+  .menu-price {
+    font-size: 18px;
   }
 }
