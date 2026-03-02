@@ -9,7 +9,7 @@ import { usePages, useSelectedRest } from '../store/store'
 import { logout } from '../api/api'
 import { useNavigate } from 'react-router-dom'
 
-export default function Sidebar() {
+export default function Sidebar({ className = '' }) {
   const selectPage = usePages((state) => state.selectPage)
   const setSelectPage = usePages((state) => state.setSelectPage)
   const selectedRest = useSelectedRest((state) => state.selectedRest)
@@ -21,7 +21,7 @@ export default function Sidebar() {
   }
 
   return (
-    <aside>
+    <aside className={`sidebar ${className}`}>
       <div className="aside_head">
         <img src={logo} alt="" />
         <h3>TableKit</h3>
