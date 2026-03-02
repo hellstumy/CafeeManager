@@ -5,21 +5,24 @@ import menu from '../assets/icons/menu.svg'
 import orders from '../assets/icons/orders.svg'
 import qrcode from '../assets/icons/qrcode.svg'
 import restaurants from '../assets/icons/Restaurants.svg'
-import { usePages, useSelectedRest } from '../store/store'
+import { usePages, useSelectedRest, useCurrentUser } from '../store/store'
+
 import { logout } from '../api/api'
 import { useNavigate } from 'react-router-dom'
 
 export default function Sidebar({ className = '' }) {
   const selectPage = usePages((state) => state.selectPage)
+  const currentUser = useCurrentUser((state) => state.currentUser)
+  const setCurrentUser = useCurrentUser((state) => state.setCurrentUser)
   const setSelectPage = usePages((state) => state.setSelectPage)
   const selectedRest = useSelectedRest((state) => state.selectedRest)
 
   const navigate = useNavigate()
   const handleLogout = async () => {
     logout()
+    setCurrentUser(null)
     navigate('/login')
   }
-
   return (
     <aside className={`sidebar ${className}`}>
       <div className="aside_head">
@@ -74,8 +77,8 @@ export default function Sidebar({ className = '' }) {
       <div className="aside_profile">
         <img src={menu} alt="" />
         <div className="aside_info">
-          <p className="aside_name">John Doe</p>
-          <p className="aside_mail">mail@mail.com</p>
+          <p className="aside_name">{currentUser?.name || 'John Doe'}</p>
+          <p className="aside_mail">{currentUser?.email || 'mail@mail.com'}</p>
         </div>
         <button onClick={() => handleLogout()}>
           <svg
