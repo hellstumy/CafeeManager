@@ -1,11 +1,14 @@
 import { createContext, useContext, useState, useEffect } from 'react'
 import { getCurrentUser } from '../api/api'
+import { useCurrentUser } from '../store/store'
 
 const AuthContext = createContext(null)
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null)
   const [loading, setLoading] = useState(true)
+  const setCurrentUser = useCurrentUser((state) => state.setCurrentUser)
+  const clearCurrentUser = useCurrentUser((state) => state.clearCurrentUser)
 
   // Проверка авторизации при загрузке приложения
   useEffect(() => {
@@ -14,26 +17,35 @@ export const AuthProvider = ({ children }) => {
     if (token) {
       getCurrentUser()
         .then((data) => {
-          setUser(data.user)
+          const resolvedUser = data?.user ?? data ?? null
+          setUser(resolvedUser)
+          setCurrentUser(resolvedUser)
           setLoading(false)
         })
         .catch(() => {
           localStorage.removeItem('token')
+          setUser(null)
+          clearCurrentUser()
           setLoading(false)
         })
     } else {
+      setUser(null)
+      clearCurrentUser()
       setLoading(false)
     }
-  }, [])
+  }, [clearCurrentUser, setCurrentUser])
 
   const login = (token, userData) => {
     localStorage.setItem('token', token)
-    setUser(userData)
+    const resolvedUser = userData?.user ?? userData ?? null
+    setUser(resolvedUser)
+    setCurrentUser(resolvedUser)
   }
 
   const logout = () => {
     localStorage.removeItem('token')
     setUser(null)
+    clearCurrentUser()
   }
 
   return (

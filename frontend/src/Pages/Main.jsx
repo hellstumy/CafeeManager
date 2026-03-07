@@ -6,6 +6,7 @@ import Menu from '../Subpages/Main/Menu'
 import Tables from '../Subpages/Main/Tables'
 import Orders from '../Subpages/Main/Orders'
 import EditRestaurant from '../Subpages/Main/EditRestaurant'
+import Profile from './Profile'
 import { usePages } from '../store/store'
 
 export default function Main() {
@@ -30,6 +31,7 @@ export default function Main() {
           {selectPage === 'tables' && <Tables />}
           {selectPage === 'orders' && <Orders />}
           {selectPage === 'restaurant-edit' && <EditRestaurant />}
+          {selectPage === 'profile' && <Profile />}
         </div>
       </main>
     </>

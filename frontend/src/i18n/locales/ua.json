@@ -1,0 +1,324 @@
+{
+  "auth": {
+    "login": "Вхід",
+    "register": "Реєстрація",
+    "email": "Email",
+    "password": "Пароль",
+    "name": "Повне ім'я",
+    "confirmPassword": "Підтвердити пароль",
+    "signIn": "Увійти",
+    "createAccount": "Створити акаунт",
+    "welcomeBack": "З поверненням",
+    "loginSubtitle": "Увійдіть у панель керування кафе",
+    "registerTitle": "Створити акаунт",
+    "registerSubtitle": "Зареєструйте свій бізнес і почніть керувати замовленнями",
+    "signingIn": "Вхід...",
+    "tokenNotReturned": "Токен не було повернуто",
+    "loginError": "Помилка входу. Спробуйте ще раз.",
+    "passwordsNotMatch": "Паролі не співпадають!",
+    "registrationSuccess": "Реєстрація успішна! Увійдіть у систему.",
+    "registrationFailed": "Помилка реєстрації. Спробуйте ще раз.",
+    "loginFailed": "Помилка входу.",
+    "placeholders": {
+      "email": "you@cafemanager.com",
+      "password": "Введіть пароль",
+      "fullName": "Jane Doe",
+      "createPassword": "Створіть пароль",
+      "repeatPassword": "Повторіть пароль"
+    }
+  },
+  "sidebar": {
+    "dashboard": "Дашборд",
+    "restaurants": "Ресторани",
+    "menu": "Меню",
+    "tables": "Столи",
+    "orders": "Замовлення",
+    "restaurantSection": "Ресторан"
+  },
+  "main": {
+    "dashboard": "Панель керування",
+    "hideSidebar": "Сховати бічну панель",
+    "showSidebar": "Показати бічну панель",
+    "restaurants": {
+      "title": "Ресторани",
+      "subtitle": "Керуйте локаціями вашого ресторану",
+      "addRestaurant": "Додати ресторан",
+      "empty": "Поки що немає ресторанів",
+      "addcat": "Додати категорію",
+      "addCategoryTitle": "Нова категорія",
+      "categoryName": "Назва категорії",
+      "addItem": "Додати позицію",
+      "itemName": "Назва позиції",
+      "itemDescriptin": "Опис позиції",
+      "price": "Ціна",
+      "item": {
+        "tables": "Столи",
+        "items": "Позиції меню",
+        "name": "Назва",
+        "description": "Опис",
+        "address": "Адреса",
+        "phone": "Телефон",
+        "working": {
+          "title": "Години роботи",
+          "monday": "Понеділок",
+          "tuesday": "Вівторок",
+          "wednesday": "Середа",
+          "thursday": "Четвер",
+          "friday": "П'ятниця",
+          "saturday": "Субота",
+          "sunday": "Неділя",
+          "closed": "Зачинено"
+        }
+      },
+      "card": {
+        "settings": "Налаштування",
+        "editMenu": "Редагувати меню",
+        "delete": "Видалити",
+        "tables": "Столи",
+        "menuItems": "Позиції меню",
+        "menu": "Меню",
+        "orders": "Замовлення",
+        "additionalSettings": "Додаткові налаштування"
+      }
+    },
+    "dashboardPage": {
+      "title": "Дашборд",
+      "subtitle": "Огляд роботи вашого ресторану",
+      "activeOrders": "Активні замовлення",
+      "tablesOccupied": "Зайняті столи",
+      "revenueToday": "Виручка сьогодні",
+      "avgOrderValue": "Середній чек",
+      "vsLastWeek": "проти минулого тижня",
+      "yourRestaurants": "Ваші ресторани"
+    },
+    "menuPage": {
+      "title": "Керування меню",
+      "subtitle": "Керуйте позиціями меню ресторану",
+      "addCategory": "Додати категорію",
+      "addItem": "Додати позицію",
+      "allItems": "Усі позиції",
+      "empty": "Позицій не знайдено",
+      "edit": "Редагувати"
+    },
+    "tablesPage": {
+      "title": "Керування столами",
+      "subtitle": "Керуйте столами та QR-кодами",
+      "addTable": "Додати стіл",
+      "totalTables": "Усього столів",
+      "activeTables": "Активні столи",
+      "totalSeats": "Усього місць",
+      "empty": "Поки що немає столів",
+      "seats": "Місця",
+      "active": "Активний",
+      "viewQr": "Переглянути QR"
+    },
+    "ordersPage": {
+      "title": "Дошка замовлень",
+      "subtitle": "Керування замовленнями в реальному часі",
+      "refresh": "Оновити",
+      "ordersCount": "замовлень",
+      "pending": "Очікує",
+      "inProgress": "В процесі",
+      "completed": "Завершено",
+      "table": "Стіл",
+      "delete": "Видалити"
+    },
+    "editRestaurant": {
+      "title": "Редагувати ресторан",
+      "subtitle": "Оновіть основну інформацію та графік роботи",
+      "back": "Назад",
+      "notSelected": "Ресторан не вибрано",
+      "restaurantName": "Назва ресторану",
+      "description": "Опис",
+      "logoUrl": "URL логотипа",
+      "address": "Адреса",
+      "phone": "Телефон",
+      "workingHours": "Години роботи",
+      "cancel": "Скасувати",
+      "saveChanges": "Зберегти зміни",
+      "loading": "Завантаження ресторану...",
+      "failedToUpdate": "Не вдалося оновити ресторан",
+      "days": {
+        "monday": "Понеділок",
+        "tuesday": "Вівторок",
+        "wednesday": "Середа",
+        "thursday": "Четвер",
+        "friday": "П'ятниця",
+        "saturday": "Субота",
+        "sunday": "Неділя",
+        "closed": "Зачинено"
+      }
+    }
+  },
+  "client": {
+    "back": "Повернутися до меню",
+    "zerotitle": "Ваш кошик порожній",
+    "zero": "Додайте позиції, повернувшись до меню",
+    "title": "Кошик",
+    "sum": "Сума замовлення",
+    "subtotal": "Сума",
+    "servicefee": "Плата за обслуговування",
+    "checkout": "Підтвердити",
+    "quantity": "К-сть",
+    "itemtotal": "Загальна ціна",
+    "note": "Примітка для кухні",
+    "orderSummary": "Підсумок замовлення",
+    "total": "Разом",
+    "submitting": "Відправлення...",
+    "table": "Стіл #{{number}}",
+    "all": "Усе",
+    "add": "Додати",
+    "added": "Додано",
+    "noDescription": "Опис відсутній",
+    "priceEach": "за штуку",
+    "itemTotalLabel": "Вартість позиції",
+    "notePlaceholder": "Без цукру, дуже гаряче, алергії...",
+    "deleteItemAlt": "Видалити позицію",
+    "cartIconAlt": "кошик",
+    "otherCategory": "Інше",
+    "loadingMenu": "Завантаження меню...",
+    "errorPrefix": "Помилка:",
+    "dataNotFound": "Дані не знайдено",
+    "orderCreated": "Замовлення успішно створено",
+    "orderCreateFailed": "Не вдалося створити замовлення",
+    "qrTokenMissing": "QR токен відсутній",
+    "tableNotFound": "Стіл не знайдено",
+    "tableWithoutRestaurant": "У столу немає restaurant_id",
+    "dataLoadError": "Помилка завантаження даних"
+  },
+  "modals": {
+    "common": {
+      "cancel": "Скасувати",
+      "close": "Закрити",
+      "download": "Завантажити",
+      "selectCategory": "Оберіть категорію"
+    },
+    "addRestaurant": {
+      "title": "Додати ресторан",
+      "create": "Створити ресторан",
+      "name": "Назва ресторану",
+      "description": "Опис",
+      "logoUrl": "URL логотипа",
+      "address": "Адреса",
+      "phone": "Телефон",
+      "workingHours": "Години роботи",
+      "namePlaceholder": "Japan Sushi and Ramen",
+      "descriptionPlaceholder": "Найкращі суші у місті",
+      "logoPlaceholder": "https://example.com/logo.png",
+      "addressPlaceholder": "123 Street, Katowice",
+      "phonePlaceholder": "11222333",
+      "failed": "Не вдалося створити ресторан"
+    },
+    "addCategory": {
+      "title": "Додати нову категорію",
+      "name": "Назва категорії",
+      "placeholder": "Напр., Закуски, Основні страви",
+      "create": "Створити категорію"
+    },
+    "addMenuItem": {
+      "title": "Додати позицію меню",
+      "name": "Назва позиції",
+      "description": "Опис",
+      "imageUrl": "URL зображення",
+      "price": "Ціна",
+      "create": "Створити позицію меню",
+      "namePlaceholder": "Капучино",
+      "descriptionPlaceholder": "Короткий опис позиції",
+      "imagePlaceholder": "https://picsum.photos/seed/picsum/200/300",
+      "pricePlaceholder": "4.50"
+    },
+    "editMenuItem": {
+      "title": "Редагувати позицію меню",
+      "update": "Оновити позицію",
+      "failed": "Не вдалося оновити позицію меню"
+    },
+    "addTable": {
+      "title": "Додати новий стіл",
+      "tableNumber": "Номер столу",
+      "seats": "Кількість місць",
+      "create": "Створити стіл",
+      "tablePlaceholder": "1A",
+      "seatsPlaceholder": "4"
+    },
+    "qrCode": {
+      "title": "QR-код - Стіл {{number}}",
+      "table": "Стіл {{number}}"
+    }
+  },
+  "profile": {
+    "title": "Мій профіль",
+    "subtitle": "Керуйте даними акаунта та підпискою",
+    "userFallback": "Користувач",
+    "currentPlan": "Поточний план",
+    "subscriptionPlans": "Плани підписки",
+    "profileDetails": "Деталі профілю",
+    "editProfile": "Редагувати профіль",
+    "name": "Ім'я",
+    "email": "Email",
+    "save": "Зберегти",
+    "saving": "Збереження...",
+    "cancel": "Скасувати",
+    "languageTitle": "Мова застосунку",
+    "language": "Мова",
+    "loading": "Завантаження профілю...",
+    "loadFailed": "Не вдалося завантажити профіль",
+    "requiredError": "Ім'я та email є обов'язковими",
+    "saveSuccess": "Профіль успішно оновлено",
+    "saveFailed": "Не вдалося оновити профіль",
+    "plans": {
+      "free": {
+        "name": "FREE",
+        "price": "$0",
+        "button": "Вибрати FREE"
+      },
+      "pro": {
+        "name": "PRO",
+        "price": "$19/міс",
+        "button": "Спробувати PRO"
+      },
+      "business": {
+        "name": "BUSINESS",
+        "price": "$49/міс",
+        "button": "Вибрати BUSINESS"
+      }
+    },
+    "features": {
+      "restaurants": "Ресторани",
+      "menuItems": "Страви в меню",
+      "tables": "Столики",
+      "qrCodes": "QR-коди",
+      "digitalMenu": "Цифрове меню",
+      "removeWatermark": "Прибрати watermark",
+      "multilingual": "Багатомовність",
+      "trialPeriod": "Пробний період",
+      "unlimited": "Безліміт",
+      "days14": "14 днів",
+      "days30": "30 днів"
+    },
+    "roles": {
+      "owner": "Business Plan",
+      "manager": "Starter Plan",
+      "admin": "Enterprise Plan"
+    },
+    "languages": {
+      "en": "English",
+      "ru": "Русский",
+      "pl": "Polski",
+      "de": "Deutsch",
+      "es": "Español"
+    }
+  },
+  "loader": {
+    "default": "Завантаження...",
+    "checkingSession": "Перевірка сесії..."
+  },
+  "alerts": {
+    "genericError": "Сталася помилка. Спробуйте пізніше",
+    "menuDeleteFailed": "Помилка. Спробуйте пізніше!",
+    "tableDeleteFailed": "Помилка, спробуйте пізніше!",
+    "tableUpdateFailed": "Не вдалося оновити статус столу. Спробуйте ще раз.",
+    "restaurantDeleteFailed": "Сталася помилка. Спробуйте пізніше",
+    "createRestaurantFailed": "Не вдалося створити ресторан",
+    "updateRestaurantFailed": "Не вдалося оновити ресторан"
+  }
+}

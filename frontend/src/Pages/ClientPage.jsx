@@ -66,7 +66,8 @@ export default function ClientPage() {
   const subtotal = useMemo(
     () =>
       cartList.reduce(
-        (sum, item) => sum + Number(item.price || 0) * Number(item.quantity || 0),
+        (sum, item) =>
+          sum + Number(item.price || 0) * Number(item.quantity || 0),
         0
       ),
     [cartList]
@@ -173,11 +174,11 @@ export default function ClientPage() {
   }
 
   if (error) {
-    return <div className="client-page">Ошибка: {error}</div>
+    return <div className="client-page"> Error: {error}</div>
   }
 
   if (!client) {
-    return <div className="client-page">Данные не найдены</div>
+    return <div className="client-page">data not found</div>
   }
 
   return (

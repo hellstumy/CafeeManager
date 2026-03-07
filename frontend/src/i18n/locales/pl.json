@@ -1,0 +1,324 @@
+{
+  "auth": {
+    "login": "Logowanie",
+    "register": "Rejestracja",
+    "email": "Email",
+    "password": "Hasło",
+    "name": "Pełne imię i nazwisko",
+    "confirmPassword": "Potwierdź hasło",
+    "signIn": "Zaloguj się",
+    "createAccount": "Utwórz konto",
+    "welcomeBack": "Witaj ponownie",
+    "loginSubtitle": "Zaloguj się do panelu zarządzania kawiarnią",
+    "registerTitle": "Utwórz konto",
+    "registerSubtitle": "Zarejestruj swój biznes i zacznij zarządzać zamówieniami",
+    "signingIn": "Logowanie...",
+    "tokenNotReturned": "Token nie został zwrócony",
+    "loginError": "Błąd logowania. Spróbuj ponownie.",
+    "passwordsNotMatch": "Hasła nie pasują!",
+    "registrationSuccess": "Rejestracja udana! Zaloguj się do systemu.",
+    "registrationFailed": "Błąd rejestracji. Spróbuj ponownie.",
+    "loginFailed": "Błąd logowania.",
+    "placeholders": {
+      "email": "you@cafemanager.com",
+      "password": "Wpisz hasło",
+      "fullName": "Jan Kowalski",
+      "createPassword": "Stwórz hasło",
+      "repeatPassword": "Powtórz hasło"
+    }
+  },
+  "sidebar": {
+    "dashboard": "Panel główny",
+    "restaurants": "Restauracje",
+    "menu": "Menu",
+    "tables": "Stoły",
+    "orders": "Zamówienia",
+    "restaurantSection": "Restauracja"
+  },
+  "main": {
+    "dashboard": "Panel sterowania",
+    "hideSidebar": "Ukryj pasek boczny",
+    "showSidebar": "Pokaż pasek boczny",
+    "restaurants": {
+      "title": "Restauracje",
+      "subtitle": "Zarządzaj lokalizacjami swojej restauracji",
+      "addRestaurant": "Dodaj restaurację",
+      "empty": "Brak dodanych restauracji",
+      "addcat": "Dodaj kategorię",
+      "addCategoryTitle": "Nowa kategoria",
+      "categoryName": "Nazwa kategorii",
+      "addItem": "Dodaj pozycję",
+      "itemName": "Nazwa pozycji",
+      "itemDescriptin": "Opis pozycji",
+      "price": "Cena",
+      "item": {
+        "tables": "Stoły",
+        "items": "Pozycje menu",
+        "name": "Nazwa",
+        "description": "Opis",
+        "address": "Adres",
+        "phone": "Telefon",
+        "working": {
+          "title": "Godziny otwarcia",
+          "monday": "Poniedziałek",
+          "tuesday": "Wtorek",
+          "wednesday": "Środa",
+          "thursday": "Czwartek",
+          "friday": "Piątek",
+          "saturday": "Sobota",
+          "sunday": "Niedziela",
+          "closed": "Zamknięte"
+        }
+      },
+      "card": {
+        "settings": "Ustawienia",
+        "editMenu": "Edytuj menu",
+        "delete": "Usuń",
+        "tables": "Stoły",
+        "menuItems": "Pozycje menu",
+        "menu": "Menu",
+        "orders": "Zamówienia",
+        "additionalSettings": "Dodatkowe ustawienia"
+      }
+    },
+    "dashboardPage": {
+      "title": "Panel główny",
+      "subtitle": "Przegląd działania Twojej restauracji",
+      "activeOrders": "Aktywne zamówienia",
+      "tablesOccupied": "Zajęte stoły",
+      "revenueToday": "Dzisiejszy przychód",
+      "avgOrderValue": "Średni rachunek",
+      "vsLastWeek": "w porównaniu do zeszłego tygodnia",
+      "yourRestaurants": "Twoje restauracje"
+    },
+    "menuPage": {
+      "title": "Zarządzanie menu",
+      "subtitle": "Zarządzaj pozycjami w menu restauracji",
+      "addCategory": "Dodaj kategorię",
+      "addItem": "Dodaj pozycję",
+      "allItems": "Wszystkie pozycje",
+      "empty": "Nie znaleziono pozycji",
+      "edit": "Edytuj"
+    },
+    "tablesPage": {
+      "title": "Zarządzanie stołami",
+      "subtitle": "Zarządzaj stołami i kodami QR",
+      "addTable": "Dodaj stół",
+      "totalTables": "Wszystkie stoły",
+      "activeTables": "Aktywne stoły",
+      "totalSeats": "Łączna liczba miejsc",
+      "empty": "Brak dodanych stołów",
+      "seats": "Miejsca",
+      "active": "Aktywny",
+      "viewQr": "Pokaż QR"
+    },
+    "ordersPage": {
+      "title": "Tablica zamówień",
+      "subtitle": "Zarządzanie zamówieniami w czasie rzeczywistym",
+      "refresh": "Odśwież",
+      "ordersCount": "zamówień",
+      "pending": "Oczekujące",
+      "inProgress": "W przygotowaniu",
+      "completed": "Zrealizowane",
+      "table": "Stół",
+      "delete": "Usuń"
+    },
+    "editRestaurant": {
+      "title": "Edytuj restaurację",
+      "subtitle": "Zaktualizuj podstawowe informacje i godziny pracy",
+      "back": "Wróć",
+      "notSelected": "Nie wybrano restauracji",
+      "restaurantName": "Nazwa restauracji",
+      "description": "Opis",
+      "logoUrl": "URL logo",
+      "address": "Adres",
+      "phone": "Telefon",
+      "workingHours": "Godziny pracy",
+      "cancel": "Anuluj",
+      "saveChanges": "Zapisz zmiany",
+      "loading": "Ładowanie restauracji...",
+      "failedToUpdate": "Nie udało się zaktualizować restauracji",
+      "days": {
+        "monday": "Poniedziałek",
+        "tuesday": "Wtorek",
+        "wednesday": "Środa",
+        "thursday": "Czwartek",
+        "friday": "Piątek",
+        "saturday": "Sobota",
+        "sunday": "Niedziela",
+        "closed": "Zamknięte"
+      }
+    }
+  },
+  "client": {
+    "back": "Powrót do menu",
+    "zerotitle": "Twój koszyk jest pusty",
+    "zero": "Dodaj pozycje, wracając do menu",
+    "title": "Koszyk",
+    "sum": "Suma zamówienia",
+    "subtotal": "Suma częściowa",
+    "servicefee": "Opłata serwisowa",
+    "checkout": "Potwierdź",
+    "quantity": "Ilość",
+    "itemtotal": "Cena całkowita",
+    "note": "Uwagi do kuchni",
+    "orderSummary": "Podsumowanie zamówienia",
+    "total": "Razem",
+    "submitting": "Wysyłanie...",
+    "table": "Stół #{{number}}",
+    "all": "Wszystko",
+    "add": "Dodaj",
+    "added": "Dodano",
+    "noDescription": "Brak opisu",
+    "priceEach": "za sztukę",
+    "itemTotalLabel": "Wartość pozycji",
+    "notePlaceholder": "Bez cukru, bardzo gorące, alergie...",
+    "deleteItemAlt": "Usuń pozycję",
+    "cartIconAlt": "koszyk",
+    "otherCategory": "Inne",
+    "loadingMenu": "Ładowanie menu...",
+    "errorPrefix": "Błąd:",
+    "dataNotFound": "Nie znaleziono danych",
+    "orderCreated": "Zamówienie pomyślnie utworzone",
+    "orderCreateFailed": "Nie udało się utworzyć zamówienia",
+    "qrTokenMissing": "Brak tokenu QR",
+    "tableNotFound": "Nie znaleziono stołu",
+    "tableWithoutRestaurant": "Stół nie posiada restaurant_id",
+    "dataLoadError": "Błąd ładowania danych"
+  },
+  "modals": {
+    "common": {
+      "cancel": "Anuluj",
+      "close": "Zamknij",
+      "download": "Pobierz",
+      "selectCategory": "Wybierz kategorię"
+    },
+    "addRestaurant": {
+      "title": "Dodaj restaurację",
+      "create": "Stwórz restaurację",
+      "name": "Nazwa restauracji",
+      "description": "Opis",
+      "logoUrl": "URL logo",
+      "address": "Adres",
+      "phone": "Telefon",
+      "workingHours": "Godziny otwarcia",
+      "namePlaceholder": "Japan Sushi and Ramen",
+      "descriptionPlaceholder": "Najlepsze sushi w mieście",
+      "logoPlaceholder": "https://example.com/logo.png",
+      "addressPlaceholder": "ul. Przykładowa 123, Katowice",
+      "phonePlaceholder": "11222333",
+      "failed": "Nie udało się utworzyć restauracji"
+    },
+    "addCategory": {
+      "title": "Dodaj nową kategorię",
+      "name": "Nazwa kategorii",
+      "placeholder": "np. Przystawki, Dania główne",
+      "create": "Stwórz kategorię"
+    },
+    "addMenuItem": {
+      "title": "Dodaj pozycję menu",
+      "name": "Nazwa pozycji",
+      "description": "Opis",
+      "imageUrl": "URL zdjęcia",
+      "price": "Cena",
+      "create": "Stwórz pozycję menu",
+      "namePlaceholder": "Cappuccino",
+      "descriptionPlaceholder": "Krótki opis pozycji",
+      "imagePlaceholder": "https://picsum.photos/seed/picsum/200/300",
+      "pricePlaceholder": "4.50"
+    },
+    "editMenuItem": {
+      "title": "Edytuj pozycję menu",
+      "update": "Zaktualizuj pozycję",
+      "failed": "Nie udało się zaktualizować pozycji menu"
+    },
+    "addTable": {
+      "title": "Dodaj nowy stół",
+      "tableNumber": "Numer stołu",
+      "seats": "Liczba miejsc",
+      "create": "Stwórz stół",
+      "tablePlaceholder": "1A",
+      "seatsPlaceholder": "4"
+    },
+    "qrCode": {
+      "title": "Kod QR - Stół {{number}}",
+      "table": "Stół {{number}}"
+    }
+  },
+  "profile": {
+    "title": "Mój profil",
+    "subtitle": "Zarządzaj danymi konta i subskrypcją",
+    "userFallback": "Użytkownik",
+    "currentPlan": "Obecny plan",
+    "subscriptionPlans": "Plany subskrypcji",
+    "profileDetails": "Szczegóły profilu",
+    "editProfile": "Edytuj profil",
+    "name": "Imię i nazwisko",
+    "email": "Email",
+    "save": "Zapisz",
+    "saving": "Zapisywanie...",
+    "cancel": "Anuluj",
+    "languageTitle": "Język aplikacji",
+    "language": "Język",
+    "loading": "Ładowanie profilu...",
+    "loadFailed": "Nie udało się załadować profilu",
+    "requiredError": "Imię oraz email są wymagane",
+    "saveSuccess": "Profil pomyślnie zaktualizowany",
+    "saveFailed": "Nie udało się zaktualizować profilu",
+    "plans": {
+      "free": {
+        "name": "FREE",
+        "price": "$0",
+        "button": "Wybierz FREE"
+      },
+      "pro": {
+        "name": "PRO",
+        "price": "$19/mies.",
+        "button": "Wypróbuj PRO"
+      },
+      "business": {
+        "name": "BUSINESS",
+        "price": "$49/mies.",
+        "button": "Wybierz BUSINESS"
+      }
+    },
+    "features": {
+      "restaurants": "Restauracje",
+      "menuItems": "Dania w menu",
+      "tables": "Stoliki",
+      "qrCodes": "Kody QR",
+      "digitalMenu": "Menu cyfrowe",
+      "removeWatermark": "Usuń znak wodny",
+      "multilingual": "Wielojęzyczność",
+      "trialPeriod": "Okres próbny",
+      "unlimited": "Bez limitu",
+      "days14": "14 dni",
+      "days30": "30 dni"
+    },
+    "roles": {
+      "owner": "Business Plan",
+      "manager": "Starter Plan",
+      "admin": "Enterprise Plan"
+    },
+    "languages": {
+      "en": "English",
+      "ru": "Русский",
+      "pl": "Polski",
+      "de": "Deutsch",
+      "es": "Español"
+    }
+  },
+  "loader": {
+    "default": "Ładowanie...",
+    "checkingSession": "Weryfikacja sesji..."
+  },
+  "alerts": {
+    "genericError": "Wystąpił błąd. Spróbuj później",
+    "menuDeleteFailed": "Błąd. Spróbuj później!",
+    "tableDeleteFailed": "Błąd, spróbuj później!",
+    "tableUpdateFailed": "Nie udało się zaktualizować statusu stołu. Spróbuj ponownie.",
+    "restaurantDeleteFailed": "Wystąpił błąd. Spróbuj później",
+    "createRestaurantFailed": "Nie udało się utworzyć restauracji",
+    "updateRestaurantFailed": "Nie udało się zaktualizować restauracji"
+  }
+}
