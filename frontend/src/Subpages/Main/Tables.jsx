@@ -4,8 +4,10 @@ import AddTableModal from '../../Components/Modals/AddTableModal'
 import { getTables } from '../../api/api'
 import { useSelectedRest } from '../../store/store'
 import TableLoader from '../../Ui/Skeleton/TableLoader'
+import { useTranslation } from 'react-i18next'
 
 export default function Tables() {
+  const { t } = useTranslation()
   const [isAddTableOpen, setIsAddTableOpen] = useState(false)
   const [tables, setTables] = useState([])
   const [isLoading, setIsLoading] = useState(true)
@@ -62,21 +64,23 @@ export default function Tables() {
   return (
     <div className="table-page">
       <div className="table-title">
-        <h1>Tables Management</h1>
-        <button onClick={() => setIsAddTableOpen(true)}>Add Table</button>
+        <h1>{t('main.tablesPage.title')}</h1>
+        <button onClick={() => setIsAddTableOpen(true)}>
+          {t('main.tablesPage.addTable')}
+        </button>
       </div>
-      <p className="subtitle">Manage tables and QR codes</p>
+      <p className="subtitle">{t('main.tablesPage.subtitle')}</p>
       <div className="tables_stats">
         <div className="table-stat_card">
-          <p className="table-stat_title">Total Tables</p>
+          <p className="table-stat_title">{t('main.tablesPage.totalTables')}</p>
           <h5 className="table-stat_value">{tables.length}</h5>
         </div>
         <div className="table-stat_card">
-          <p className="table-stat_title">Active Tables</p>
+          <p className="table-stat_title">{t('main.tablesPage.activeTables')}</p>
           <h5 className="table-stat_value">{activeTables}</h5>
         </div>
         <div className="table-stat_card">
-          <p className="table-stat_title">Total Seats</p>
+          <p className="table-stat_title">{t('main.tablesPage.totalSeats')}</p>
           <h5 className="table-stat_value">{totalSeats}</h5>
         </div>
       </div>
@@ -84,16 +88,16 @@ export default function Tables() {
         {isLoading ? (
           Array.from({ length: 6 }).map((_, index) => <TableLoader key={index} />)
         ) : tables.length > 0 ? (
-          tables.map((t) => (
+          tables.map((table) => (
             <Table
-              key={t.id}
+              key={table.id}
               onDeleted={handleTableDeleted}
               onStatusChanged={handleStatusChanged}
-              t={t}
+              table={table}
             />
           ))
         ) : (
-          <p className="subtitle">No tables yet</p>
+          <p className="subtitle">{t('main.tablesPage.empty')}</p>
         )}
       </div>
       <AddTableModal

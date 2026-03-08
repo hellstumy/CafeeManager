@@ -6,9 +6,12 @@ import Menu from '../Subpages/Main/Menu'
 import Tables from '../Subpages/Main/Tables'
 import Orders from '../Subpages/Main/Orders'
 import EditRestaurant from '../Subpages/Main/EditRestaurant'
+import Profile from './Profile'
 import { usePages } from '../store/store'
+import { useTranslation } from 'react-i18next'
 
 export default function Main() {
+  const { t } = useTranslation()
   const selectPage = usePages((state) => state.selectPage)
   const [isSidebarOpen, setIsSidebarOpen] = useState(true)
 
@@ -22,7 +25,7 @@ export default function Main() {
             onClick={() => setIsSidebarOpen((prev) => !prev)}
             type="button"
           >
-            {isSidebarOpen ? 'Hide Sidebar' : 'Show Sidebar'}
+            {isSidebarOpen ? t('main.hideSidebar') : t('main.showSidebar')}
           </button>
           {selectPage === 'dashboard' && <Dashboard />}
           {selectPage === 'restaurants' && <Restaurants />}
@@ -30,6 +33,7 @@ export default function Main() {
           {selectPage === 'tables' && <Tables />}
           {selectPage === 'orders' && <Orders />}
           {selectPage === 'restaurant-edit' && <EditRestaurant />}
+          {selectPage === 'profile' && <Profile />}
         </div>
       </main>
     </>

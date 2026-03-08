@@ -2,8 +2,10 @@ import { useSelectedRest } from '../../store/store'
 import './Modal.css'
 import { createMenuItem, getCategory } from '../../api/api'
 import { useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 
 export default function AddMenuItemModal({ isOpen, onClose, onCreated }) {
+  const { t } = useTranslation()
   const [categories, setCategories] = useState([])
   const selectedRest = useSelectedRest((state) => state.selectedRest)
 
@@ -52,39 +54,39 @@ export default function AddMenuItemModal({ isOpen, onClose, onCreated }) {
     <div className="modal-overlay" onClick={onClose}>
       <div className="modal-content" onClick={(e) => e.stopPropagation()}>
         <div className="modal-title">
-          <h2>Add Menu Item</h2>
+          <h2>{t('modals.addMenuItem.title')}</h2>
           <button onClick={onClose}>&#735;</button>
         </div>
 
         <form className="modal-form" onSubmit={handleCreate}>
           <label>
-            <p className="form-p">Item Name</p>
+            <p className="form-p">{t('modals.addMenuItem.name')}</p>
             <input
               value={name}
               onChange={(e) => setName(e.target.value)}
-              placeholder="Cappuccino"
+              placeholder={t('modals.addMenuItem.namePlaceholder')}
               className="form-input"
               type="text"
             />
           </label>
 
           <label>
-            <p className="form-p">Description</p>
+            <p className="form-p">{t('modals.addMenuItem.description')}</p>
             <input
               value={description}
               onChange={(e) => setDescription(e.target.value)}
-              placeholder="Brief description of the item"
+              placeholder={t('modals.addMenuItem.descriptionPlaceholder')}
               className="form-input"
               type="text"
             />
           </label>
 
           <label>
-            <p className="form-p">Image URL</p>
+            <p className="form-p">{t('modals.addMenuItem.imageUrl')}</p>
             <input
               value={img_url}
               onChange={(e) => setImg_url(e.target.value)}
-              placeholder="https://picsum.photos/seed/picsum/200/300"
+              placeholder={t('modals.addMenuItem.imagePlaceholder')}
               className="form-input"
               type="text"
             />
@@ -92,11 +94,11 @@ export default function AddMenuItemModal({ isOpen, onClose, onCreated }) {
 
           <div className="form-cont">
             <label>
-              <p className="form-p">Price</p>
+              <p className="form-p">{t('modals.addMenuItem.price')}</p>
               <input
                 value={price}
                 onChange={(e) => setPrice(e.target.value)}
-                placeholder="4.50"
+                placeholder={t('modals.addMenuItem.pricePlaceholder')}
                 min={0}
                 className="form-input"
                 type="number"
@@ -108,7 +110,7 @@ export default function AddMenuItemModal({ isOpen, onClose, onCreated }) {
               onChange={(e) => setSelectedCategory(e.target.value)}
               className="form-select"
             >
-              <option value="">Select category</option>
+              <option value="">{t('modals.common.selectCategory')}</option>
               {categories.map((c) => (
                 <option key={c.id} value={c.id}>
                   {c.name}
@@ -119,10 +121,10 @@ export default function AddMenuItemModal({ isOpen, onClose, onCreated }) {
 
           <div className="form-buttons">
             <button type="button" onClick={onClose} className="form-cancel">
-              Cancel
+              {t('modals.common.cancel')}
             </button>
             <button type="submit" className="form-accept">
-              Create Menu Item
+              {t('modals.addMenuItem.create')}
             </button>
           </div>
         </form>

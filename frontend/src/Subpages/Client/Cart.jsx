@@ -1,5 +1,6 @@
 import CartCard from '../../Components/CartCard'
 import Loader from '../../Components/Loader'
+import { useTranslation } from 'react-i18next'
 
 function formatMoney(value) {
   return `$${Number(value || 0).toFixed(2)}`
@@ -19,17 +20,18 @@ export default function Cart({
   submitError,
   submitSuccess,
 }) {
+  const { t } = useTranslation()
   return (
     <div className="cart-page">
       <button className="cart-back-btn" onClick={onBackToMenu} type="button">
-        &#8592; Back to Menu
+        &#8592; {t('client.back')}
       </button>
-      <h1>Your Cart</h1>
+      <h1>{t('client.title')}</h1>
 
       {items.length === 0 ? (
         <div className="cart-empty">
-          <h3>Cart is empty</h3>
-          <p>Add items from the menu to place an order.</p>
+          <h3>{t('client.zerotitle')}</h3>
+          <p>{t('client.zero')}</p>
         </div>
       ) : (
         <div className="cart-list">
@@ -52,15 +54,15 @@ export default function Cart({
       )}
 
       <div className="cart-total">
-        <h3>Order Summary</h3>
+        <h3>{t('client.orderSummary')}</h3>
         <p>
-          Subtotal <span>{formatMoney(subtotal)}</span>
+          {t('client.subtotal')} <span>{formatMoney(subtotal)}</span>
         </p>
         <p>
-          Service Fee <span>{formatMoney(serviceFee)}</span>
+          {t('client.servicefee')} <span>{formatMoney(serviceFee)}</span>
         </p>
         <p className="cart-total-line">
-          Total <span>{formatMoney(total)}</span>
+          {t('client.total')} <span>{formatMoney(total)}</span>
         </p>
         {submitError && <p>{submitError}</p>}
         {submitSuccess && <p>{submitSuccess}</p>}
@@ -73,10 +75,10 @@ export default function Cart({
           {isSubmitting ? (
             <>
               <Loader inline label="" size="sm" />
-              Submitting...
+              {t('client.submitting')}
             </>
           ) : (
-            'Checkout'
+            t('client.checkout')
           )}
         </button>
       </div>

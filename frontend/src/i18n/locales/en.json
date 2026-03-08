@@ -1,0 +1,327 @@
+{
+  "auth": {
+    "login": "Login",
+    "register": "Register",
+    "email": "Email",
+    "password": "Password",
+    "name": "Full name",
+    "confirmPassword": "Confirm password",
+    "signIn": "Sign In",
+    "createAccount": "Create account",
+    "welcomeBack": "Welcome back",
+    "loginSubtitle": "Sign in to your cafe management panel",
+    "registerTitle": "Create an account",
+    "registerSubtitle": "Register your business and start managing orders",
+    "signingIn": "Signing in...",
+    "tokenNotReturned": "Token was not returned",
+    "loginError": "Login error. Please try again.",
+    "passwordsNotMatch": "Passwords do not match!",
+    "registrationSuccess": "Registration successful! Please sign in.",
+    "registrationFailed": "Registration failed. Please try again.",
+    "loginFailed": "Login failed.",
+    "placeholders": {
+      "email": "you@cafemanager.com",
+      "password": "Enter your password",
+      "fullName": "Jane Doe",
+      "createPassword": "Create a password",
+      "repeatPassword": "Repeat password"
+    }
+  },
+  "sidebar": {
+    "dashboard": "Dashboard",
+    "restaurants": "Restaurants",
+    "menu": "Menu",
+    "tables": "Tables",
+    "orders": "Orders",
+    "restaurantSection": "Restaurant"
+  },
+  "main": {
+    "dashboard": "Dashboard",
+    "hideSidebar": "Hide sidebar",
+    "showSidebar": "Show sidebar",
+    "restaurants": {
+      "title": "Restaurants",
+      "subtitle": "Manage your restaurant locations",
+      "addRestaurant": "Add restaurant",
+      "empty": "No restaurants yet",
+      "addcat": "Add category",
+      "addCategoryTitle": "New category",
+      "categoryName": "Category name",
+      "addItem": "Add item",
+      "itemName": "Item name",
+      "itemDescriptin": "Item description",
+      "price": "Price",
+      "item": {
+        "tables": "Tables",
+        "items": "Menu items",
+        "name": "Name",
+        "description": "Description",
+        "address": "Address",
+        "phone": "Phone",
+        "working": {
+          "title": "Working hours",
+          "monday": "Monday",
+          "tuesday": "Tuesday",
+          "wednesday": "Wednesday",
+          "thursday": "Thursday",
+          "friday": "Friday",
+          "saturday": "Saturday",
+          "sunday": "Sunday",
+          "closed": "Closed"
+        }
+      },
+      "card": {
+        "settings": "Settings",
+        "editMenu": "Edit menu",
+        "delete": "Delete",
+        "tables": "Tables",
+        "menuItems": "Menu items",
+        "menu": "Menu",
+        "orders": "Orders",
+        "additionalSettings": "Additional settings"
+      }
+    },
+    "dashboardPage": {
+      "title": "Dashboard",
+      "subtitle": "Overview of your restaurant's performance",
+      "activeOrders": "Active orders",
+      "tablesOccupied": "Tables occupied",
+      "revenueToday": "Revenue today",
+      "avgOrderValue": "Avg. order value",
+      "vsLastWeek": "vs last week",
+      "yourRestaurants": "Your restaurants"
+    },
+    "menuPage": {
+      "title": "Menu management",
+      "subtitle": "Manage your restaurant menu items",
+      "addCategory": "Add category",
+      "addItem": "Add item",
+      "allItems": "All items",
+      "empty": "No items found",
+      "edit": "Edit"
+    },
+    "tablesPage": {
+      "title": "Table management",
+      "subtitle": "Manage tables and QR codes",
+      "addTable": "Add table",
+      "totalTables": "Total tables",
+      "activeTables": "Active tables",
+      "totalSeats": "Total seats",
+      "empty": "No tables yet",
+      "seats": "Seats",
+      "active": "Active",
+      "viewQr": "View QR"
+    },
+    "ordersPage": {
+      "title": "Order board",
+      "subtitle": "Real-time order management",
+      "refresh": "Refresh",
+      "ordersCount": "orders",
+      "pending": "Pending",
+      "inProgress": "In progress",
+      "completed": "Completed",
+      "table": "Table",
+      "delete": "Delete"
+    },
+    "editRestaurant": {
+      "title": "Edit restaurant",
+      "subtitle": "Update basic info and working hours",
+      "back": "Back",
+      "notSelected": "Restaurant not selected",
+      "restaurantName": "Restaurant name",
+      "description": "Description",
+      "logoUrl": "Logo URL",
+      "address": "Address",
+      "phone": "Phone",
+      "workingHours": "Working hours",
+      "cancel": "Cancel",
+      "saveChanges": "Save changes",
+      "loading": "Loading restaurant...",
+      "failedToUpdate": "Failed to update restaurant",
+      "days": {
+        "monday": "Monday",
+        "tuesday": "Tuesday",
+        "wednesday": "Wednesday",
+        "thursday": "Thursday",
+        "friday": "Friday",
+        "saturday": "Saturday",
+        "sunday": "Sunday",
+        "closed": "Closed"
+      }
+    }
+  },
+  "client": {
+    "back": "Return to menu",
+    "zerotitle": "Your cart is empty",
+    "zero": "Add items by returning to the menu",
+    "title": "Cart",
+    "sum": "Order total",
+    "subtotal": "Subtotal",
+    "servicefee": "Service fee",
+    "checkout": "Confirm",
+    "quantity": "Qty",
+    "itemtotal": "Total price",
+    "note": "Note for kitchen",
+    "orderSummary": "Order summary",
+    "total": "Total",
+    "submitting": "Submitting...",
+    "table": "Table #{{number}}",
+    "all": "All",
+    "add": "Add",
+    "added": "Added",
+    "noDescription": "No description",
+    "priceEach": "each",
+    "itemTotalLabel": "Item total",
+    "notePlaceholder": "No sugar, very hot, allergies...",
+    "deleteItemAlt": "Delete item",
+    "cartIconAlt": "cart",
+    "otherCategory": "Other",
+    "loadingMenu": "Loading menu...",
+    "errorPrefix": "Error:",
+    "dataNotFound": "Data not found",
+    "orderCreated": "Order created successfully",
+    "orderCreateFailed": "Failed to create order",
+    "qrTokenMissing": "QR token missing",
+    "tableNotFound": "Table not found",
+    "tableWithoutRestaurant": "Table has no restaurant_id",
+    "dataLoadError": "Data load error"
+  },
+  "modals": {
+    "common": {
+      "cancel": "Cancel",
+      "close": "Close",
+      "download": "Download",
+      "selectCategory": "Select category"
+    },
+    "addRestaurant": {
+      "title": "Add restaurant",
+      "create": "Create restaurant",
+      "name": "Restaurant name",
+      "description": "Description",
+      "logoUrl": "Logo URL",
+      "address": "Address",
+      "phone": "Phone",
+      "workingHours": "Working hours",
+      "namePlaceholder": "Japan Sushi and Ramen",
+      "descriptionPlaceholder": "Best sushi in town",
+      "logoPlaceholder": "https://example.com/logo.png",
+      "addressPlaceholder": "123 Street, Katowice",
+      "phonePlaceholder": "11222333",
+      "failed": "Failed to create restaurant"
+    },
+    "addCategory": {
+      "title": "Add new category",
+      "name": "Category name",
+      "placeholder": "e.g., Appetizers, Main dishes",
+      "create": "Create category"
+    },
+    "addMenuItem": {
+      "title": "Add menu item",
+      "name": "Item name",
+      "description": "Description",
+      "imageUrl": "Image URL",
+      "price": "Price",
+      "create": "Create menu item",
+      "namePlaceholder": "Cappuccino",
+      "descriptionPlaceholder": "Brief description of the item",
+      "imagePlaceholder": "https://picsum.photos/seed/picsum/200/300",
+      "pricePlaceholder": "4.50"
+    },
+    "editMenuItem": {
+      "title": "Edit menu item",
+      "update": "Update item",
+      "failed": "Failed to update menu item"
+    },
+    "addTable": {
+      "title": "Add new table",
+      "tableNumber": "Table number",
+      "seats": "Number of seats",
+      "create": "Create table",
+      "tablePlaceholder": "1A",
+      "seatsPlaceholder": "4"
+    },
+    "qrCode": {
+      "title": "QR Code - Table {{number}}",
+      "table": "Table {{number}}"
+    }
+  },
+  "profile": {
+    "title": "My profile",
+    "subtitle": "Manage account data and subscription",
+    "userFallback": "User",
+    "currentPlan": "Current plan",
+    "subscriptionPlans": "Subscription plans",
+    "profileDetails": "Profile details",
+    "editProfile": "Edit profile",
+    "name": "Name",
+    "email": "Email",
+    "save": "Save",
+    "saving": "Saving...",
+    "cancel": "Cancel",
+    "languageTitle": "App language",
+    "language": "Language",
+    "loading": "Loading profile...",
+    "loadFailed": "Failed to load profile",
+    "requiredError": "Name and email are required",
+    "saveSuccess": "Profile updated successfully",
+    "saveFailed": "Failed to update profile",
+    "plans": {
+      "free": {
+        "name": "FREE",
+        "price": "$0",
+        "button": "Select FREE"
+      },
+      "pro": {
+        "name": "PRO",
+        "price": "$19/mo",
+        "button": "Try PRO"
+      },
+      "business": {
+        "name": "BUSINESS",
+        "price": "$49/mo",
+        "button": "Select BUSINESS"
+      }
+    },
+    "features": {
+      "restaurants": "Restaurants",
+      "menuItems": "Menu items",
+      "tables": "Tables",
+      "qrCodes": "QR codes",
+      "digitalMenu": "Digital menu",
+      "removeWatermark": "Remove watermark",
+      "multilingual": "Multilingual",
+      "trialPeriod": "Trial period",
+      "unlimited": "Unlimited",
+      "days14": "14 days",
+      "days30": "30 days"
+    },
+    "roles": {
+      "owner": "Business Plan",
+      "manager": "Starter Plan",
+      "admin": "Enterprise Plan"
+    },
+    "languages": {
+      "en": "English",
+      "ru": "Русский",
+      "pl": "Polski",
+      "de": "Deutsch",
+      "es": "Español"
+    }
+  },
+  "loader": {
+    "default": "Loading...",
+    "checkingSession": "Checking session..."
+  },
+  "app": {
+    "notFound": "404 - Page Not Found"
+  },
+  "alerts": {
+    "genericError": "An error occurred. Please try later",
+    "menuDeleteFailed": "Error. Please try later!",
+    "tableDeleteFailed": "Error, please try later!",
+    "tableUpdateFailed": "Failed to update table status. Please try again.",
+    "restaurantDeleteFailed": "An error occurred. Please try later",
+    "createRestaurantFailed": "Failed to create restaurant",
+    "updateRestaurantFailed": "Failed to update restaurant"
+  }
+}

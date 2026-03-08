@@ -1,7 +1,9 @@
 import restaurants from '../assets/icons/Restaurants.svg'
 import { useSelectedRest } from '../store/store'
+import { useTranslation } from 'react-i18next'
 
 export default function DashCard({ r }) {
+  const { t } = useTranslation()
   const setSelectedRest = useSelectedRest((state) => state.setSelectedRest)
   return (
     <div
@@ -14,10 +16,10 @@ export default function DashCard({ r }) {
       <h3>{r.name}</h3>
       <div className="dash_restaurant-info">
         <p>
-          Active Orders <span>12</span>
+          {t('main.dashboardPage.activeOrders')} <span>12</span>
         </p>
         <p>
-          Tables <span>8</span>
+          {t('main.restaurants.card.tables')} <span>8</span>
         </p>
       </div>
     </div>

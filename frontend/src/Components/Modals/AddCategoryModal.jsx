@@ -2,8 +2,10 @@ import './Modal.css'
 import { createCategory } from '../../api/api'
 import { useState } from 'react'
 import { useSelectedRest } from '../../store/store'
+import { useTranslation } from 'react-i18next'
 
 export default function AddCategoryModal({ isOpen, onClose, onCreated }) {
+  const { t } = useTranslation()
   const [name, setName] = useState('')
   const selectedRest = useSelectedRest((state) => state.selectedRest)
   if (!isOpen) return null
@@ -25,15 +27,15 @@ export default function AddCategoryModal({ isOpen, onClose, onCreated }) {
     <div className="modal-overlay" onClick={onClose}>
       <div className="modal-content" onClick={(e) => e.stopPropagation()}>
         <div className="modal-title">
-          <h2>Add New Category</h2>
+          <h2>{t('modals.addCategory.title')}</h2>
           <button onClick={onClose}>&#735;</button>
         </div>
 
         <form className="modal-form" onSubmit={handleCreate}>
           <label>
-            <p className="form-p">Category Name</p>
+            <p className="form-p">{t('modals.addCategory.name')}</p>
             <input
-              placeholder="e.g., Appetizers, Main Course"
+              placeholder={t('modals.addCategory.placeholder')}
               className="form-input"
               type="text"
               value={name}
@@ -43,9 +45,9 @@ export default function AddCategoryModal({ isOpen, onClose, onCreated }) {
 
           <div className="form-buttons">
             <button type="button" onClick={onClose} className="form-cancel">
-              Cancel
+              {t('modals.common.cancel')}
             </button>
-            <button className="form-accept">Create Category</button>
+            <button className="form-accept">{t('modals.addCategory.create')}</button>
           </div>
         </form>
       </div>

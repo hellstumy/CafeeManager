@@ -1,11 +1,13 @@
 import menuIMG from '../assets/menuIMG.png'
 import { useEffect, useRef, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 
 function formatMoney(value) {
   return `$${Number(value || 0).toFixed(2)}`
 }
 
 export default function ClientCard({ item, categoryName, onAdd }) {
+  const { t } = useTranslation()
   const [isAdded, setIsAdded] = useState(false)
   const resetTimerRef = useRef(null)
 
@@ -51,7 +53,7 @@ export default function ClientCard({ item, categoryName, onAdd }) {
           {item.name} <span>{categoryName}</span>
         </h3>
         <p className="client-card_description">
-          {item.description || 'No description available'}
+          {item.description || t('client.noDescription')}
         </p>
         <div className="client-card_other">
           <p className="clirnt-price">{formatMoney(item.price)}</p>
@@ -60,7 +62,7 @@ export default function ClientCard({ item, categoryName, onAdd }) {
             onClick={handleAddClick}
             type="button"
           >
-            {isAdded ? 'Added' : 'Add'}
+            {isAdded ? t('client.added') : t('client.add')}
           </button>
         </div>
       </div>

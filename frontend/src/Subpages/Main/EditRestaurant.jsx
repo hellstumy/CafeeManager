@@ -3,15 +3,16 @@ import Loader from '../../Components/Loader'
 import { getRestaurant, updateRestaurant } from '../../api/api'
 import { usePages, useSelectedRest } from '../../store/store'
 import '../../Components/Modals/Modal.css'
+import { useTranslation } from 'react-i18next'
 
 const DAYS = [
-  { key: 'monday', label: 'Monday' },
-  { key: 'tuesday', label: 'Tuesday' },
-  { key: 'wednesday', label: 'Wednesday' },
-  { key: 'thursday', label: 'Thursday' },
-  { key: 'friday', label: 'Friday' },
-  { key: 'saturday', label: 'Saturday' },
-  { key: 'sunday', label: 'Sunday' },
+  { key: 'monday' },
+  { key: 'tuesday' },
+  { key: 'wednesday' },
+  { key: 'thursday' },
+  { key: 'friday' },
+  { key: 'saturday' },
+  { key: 'sunday' },
 ]
 
 const getInitialHours = () => ({
@@ -86,6 +87,7 @@ const buildWorkingHours = (hours) =>
   )
 
 export default function EditRestaurant() {
+  const { t } = useTranslation()
   const selectedRest = useSelectedRest((state) => state.selectedRest)
   const setSelectPage = usePages((state) => state.setSelectPage)
   const [restaurants, setRestaurants] = useState([])
@@ -147,24 +149,26 @@ export default function EditRestaurant() {
       setSelectPage('restaurants')
     } catch (err) {
       console.log(err)
-      alert('Failed to update restaurant')
+      alert(t('main.editRestaurant.failedToUpdate'))
     } finally {
       setIsSubmitting(false)
     }
   }
 
   if (isLoading) {
-    return <Loader label="Loading restaurant..." />
+    return <Loader label={t('main.editRestaurant.loading')} />
   }
 
   if (!selectedRest || !restaurant) {
     return (
       <div className="edit-restaurant-page">
         <div className="edit-restaurant-header">
-          <h1>Edit Restaurant</h1>
-          <button onClick={() => setSelectPage('restaurants')}>Back</button>
+          <h1>{t('main.editRestaurant.title')}</h1>
+          <button onClick={() => setSelectPage('restaurants')}>
+            {t('main.editRestaurant.back')}
+          </button>
         </div>
-        <p className="subtitle">Restaurant not selected</p>
+        <p className="subtitle">{t('main.editRestaurant.notSelected')}</p>
       </div>
     )
   }
@@ -173,21 +177,21 @@ export default function EditRestaurant() {
     <div className="edit-restaurant-page">
       <div className="edit-restaurant-header">
         <div>
-          <h1>Edit Restaurant</h1>
-          <p className="subtitle">Update basic info and working hours</p>
+          <h1>{t('main.editRestaurant.title')}</h1>
+          <p className="subtitle">{t('main.editRestaurant.subtitle')}</p>
         </div>
         <button
           className="edit-restaurant-back"
           onClick={() => setSelectPage('restaurants')}
           type="button"
         >
-          Back
+          {t('main.editRestaurant.back')}
         </button>
       </div>
 
       <form className="edit-restaurant-form" onSubmit={handleSubmit}>
         <label>
-          <p className="form-p">Restaurant Name</p>
+          <p className="form-p">{t('main.editRestaurant.restaurantName')}</p>
           <input
             value={name}
             onChange={(e) => setName(e.target.value)}
@@ -198,7 +202,7 @@ export default function EditRestaurant() {
         </label>
 
         <label>
-          <p className="form-p">Description</p>
+          <p className="form-p">{t('main.editRestaurant.description')}</p>
           <textarea
             value={description}
             onChange={(e) => setDescription(e.target.value)}
@@ -208,7 +212,7 @@ export default function EditRestaurant() {
         </label>
 
         <label>
-          <p className="form-p">Logo URL</p>
+          <p className="form-p">{t('main.editRestaurant.logoUrl')}</p>
           <input
             value={logoUrl}
             onChange={(e) => setLogoUrl(e.target.value)}
@@ -218,7 +222,7 @@ export default function EditRestaurant() {
         </label>
 
         <label>
-          <p className="form-p">Address</p>
+          <p className="form-p">{t('main.editRestaurant.address')}</p>
           <input
             value={address}
             onChange={(e) => setAddress(e.target.value)}
@@ -229,7 +233,7 @@ export default function EditRestaurant() {
         </label>
 
         <label>
-          <p className="form-p">Phone</p>
+          <p className="form-p">{t('main.editRestaurant.phone')}</p>
           <input
             value={phone}
             onChange={(e) => setPhone(e.target.value)}
@@ -240,10 +244,10 @@ export default function EditRestaurant() {
         </label>
 
         <div className="working-hours">
-          <p className="form-p">Working Hours</p>
-          {DAYS.map(({ key, label }) => (
+          <p className="form-p">{t('main.editRestaurant.workingHours')}</p>
+          {DAYS.map(({ key }) => (
             <div className="day-hours" key={key}>
-              <span className="day-name">{label}</span>
+              <span className="day-name">{t(`main.editRestaurant.days.${key}`)}</span>
               <input
                 type="time"
                 className="form-input time-input"
@@ -266,7 +270,7 @@ export default function EditRestaurant() {
                     handleHoursChange(key, 'closed', e.target.checked)
                   }
                 />
-                Closed
+                {t('main.editRestaurant.days.closed')}
               </label>
             </div>
           ))}
@@ -278,10 +282,10 @@ export default function EditRestaurant() {
             className="form-cancel"
             onClick={() => setSelectPage('restaurants')}
           >
-            Cancel
+            {t('main.editRestaurant.cancel')}
           </button>
           <button type="submit" className="form-accept" disabled={isSubmitting}>
-            Save Changes
+            {t('main.editRestaurant.saveChanges')}
           </button>
         </div>
       </form>

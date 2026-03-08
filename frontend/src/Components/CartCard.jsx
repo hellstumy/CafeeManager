@@ -1,5 +1,6 @@
 import menuIMG from '../assets/menuIMG.png'
 import delbtn from '../assets/icons/delete.svg'
+import { useTranslation } from 'react-i18next'
 
 export default function CartCard({
   imageUrl,
@@ -13,6 +14,7 @@ export default function CartCard({
   onQuantityChange,
   onNoteChange,
 }) {
+  const { t } = useTranslation()
   const safeImageSrc =
     typeof imageUrl === 'string' && imageUrl.trim() ? imageUrl : menuIMG
 
@@ -32,12 +34,14 @@ export default function CartCard({
             {title} <span>{category}</span>
           </h4>
           <button className="cart-delete-btn" onClick={onRemove} type="button">
-            <img src={delbtn} alt="Delete item" />
+            <img src={delbtn} alt={t('client.deleteItemAlt')} />
           </button>
         </div>
-        <p className="price-for-each">{priceEach} each</p>
+        <p className="price-for-each">
+          {priceEach} {t('client.priceEach')}
+        </p>
         <label className="cart-input-label">
-          Quantity
+          {t('client.quantity')}
           <input
             className="cart-qty-input"
             min="1"
@@ -46,13 +50,15 @@ export default function CartCard({
             value={quantity}
           />
         </label>
-        <p className="cart-card-price">Item total: {itemTotal}</p>
+        <p className="cart-card-price">
+          {t('client.itemTotalLabel')}: {itemTotal}
+        </p>
         <label className="cart-input-label">
-          Note for kitchen
+          {t('client.note')}
           <textarea
             className="cart-note-input"
             onChange={(e) => onNoteChange(e.target.value)}
-            placeholder="No sugar, extra hot, allergies..."
+            placeholder={t('client.notePlaceholder')}
             value={note}
           />
         </label>

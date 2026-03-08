@@ -2,8 +2,10 @@ import { useEffect, useRef, useState } from 'react'
 import Restaurant from '../assets/icons/Restaurants.svg'
 import { usePages, useSelectedRest } from '../store/store'
 import { deleteRestaurant } from '../api/api'
+import { useTranslation } from 'react-i18next'
 
 export default function RestCard({ r, onDeleted }) {
+  const { t } = useTranslation()
   const setSelectedRest = useSelectedRest((state) => state.setSelectedRest)
   const setSelectPage = usePages((state) => state.setSelectPage)
   const [isSettingsOpen, setIsSettingsOpen] = useState(false)
@@ -16,7 +18,7 @@ export default function RestCard({ r, onDeleted }) {
       setIsSettingsOpen(false)
     } catch (err) {
       console.log(err)
-      alert(`Some error. Please try again later`)
+      alert(t('alerts.restaurantDeleteFailed'))
     }
   }
   useEffect(() => {
@@ -51,7 +53,7 @@ export default function RestCard({ r, onDeleted }) {
         <div className="rest-settings" ref={settingsRef}>
           <button
             type="button"
-            aria-label="Additional settings"
+            aria-label={t('main.restaurants.card.additionalSettings')}
             onClick={() => setIsSettingsOpen((prev) => !prev)}
           >
             &#8942;
@@ -59,13 +61,13 @@ export default function RestCard({ r, onDeleted }) {
           {isSettingsOpen && (
             <div className="rest-card-subsetting">
               <button type="button" onClick={() => openEditRestaurant()}>
-                Settings
+                {t('main.restaurants.card.settings')}
               </button>
               <button type="button" onClick={() => openMenu()}>
-                Edit Menu
+                {t('main.restaurants.card.editMenu')}
               </button>
               <button type="button" onClick={handleDelete}>
-                Delete
+                {t('main.restaurants.card.delete')}
               </button>
             </div>
           )}
@@ -79,18 +81,18 @@ export default function RestCard({ r, onDeleted }) {
       </div>
       <div className="rest-stats">
         <p className="rest_info-p">
-          Tables: <span>5</span>
+          {t('main.restaurants.card.tables')}: <span>5</span>
         </p>
         <p className="rest_info-p">
-          Menu Items: <span>10</span>
+          {t('main.restaurants.card.menuItems')}: <span>10</span>
         </p>
       </div>
       <div className="rest-buttons">
         <button onClick={() => openMenu()} className="rest-btn">
-          Menu
+          {t('main.restaurants.card.menu')}
         </button>
         <button onClick={() => openOrders()} className="rest-btn">
-          Orders
+          {t('main.restaurants.card.orders')}
         </button>
       </div>
     </div>

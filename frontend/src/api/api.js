@@ -67,6 +67,16 @@ export async function getCurrentUser() {
   return request('/auth/me')
 }
 
+export async function updateCurrentUserProfile(userData) {
+  return request('/auth/me', {
+    method: 'PATCH',
+    body: JSON.stringify({
+      name: userData.name,
+      email: userData.email,
+    }),
+  })
+}
+
 export function logout() {
   localStorage.removeItem('token')
 }

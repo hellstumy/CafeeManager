@@ -5,8 +5,10 @@ import ClientPage from './Pages/ClientPage'
 import LoginRegister from './Pages/LoginRegister'
 import Main from './Pages/Main'
 import ProtectedRoute from './Components/ProtectedRoute' // ← Для защиты роутов
+import { useTranslation } from 'react-i18next'
 
 function App() {
+  const { t } = useTranslation()
   return (
     <AuthProvider>
       {' '}
@@ -33,7 +35,7 @@ function App() {
           <Route path="/" element={<Navigate to="/main" replace />} />
 
           {/* 404 - Page Not Found */}
-          <Route path="*" element={<div>404 - Page Not Found</div>} />
+          <Route path="*" element={<div>{t('app.notFound')}</div>} />
         </Routes>
       </BrowserRouter>
     </AuthProvider>

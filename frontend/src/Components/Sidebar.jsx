@@ -9,8 +9,10 @@ import { usePages, useSelectedRest, useCurrentUser } from '../store/store'
 
 import { logout } from '../api/api'
 import { useNavigate } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 
 export default function Sidebar({ className = '' }) {
+  const { t } = useTranslation()
   const selectPage = usePages((state) => state.selectPage)
   const currentUser = useCurrentUser((state) => state.currentUser)
   const setCurrentUser = useCurrentUser((state) => state.setCurrentUser)
@@ -36,51 +38,59 @@ export default function Sidebar({ className = '' }) {
             className={`nav_btn ${selectPage === 'dashboard' ? 'nav_active' : ''}`}
           >
             <img src={dashboard} alt="" />
-            Dashboard
+            {t('sidebar.dashboard')}
           </button>
           <button
             onClick={() => setSelectPage('restaurants')}
             className={`nav_btn ${selectPage === 'restaurants' ? 'nav_active' : ''}`}
           >
             <img src={restaurants} alt="" />
-            Restaurants
+            {t('sidebar.restaurants')}
           </button>
         </ul>
         <ul
           style={selectedRest === null ? { display: 'none' } : {}}
           className="nav_ul"
         >
-          Restaurant
+          {t('sidebar.restaurants')}
           <button
             onClick={() => setSelectPage('menu')}
             className={`nav_btn ${selectPage === 'menu' ? 'nav_active' : ''}`}
           >
             <img src={menu} alt="" />
-            Menu
+            {t('sidebar.menu')}
           </button>
           <button
             onClick={() => setSelectPage('tables')}
             className={`nav_btn ${selectPage === 'tables' ? 'nav_active' : ''}`}
           >
             <img src={qrcode} alt="" />
-            Tables
+            {t('sidebar.tables')}
           </button>
           <button
             onClick={() => setSelectPage('orders')}
             className={`nav_btn ${selectPage === 'orders' ? 'nav_active' : ''}`}
           >
             <img src={orders} alt="" />
-            Orders
+            {t('sidebar.orders')}
           </button>
         </ul>
       </nav>
-      <div className="aside_profile">
+      <div
+        className={`aside_profile ${selectPage === 'profile' ? 'aside_profile_active' : ''}`}
+        onClick={() => setSelectPage('profile')}
+      >
         <img src={menu} alt="" />
         <div className="aside_info">
           <p className="aside_name">{currentUser?.name || 'John Doe'}</p>
           <p className="aside_mail">{currentUser?.email || 'mail@mail.com'}</p>
         </div>
-        <button onClick={() => handleLogout()}>
+        <button
+          onClick={(e) => {
+            e.stopPropagation()
+            handleLogout()
+          }}
+        >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="16"

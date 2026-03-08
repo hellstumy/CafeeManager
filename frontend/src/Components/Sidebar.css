@@ -67,16 +67,26 @@
   color: #fff;
 }
 .aside_profile {
+  background: #070c27;
+  border-radius: 16px;
   margin-top: auto;
   display: flex;
   padding: 12px 12px 0 12px;
   gap: 12px;
   border-top: 1px solid #1e293b;
+  cursor: pointer;
 }
 .aside_profile img {
   padding: 12px;
   border-radius: 50%;
   background: #0d9488;
+}
+.aside_profile:hover {
+  background: #050e38;
+}
+.aside_profile_active {
+  background: #0b132f;
+  border: 1px solid rgba(13, 148, 136, 0.45);
 }
 .aside_name {
   color: #e2e8f0;
@@ -89,8 +99,13 @@
   font-weight: 500;
 }
 .aside_profile button {
+  padding: 5px;
+  border-radius: 12px;
+  transition: 0.1s;
 }
-
+.aside_profile button:hover {
+  background-color: rgba(228, 22, 22, 0.474);
+}
 .sidebar-hidden {
   width: 0;
   max-width: 0;

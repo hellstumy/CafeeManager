@@ -1,6 +1,8 @@
 import { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 
 export default function OrderItem({ order, onDelete }) {
+  const { t } = useTranslation()
   const [isDeleting, setIsDeleting] = useState(false)
 
   async function handleDelete() {
@@ -12,7 +14,9 @@ export default function OrderItem({ order, onDelete }) {
   return (
     <>
       <h3 className="order-item_num">#{order.order_id}</h3>
-      <p className="order-info_p">Table {order.table_number}</p>
+      <p className="order-info_p">
+        {t('main.ordersPage.table')} {order.table_number}
+      </p>
       <div className="order_items">
         {order.items.map((item) => (
           <p className="order-info_p" key={item.id}>
@@ -29,7 +33,7 @@ export default function OrderItem({ order, onDelete }) {
           onClick={handleDelete}
           disabled={isDeleting}
         >
-          {isDeleting ? '...' : 'Delete'}
+          {isDeleting ? '...' : t('main.ordersPage.delete')}
         </button>
       </div>
     </>

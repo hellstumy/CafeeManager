@@ -80,4 +80,35 @@ router.get('/me', authMiddleware, async (req, res) => {
   }
 })
 
+router.patch('/me', authMiddleware, async (req, res) => {
+  const { name, email } = req.body
+
+  if (!name && !email) {
+    return res.status(400).json({ message: 'Name or email is required' })
+  }
+
+  try {
+    const result = await query(
+      `UPDATE users
+       SET name = COALESCE($1, name), email = COALESCE($2, email)
+       WHERE id = $3
+       RETURNING id, email, name, role`,
+      [name, email, req.user.id]
+    )
+
+    const user = result.rows[0]
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' })
+    }
+
+    res.json(user)
+  } catch (err) {
+    if (err?.code === '23505') {
+      return res.status(409).json({ message: 'Email already in use' })
+    }
+    console.error('Error updating user data:', err)
+    res.status(500).json({ error: 'Failed to update user data' })
+  }
+})
+
 export default router

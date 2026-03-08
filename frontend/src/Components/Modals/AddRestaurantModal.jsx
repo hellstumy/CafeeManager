@@ -1,15 +1,16 @@
 import { useState } from 'react'
 import { createRestaurant } from '../../api/api'
 import './Modal.css'
+import { useTranslation } from 'react-i18next'
 
 const DAYS = [
-  { key: 'monday', label: 'Monday' },
-  { key: 'tuesday', label: 'Tuesday' },
-  { key: 'wednesday', label: 'Wednesday' },
-  { key: 'thursday', label: 'Thursday' },
-  { key: 'friday', label: 'Friday' },
-  { key: 'saturday', label: 'Saturday' },
-  { key: 'sunday', label: 'Sunday' },
+  { key: 'monday' },
+  { key: 'tuesday' },
+  { key: 'wednesday' },
+  { key: 'thursday' },
+  { key: 'friday' },
+  { key: 'saturday' },
+  { key: 'sunday' },
 ]
 
 const getInitialHours = () => ({
@@ -39,6 +40,7 @@ const buildWorkingHours = (hours) =>
   )
 
 export default function AddRestaurantModal({ isOpen, onClose, onCreated }) {
+  const { t } = useTranslation()
   const [name, setName] = useState('')
   const [description, setDescription] = useState('')
   const [logoUrl, setLogoUrl] = useState('')
@@ -88,7 +90,7 @@ export default function AddRestaurantModal({ isOpen, onClose, onCreated }) {
       onClose()
     } catch (err) {
       console.log(err)
-      alert('Failed to create restaurant')
+      alert(t('alerts.createRestaurantFailed'))
     } finally {
       setIsSubmitting(false)
     }
@@ -98,17 +100,17 @@ export default function AddRestaurantModal({ isOpen, onClose, onCreated }) {
     <div className="modal-overlay" onClick={onClose}>
       <div className="modal-content" onClick={(e) => e.stopPropagation()}>
         <div className="modal-title">
-          <h2>Add Restaurant</h2>
+          <h2>{t('modals.addRestaurant.title')}</h2>
           <button onClick={onClose}>&#735;</button>
         </div>
 
         <form className="modal-form" onSubmit={handleSubmit}>
           <label>
-            <p className="form-p">Restaurant Name</p>
+            <p className="form-p">{t('modals.addRestaurant.name')}</p>
             <input
               value={name}
               onChange={(e) => setName(e.target.value)}
-              placeholder="Japan Sushi and Ramen"
+              placeholder={t('modals.addRestaurant.namePlaceholder')}
               className="form-input"
               type="text"
               required
@@ -116,33 +118,33 @@ export default function AddRestaurantModal({ isOpen, onClose, onCreated }) {
           </label>
 
           <label>
-            <p className="form-p">Description</p>
+            <p className="form-p">{t('modals.addRestaurant.description')}</p>
             <textarea
               value={description}
               onChange={(e) => setDescription(e.target.value)}
-              placeholder="Самые лучшие суши в городе"
+              placeholder={t('modals.addRestaurant.descriptionPlaceholder')}
               className="form-textArea"
               required
             />
           </label>
 
           <label>
-            <p className="form-p">Logo URL</p>
+            <p className="form-p">{t('modals.addRestaurant.logoUrl')}</p>
             <input
               value={logoUrl}
               onChange={(e) => setLogoUrl(e.target.value)}
-              placeholder="https://example.com/logo.png"
+              placeholder={t('modals.addRestaurant.logoPlaceholder')}
               className="form-input"
               type="text"
             />
           </label>
 
           <label>
-            <p className="form-p">Address</p>
+            <p className="form-p">{t('modals.addRestaurant.address')}</p>
             <input
               value={address}
               onChange={(e) => setAddress(e.target.value)}
-              placeholder="123 Street, Katowice"
+              placeholder={t('modals.addRestaurant.addressPlaceholder')}
               className="form-input"
               type="text"
               required
@@ -150,11 +152,11 @@ export default function AddRestaurantModal({ isOpen, onClose, onCreated }) {
           </label>
 
           <label>
-            <p className="form-p">Phone</p>
+            <p className="form-p">{t('modals.addRestaurant.phone')}</p>
             <input
               value={phone}
               onChange={(e) => setPhone(e.target.value)}
-              placeholder="11222333"
+              placeholder={t('modals.addRestaurant.phonePlaceholder')}
               className="form-input"
               type="text"
               required
@@ -162,10 +164,10 @@ export default function AddRestaurantModal({ isOpen, onClose, onCreated }) {
           </label>
 
           <div className="working-hours">
-            <p className="form-p">Working Hours</p>
-            {DAYS.map(({ key, label }) => (
+            <p className="form-p">{t('modals.addRestaurant.workingHours')}</p>
+            {DAYS.map(({ key }) => (
               <div className="day-hours" key={key}>
-                <span className="day-name">{label}</span>
+                <span className="day-name">{t(`main.editRestaurant.days.${key}`)}</span>
                 <input
                   type="time"
                   className="form-input time-input"
@@ -188,7 +190,7 @@ export default function AddRestaurantModal({ isOpen, onClose, onCreated }) {
                       handleHoursChange(key, 'closed', e.target.checked)
                     }
                   />
-                  Closed
+                  {t('main.editRestaurant.days.closed')}
                 </label>
               </div>
             ))}
@@ -196,10 +198,10 @@ export default function AddRestaurantModal({ isOpen, onClose, onCreated }) {
 
           <div className="form-buttons">
             <button type="button" onClick={onClose} className="form-cancel">
-              Cancel
+              {t('modals.common.cancel')}
             </button>
             <button type="submit" className="form-accept" disabled={isSubmitting}>
-              Create Restaurant
+              {t('modals.addRestaurant.create')}
             </button>
           </div>
         </form>
