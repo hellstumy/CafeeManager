@@ -5,8 +5,10 @@ import AddMenuItemModal from '../../Components/Modals/AddMenuItemModal'
 import { getMenu } from '../../api/api'
 import { useSelectedRest } from '../../store/store'
 import MenuLoader from '../../Ui/Skeleton/MenuLoader'
+import { useTranslation } from 'react-i18next'
 
 export default function Menu() {
+  const { t } = useTranslation()
   const [isAddCategoryOpen, setIsAddCategoryOpen] = useState(false)
   const [isAddMenuItemOpen, setIsAddMenuItemOpen] = useState(false)
   const [categories, setCategories] = useState([])
@@ -119,22 +121,24 @@ export default function Menu() {
   return (
     <div className="menu-page">
       <div className="menu-title">
-        <h1>Menu Management</h1>
+        <h1>{t('main.menuPage.title')}</h1>
         <div className="menu-title_buttons">
           <button onClick={() => setIsAddCategoryOpen(true)}>
-            Add Category
+            {t('main.menuPage.addCategory')}
           </button>
-          <button onClick={() => setIsAddMenuItemOpen(true)}>Add Item</button>
+          <button onClick={() => setIsAddMenuItemOpen(true)}>
+            {t('main.menuPage.addItem')}
+          </button>
         </div>
       </div>
-      <p className="subtitle">Manage your restaurant menu items</p>
+      <p className="subtitle">{t('main.menuPage.subtitle')}</p>
 
       <ul className="categoies_list">
         <li
           className={`category-li ${activeCategory === null ? 'active-li' : ''}`}
           onClick={() => setActiveCategory(null)}
         >
-          All Items ({totalItems})
+          {t('main.menuPage.allItems')} ({totalItems})
         </li>
         {categories.map((category) => (
           <li
@@ -160,7 +164,7 @@ export default function Menu() {
             />
           ))
         ) : (
-          <p className="subtitle">No items found</p>
+          <p className="subtitle">{t('main.menuPage.empty')}</p>
         )}
       </div>
 

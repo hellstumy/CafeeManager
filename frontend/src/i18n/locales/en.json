@@ -312,6 +312,9 @@
     "default": "Loading...",
     "checkingSession": "Checking session..."
   },
+  "app": {
+    "notFound": "404 - Page Not Found"
+  },
   "alerts": {
     "genericError": "An error occurred. Please try later",
     "menuDeleteFailed": "Error. Please try later!",

@@ -3,8 +3,10 @@ import delbtn from '../assets/icons/delete.svg'
 import { useState } from 'react'
 import EditMenuItemModal from './Modals/EditMenuItemModal'
 import { deleteMenuItem } from '../api/api'
+import { useTranslation } from 'react-i18next'
 
 export default function MenuCard({ item, onItemUpdated, onItemDeleted }) {
+  const { t } = useTranslation()
   const [isEditMenuItemOpen, setIsEditMenuItemOpen] = useState(false)
   const imageSrc =
     (typeof item?.image_url === 'string' && item.image_url.trim()) ||
@@ -18,7 +20,7 @@ export default function MenuCard({ item, onItemUpdated, onItemDeleted }) {
       onItemDeleted?.(item.id)
     } catch (err) {
       console.log(err)
-      alert('Error. Please try again later!')
+      alert(t('alerts.menuDeleteFailed'))
     }
   }
   return (
@@ -40,10 +42,10 @@ export default function MenuCard({ item, onItemUpdated, onItemDeleted }) {
         </p>
         <div className="menu-item_setting">
           <button onClick={() => setIsEditMenuItemOpen(true)} type="button">
-            Edit
+            {t('main.menuPage.edit')}
           </button>
           <button onClick={handleDelete} type="button">
-            <img src={delbtn} alt="delete" />
+            <img src={delbtn} alt={t('main.ordersPage.delete')} />
           </button>
         </div>
       </div>

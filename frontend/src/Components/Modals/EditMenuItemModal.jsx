@@ -2,8 +2,10 @@ import './Modal.css'
 import { useEffect, useState } from 'react'
 import { getCategory, updateMenuItem } from '../../api/api'
 import { useSelectedRest } from '../../store/store'
+import { useTranslation } from 'react-i18next'
 
 export default function EditMenuItemModal({ isOpen, onClose, item, onUpdated }) {
+  const { t } = useTranslation()
   const selectedRest = useSelectedRest((state) => state.selectedRest)
   const [categories, setCategories] = useState([])
   const [name, setName] = useState('')
@@ -49,7 +51,7 @@ export default function EditMenuItemModal({ isOpen, onClose, item, onUpdated }) 
       onClose()
     } catch (err) {
       console.log(err)
-      alert('Failed to update menu item')
+      alert(t('modals.editMenuItem.failed'))
     } finally {
       setIsSubmitting(false)
     }
@@ -59,47 +61,47 @@ export default function EditMenuItemModal({ isOpen, onClose, item, onUpdated }) 
     <div className="modal-overlay" onClick={onClose}>
       <div className="modal-content" onClick={(e) => e.stopPropagation()}>
         <div className="modal-title">
-          <h2>Edit Menu Item</h2>
+          <h2>{t('modals.editMenuItem.title')}</h2>
           <button onClick={onClose}>&#735;</button>
         </div>
         <form className="modal-form" onSubmit={handleUpdate}>
           <label>
-            <p className="form-p">Item Name</p>
+            <p className="form-p">{t('modals.addMenuItem.name')}</p>
             <input
               value={name}
               onChange={(e) => setName(e.target.value)}
-              placeholder="Cappuccino"
+              placeholder={t('modals.addMenuItem.namePlaceholder')}
               className="form-input"
               type="text"
             />
           </label>
           <label>
-            <p className="form-p">Description</p>
+            <p className="form-p">{t('modals.addMenuItem.description')}</p>
             <input
               value={description}
               onChange={(e) => setDescription(e.target.value)}
-              placeholder="Brief description of the item"
+              placeholder={t('modals.addMenuItem.descriptionPlaceholder')}
               className="form-input"
               type="text"
             />
           </label>
           <label>
-            <p className="form-p">Image URL</p>
+            <p className="form-p">{t('modals.addMenuItem.imageUrl')}</p>
             <input
               value={img_url}
               onChange={(e) => setImg_url(e.target.value)}
-              placeholder="https://picsum.photos/seed/picsum/200/300"
+              placeholder={t('modals.addMenuItem.imagePlaceholder')}
               className="form-input"
               type="text"
             />
           </label>
           <div className="form-cont">
             <label>
-              <p className="form-p">Price</p>
+              <p className="form-p">{t('modals.addMenuItem.price')}</p>
               <input
                 value={price}
                 onChange={(e) => setPrice(e.target.value)}
-                placeholder="4.50"
+                placeholder={t('modals.addMenuItem.pricePlaceholder')}
                 className="form-input"
                 type="number"
                 min={0}
@@ -111,7 +113,7 @@ export default function EditMenuItemModal({ isOpen, onClose, item, onUpdated }) 
               onChange={(e) => setSelectedCategory(e.target.value)}
               className="form-select"
             >
-              <option value="">Select category</option>
+              <option value="">{t('modals.common.selectCategory')}</option>
               {categories.map((c) => (
                 <option key={c.id} value={c.id}>
                   {c.name}
@@ -121,10 +123,10 @@ export default function EditMenuItemModal({ isOpen, onClose, item, onUpdated }) 
           </div>
           <div className="form-buttons">
             <button type="button" onClick={onClose} className="form-cancel">
-              Cancel
+              {t('modals.common.cancel')}
             </button>
             <button type="submit" className="form-accept" disabled={isSubmitting}>
-              Update Item
+              {t('modals.editMenuItem.update')}
             </button>
           </div>
         </form>

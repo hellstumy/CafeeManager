@@ -3,8 +3,10 @@ import RestCard from '../../Components/RestCard'
 import AddRestaurantModal from '../../Components/Modals/AddRestaurantModal'
 import { getRestaurant } from '../../api/api'
 import RestLoader from '../../Ui/Skeleton/RestLoader'
+import { useTranslation } from 'react-i18next'
 
 export default function Restaurants() {
+  const { t } = useTranslation()
   const [isAddItemOpen, setIsAddItemOpen] = useState(false)
   const [restaurants, setRestaurants] = useState([])
   const [isLoading, setIsLoading] = useState(true)
@@ -36,10 +38,12 @@ export default function Restaurants() {
   return (
     <div className="restaurants-page">
       <div className="restaurant_title">
-        <h1>Restaurants</h1>
-        <button onClick={() => setIsAddItemOpen(true)}>Add Restaurant</button>
+        <h1>{t('main.restaurants.title')}</h1>
+        <button onClick={() => setIsAddItemOpen(true)}>
+          {t('main.restaurants.addRestaurant')}
+        </button>
       </div>
-      <p className="subtitle">Manage your restaurant locations</p>
+      <p className="subtitle">{t('main.restaurants.subtitle')}</p>
       <div className="restaurants_list">
         {isLoading ? (
           Array.from({ length: 3 }).map((_, index) => <RestLoader key={index} />)
@@ -48,7 +52,7 @@ export default function Restaurants() {
             <RestCard key={r.id} onDeleted={handleRestaurantDeleted} r={r} />
           ))
         ) : (
-          <p className="subtitle">No restaurants yet</p>
+          <p className="subtitle">{t('main.restaurants.empty')}</p>
         )}
       </div>
       <AddRestaurantModal

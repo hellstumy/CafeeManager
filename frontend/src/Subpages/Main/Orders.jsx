@@ -4,14 +4,16 @@ import OrderItem from '../../Components/OrderItem'
 import { getOrders, updateOrderStatus, deleteOrder } from '../../api/api'
 import { useSelectedRest } from '../../store/store'
 import OrderLoader from '../../Ui/Skeleton/OrderLoader'
+import { useTranslation } from 'react-i18next'
 
 const COLUMNS = [
-  { id: 'pending', title: 'Pending' },
-  { id: 'inprogress', title: 'In Progress' },
-  { id: 'completed', title: 'Completed' },
+  { id: 'pending' },
+  { id: 'inprogress' },
+  { id: 'completed' },
 ]
 
 export default function Order() {
+  const { t } = useTranslation()
   const swapy = useRef(null)
   const container = useRef(null)
   const [slotItemMap, setSlotItemMap] = useState([])
@@ -183,8 +185,8 @@ export default function Order() {
     <div className="order-page">
       <div className="order-header">
         <div className="order-title">
-          <h1>Orders Board</h1>
-          <p className="subtitle">Live order management</p>
+          <h1>{t('main.ordersPage.title')}</h1>
+          <p className="subtitle">{t('main.ordersPage.subtitle')}</p>
         </div>
         <div className="order-buttons">
           <button onClick={() => loadOrders(true)}>
@@ -224,15 +226,21 @@ export default function Order() {
                 strokeLinejoin="round"
               />
             </svg>
-            Refresh
+            {t('main.ordersPage.refresh')}
           </button>
-          <span>{totalOrders} orders</span>
+          <span>
+            {totalOrders} {t('main.ordersPage.ordersCount')}
+          </span>
         </div>
       </div>
       <div className="order-main container" ref={container}>
         {COLUMNS.map((column) => (
           <div className="status-column" key={column.id}>
-            <h4>{column.title}</h4>
+            <h4>
+              {column.id === 'pending' && t('main.ordersPage.pending')}
+              {column.id === 'inprogress' && t('main.ordersPage.inProgress')}
+              {column.id === 'completed' && t('main.ordersPage.completed')}
+            </h4>
             <div className="status-container">
               {isLoading ? (
                 Array.from({ length: 2 }).map((_, index) => (

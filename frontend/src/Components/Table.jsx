@@ -4,23 +4,25 @@ import qrimg from '../assets/icons/qrcode.svg'
 import QRCodeModal from './Modals/QRCodeModal'
 import { deleteTable } from '../api/api'
 import { updateTable } from '../api/api'
+import { useTranslation } from 'react-i18next'
 
-export default function Table({ t, onStatusChanged, onDeleted }) {
+export default function Table({ table, onStatusChanged, onDeleted }) {
+  const { t } = useTranslation()
   const [isQRCodeOpen, setIsQRCodeOpen] = useState(false)
-  const [isActive, setIsActive] = useState(t.is_active)
+  const [isActive, setIsActive] = useState(table.is_active)
   const [isUpdating, setIsUpdating] = useState(false)
 
   useEffect(() => {
-    setIsActive(t.is_active)
-  }, [t.is_active])
+    setIsActive(table.is_active)
+  }, [table.is_active])
 
   const handleDelete = async () => {
     try {
-      await deleteTable(t.id)
-      onDeleted?.(t.id)
+      await deleteTable(table.id)
+      onDeleted?.(table.id)
     } catch (err) {
       console.log(err)
-      alert('Error, Please try later!')
+      alert(t('alerts.tableDeleteFailed'))
     }
   }
 
@@ -32,12 +34,12 @@ export default function Table({ t, onStatusChanged, onDeleted }) {
     setIsUpdating(true)
 
     try {
-      const data = await updateTable(t.id, { is_active: nextValue })
-      onStatusChanged?.(data?.table || { ...t, is_active: nextValue })
+      const data = await updateTable(table.id, { is_active: nextValue })
+      onStatusChanged?.(data?.table || { ...table, is_active: nextValue })
     } catch (err) {
       setIsActive(prevValue)
       console.log(err)
-      alert('Failed to update table status. Please try again.')
+      alert(t('alerts.tableUpdateFailed'))
     } finally {
       setIsUpdating(false)
     }
@@ -46,17 +48,17 @@ export default function Table({ t, onStatusChanged, onDeleted }) {
   return (
     <div className="table_card">
       <div className="table-card_title">
-        <p className="table-number">{t.table_number}</p>
+        <p className="table-number">{table.table_number}</p>
         <button onClick={() => handleDelete()} className="table-delete">
           <img src={delbutton} alt="" />
         </button>
       </div>
       <div>
-        <p className="table_seats">Seats</p>
-        <p className="table_seats">{t.seats} </p>
+        <p className="table_seats">{t('main.tablesPage.seats')}</p>
+        <p className="table_seats">{table.seats} </p>
       </div>
       <div className="table_isActive">
-        <p>Active</p>
+        <p>{t('main.tablesPage.active')}</p>
         <label className="switch">
           <input
             type="checkbox"
@@ -68,11 +70,11 @@ export default function Table({ t, onStatusChanged, onDeleted }) {
         </label>
       </div>
       <button onClick={() => setIsQRCodeOpen(true)} className="view_qr">
-        <img src={qrimg} alt="qr" /> View QR
+        <img src={qrimg} alt="qr" /> {t('main.tablesPage.viewQr')}
       </button>
       <QRCodeModal
         isOpen={isQRCodeOpen}
-        t={t}
+        table={table}
         onClose={() => setIsQRCodeOpen(false)}
       />
     </div>

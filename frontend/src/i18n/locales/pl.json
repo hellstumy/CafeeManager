@@ -312,6 +312,9 @@
     "default": "Ładowanie...",
     "checkingSession": "Weryfikacja sesji..."
   },
+  "app": {
+    "notFound": "404 - Nie znaleziono strony"
+  },
   "alerts": {
     "genericError": "Wystąpił błąd. Spróbuj później",
     "menuDeleteFailed": "Błąd. Spróbuj później!",

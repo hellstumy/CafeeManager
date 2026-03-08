@@ -45,34 +45,34 @@ export default function Sidebar({ className = '' }) {
             className={`nav_btn ${selectPage === 'restaurants' ? 'nav_active' : ''}`}
           >
             <img src={restaurants} alt="" />
-            Restaurants
+            {t('sidebar.restaurants')}
           </button>
         </ul>
         <ul
           style={selectedRest === null ? { display: 'none' } : {}}
           className="nav_ul"
         >
-          Restaurant
+          {t('sidebar.restaurants')}
           <button
             onClick={() => setSelectPage('menu')}
             className={`nav_btn ${selectPage === 'menu' ? 'nav_active' : ''}`}
           >
             <img src={menu} alt="" />
-            Menu
+            {t('sidebar.menu')}
           </button>
           <button
             onClick={() => setSelectPage('tables')}
             className={`nav_btn ${selectPage === 'tables' ? 'nav_active' : ''}`}
           >
             <img src={qrcode} alt="" />
-            Tables
+            {t('sidebar.tables')}
           </button>
           <button
             onClick={() => setSelectPage('orders')}
             className={`nav_btn ${selectPage === 'orders' ? 'nav_active' : ''}`}
           >
             <img src={orders} alt="" />
-            Orders
+            {t('sidebar.orders')}
           </button>
         </ul>
       </nav>

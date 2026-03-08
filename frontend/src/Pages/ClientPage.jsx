@@ -4,8 +4,10 @@ import Loader from '../Components/Loader'
 import Cart from '../Subpages/Client/Cart'
 import ClientMenu from '../Subpages/Client/ClientMenu'
 import { createPublicOrder, getMenu, getOneTable } from '../api/api'
+import { useTranslation } from 'react-i18next'
 
 export default function ClientPage() {
+  const { t } = useTranslation()
   const { qrToken } = useParams()
 
   const [isCartOpen, setIsCartOpen] = useState(false)
@@ -21,7 +23,7 @@ export default function ClientPage() {
 
   useEffect(() => {
     if (!qrToken) {
-      setError('QR токен отсутствует')
+      setError(t('client.qrTokenMissing'))
       setLoading(false)
       return
     }
@@ -35,7 +37,7 @@ export default function ClientPage() {
         const clientData = await getOneTable(qrToken)
 
         if (!clientData) {
-          throw new Error('Стол не найден')
+          throw new Error(t('client.tableNotFound'))
         }
 
         setClient(clientData)
@@ -45,18 +47,18 @@ export default function ClientPage() {
           const menuData = await getMenu(clientData.restaurant_id)
           setCategories(menuData?.categories || [])
         } else {
-          throw new Error('У стола нет restaurant_id')
+          throw new Error(t('client.tableWithoutRestaurant'))
         }
       } catch (err) {
         console.error(err)
-        setError(err.message || 'Ошибка загрузки данных')
+        setError(err.message || t('client.dataLoadError'))
       } finally {
         setLoading(false)
       }
     }
 
     fetchData()
-  }, [qrToken])
+  }, [qrToken, t])
 
   const cartList = useMemo(() => Object.values(cartItems), [cartItems])
   const cartCount = useMemo(
@@ -102,7 +104,7 @@ export default function ClientPage() {
           id: menuItem.id,
           quantity: 1,
           note: '',
-          categoryName: parentCategory?.name || 'Other',
+          categoryName: parentCategory?.name || t('client.otherCategory'),
         },
       }
     })
@@ -157,9 +159,9 @@ export default function ClientPage() {
       })
 
       setCartItems({})
-      setSubmitSuccess('Order created successfully')
+      setSubmitSuccess(t('client.orderCreated'))
     } catch (err) {
-      setSubmitError(err.message || 'Failed to create order')
+      setSubmitError(err.message || t('client.orderCreateFailed'))
     } finally {
       setIsSubmittingOrder(false)
     }
@@ -168,17 +170,21 @@ export default function ClientPage() {
   if (loading) {
     return (
       <div className="client-page">
-        <Loader label="Loading menu..." />
+        <Loader label={t('client.loadingMenu')} />
       </div>
     )
   }
 
   if (error) {
-    return <div className="client-page"> Error: {error}</div>
+    return (
+      <div className="client-page">
+        {t('client.errorPrefix')} {error}
+      </div>
+    )
   }
 
   if (!client) {
-    return <div className="client-page">data not found</div>
+    return <div className="client-page">{t('client.dataNotFound')}</div>
   }
 
   return (

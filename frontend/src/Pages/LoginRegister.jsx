@@ -5,8 +5,10 @@ import { useAuth } from '../context/AuthContext'
 import Loader from '../Components/Loader'
 import { getCurrentUser } from '../api/api'
 import { useCurrentUser } from '../store/store'
+import { useTranslation } from 'react-i18next'
 
 export default function LoginRegister() {
+  const { t } = useTranslation()
   const setCurrentUser = useCurrentUser((state) => state.setCurrentUser)
   const [activeTab, setActiveTab] = useState('login')
   const [loginError, setLoginError] = useState('')
@@ -83,24 +85,24 @@ export default function LoginRegister() {
             onClick={() => setActiveTab('login')}
             type="button"
           >
-            Login
+            {t('auth.login')}
           </button>
           <button
             className={`auth-tab ${activeTab === 'register' ? 'auth-tab-active' : ''}`}
             onClick={() => setActiveTab('register')}
             type="button"
           >
-            Register
+            {t('auth.register')}
           </button>
         </div>
 
         {activeTab === 'login' ? (
           <form className="auth-form" onSubmit={handleLogin} name="login-form">
-            <h1>Welcome Back</h1>
-            <p className="auth-subtitle">Sign in to your cafe dashboard</p>
+            <h1>{t('auth.welcomeBack')}</h1>
+            <p className="auth-subtitle">{t('auth.loginSubtitle')}</p>
 
             <label className="auth-label">
-              Email
+              {t('auth.email')}
               <input
                 value={loginData.email}
                 onChange={(e) =>
@@ -117,7 +119,7 @@ export default function LoginRegister() {
             </label>
 
             <label className="auth-label">
-              Password
+              {t('auth.password')}
               <input
                 value={loginData.password}
                 onChange={(e) =>
@@ -141,10 +143,10 @@ export default function LoginRegister() {
               {isLoginLoading ? (
                 <>
                   <Loader inline label="" size="sm" />
-                  Signing In...
+                  {t('auth.signingIn')}
                 </>
               ) : (
-                'Sign In'
+                t('auth.signIn')
               )}
             </button>
             {loginError ? <p className="auth-error">{loginError}</p> : null}
@@ -155,13 +157,11 @@ export default function LoginRegister() {
             onSubmit={handleRegister}
             name="register-form"
           >
-            <h1>Create Account</h1>
-            <p className="auth-subtitle">
-              Register your business and start managing orders
-            </p>
+            <h1> {t('auth.registerTitle')}</h1>
+            <p className="auth-subtitle">{t('auth.registerSubtitle')}</p>
 
             <label className="auth-label">
-              Full Name
+              {t('auth.name')}
               <input
                 value={registerData.name}
                 onChange={(e) =>
@@ -178,7 +178,7 @@ export default function LoginRegister() {
             </label>
 
             <label className="auth-label">
-              Email
+              {t('auth.email')}
               <input
                 value={registerData.email}
                 onChange={(e) =>
@@ -195,7 +195,7 @@ export default function LoginRegister() {
             </label>
 
             <label className="auth-label">
-              Password
+              {t('auth.password')}
               <input
                 value={registerData.password}
                 onChange={(e) =>
@@ -212,7 +212,7 @@ export default function LoginRegister() {
             </label>
 
             <label className="auth-label">
-              Confirm Password
+              {t('auth.confirmPassword')}
               <input
                 value={registerData.confirmPassword}
                 onChange={(e) =>
@@ -232,7 +232,7 @@ export default function LoginRegister() {
             </label>
 
             <button className="auth-submit" type="submit">
-              Create Account
+              {t('auth.createAccount')}
             </button>
           </form>
         )}

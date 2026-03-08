@@ -1,5 +1,6 @@
 import cart from '../../assets/icons/cart.svg'
 import ClientCard from '../../Components/ClientCard'
+import { useTranslation } from 'react-i18next'
 
 export default function ClientMenu({
   client,
@@ -10,6 +11,7 @@ export default function ClientMenu({
   cartCount,
   onAddToCart,
 }) {
+  const { t } = useTranslation()
   const visibleCategories =
     selectedCategory === 'all'
       ? categories
@@ -21,9 +23,11 @@ export default function ClientMenu({
     <div className="client-menu">
       <header className="client-header">
         <div className="client-head-title">
-          <h2 className="client-title">Table #{client.table_number}</h2>
+          <h2 className="client-title">
+            {t('client.table', { number: client.table_number })}
+          </h2>
           <button className="cart-btn" onClick={onOpenCart} type="button">
-            <img src={cart} alt="cart" />
+            <img src={cart} alt={t('client.cartIconAlt')} />
             {!!cartCount && <span className="cart-count"> ({cartCount})</span>}
           </button>
         </div>
@@ -32,7 +36,7 @@ export default function ClientMenu({
             className={`client-li ${selectedCategory === 'all' ? 'client-active' : ''}`}
             onClick={() => onSelectCategory('all')}
           >
-            All
+            {t('client.all')}
           </li>
           {categories.map((category) => (
             <li
