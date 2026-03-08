@@ -83,12 +83,12 @@
     },
     "dashboardPage": {
       "title": "Дашборд",
-      "subtitle": "Огляд роботи вашого ресторану",
+      "subtitle": "Огляд ефективності вашого ресторану",
       "activeOrders": "Активні замовлення",
-      "tablesOccupied": "Зайняті столи",
-      "revenueToday": "Виручка сьогодні",
-      "avgOrderValue": "Середній чек",
-      "vsLastWeek": "проти минулого тижня",
+      "todayOrders": "Замовлення за сьогодні",
+      "restaurants": "Ресторани",
+      "todayRevenue": "Сьогоднішній дохід",
+      "vsLastWeek": "порівняно з минулим тижнем",
       "yourRestaurants": "Ваші ресторани"
     },
     "menuPage": {

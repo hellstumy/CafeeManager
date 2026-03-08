@@ -160,6 +160,7 @@ export default function ClientPage() {
 
       setCartItems({})
       setSubmitSuccess(t('client.orderCreated'))
+      alert(t('client.orderCreated'))
     } catch (err) {
       setSubmitError(err.message || t('client.orderCreateFailed'))
     } finally {

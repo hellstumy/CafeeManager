@@ -7,17 +7,26 @@ import { getRestaurant } from '../../api/api'
 import { useEffect, useState } from 'react'
 import DashLoader from '../../Ui/Skeleton/DashLoader'
 import { useTranslation } from 'react-i18next'
+import { getStats } from '../../api/api'
 
 export default function Dashboard() {
   const { t } = useTranslation()
+  const [stats, setStats] = useState([])
   const [restaurants, setRestaurants] = useState([])
   const [isLoading, setIsLoading] = useState(true)
-
   useEffect(() => {
-    getRestaurant().then((data) => {
-      setRestaurants(data || [])
-    }).finally(() => setIsLoading(false))
+    getStats().then((data) => {
+      setStats(data)
+    })
   }, [])
+  useEffect(() => {
+    getRestaurant()
+      .then((data) => {
+        setRestaurants(data || [])
+      })
+      .finally(() => setIsLoading(false))
+  }, [])
+
   return (
     <div className="dashboard">
       <h1>{t('main.dashboardPage.title')}</h1>
@@ -25,42 +34,42 @@ export default function Dashboard() {
       <div className="dash_info">
         <div className="dash_card">
           <div>
-            <p className="dash-name">{t('main.dashboardPage.activeOrders')}</p>
+            <p className="dash-name">{t('main.dashboardPage.restaurants')}</p>
             <img src={active} alt="" />
           </div>
-          <p className="dash-value">24</p>
+          <p className="dash-value">{stats.restaurants}</p>
           <p className="dash_comparison">
-            <span>+12%</span> {t('main.dashboardPage.vsLastWeek')}
+            {/* <span>+12%</span> {t('main.dashboardPage.vsLastWeek')} */}
           </p>
         </div>
         <div className="dash_card">
           <div>
-            <p className="dash-name">{t('main.dashboardPage.tablesOccupied')}</p>
+            <p className="dash-name">{t('main.dashboardPage.activeOrders')}</p>
             <img src={people} alt="" />
           </div>
-          <p className="dash-value">18/32</p>
+          <p className="dash-value">{stats.activeOrders}</p>
           <p className="dash_comparison">
-            <span>+56%</span> {t('main.dashboardPage.vsLastWeek')}
+            {/* <span>+56%</span> {t('main.dashboardPage.vsLastWeek')} */}
           </p>
         </div>
         <div className="dash_card">
           <div>
-            <p className="dash-name">{t('main.dashboardPage.revenueToday')}</p>
+            <p className="dash-name">{t('main.dashboardPage.todayRevenue')}</p>
             <img src={salary} alt="" />
           </div>
-          <p className="dash-value">$3,847</p>
+          <p className="dash-value">${stats.todayRevenue}</p>
           <p className="dash_comparison">
-            <span>+12%</span> {t('main.dashboardPage.vsLastWeek')}
+            {/* <span>+12%</span> {t('main.dashboardPage.vsLastWeek')} */}
           </p>
         </div>
         <div className="dash_card">
           <div>
-            <p className="dash-name">{t('main.dashboardPage.avgOrderValue')}</p>
+            <p className="dash-name">{t('main.dashboardPage.todayOrders')}</p>
             <img src={avg} alt="" />
           </div>
-          <p className="dash-value">$42.50</p>
+          <p className="dash-value">{stats.todayOrders}</p>
           <p className="dash_comparison">
-            <span>+12%</span> {t('main.dashboardPage.vsLastWeek')}
+            {/* <span>+12%</span> {t('main.dashboardPage.vsLastWeek')} */}
           </p>
         </div>
       </div>

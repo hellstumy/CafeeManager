@@ -110,5 +110,61 @@ router.patch('/me', authMiddleware, async (req, res) => {
     res.status(500).json({ error: 'Failed to update user data' })
   }
 })
+//DASHBOARD
+router.get('/stats', authMiddleware, async (req, res) => {
+  try {
+    const userId = req.user.id
+
+    // 1. 📋 Всего ресторанов
+    const restaurantsResult = await query(
+      'SELECT COUNT(*) FROM restaurants WHERE owner_id = $1',
+      [userId]
+    )
+
+    // 2. 📦 Заказы за сегодня
+    const todayOrdersResult = await query(
+      `SELECT COUNT(*) 
+       FROM orders o
+       JOIN restaurants r ON o.restaurant_id = r.id
+       WHERE r.owner_id = $1 
+       AND DATE(o.created_at) = CURRENT_DATE`,
+      [userId]
+    )
+
+    // 3. 💰 Выручка за сегодня (исключаем cancelled)
+    const todayRevenueResult = await query(
+      `SELECT COALESCE(SUM(total_amount), 0) as total
+       FROM orders o
+       JOIN restaurants r ON o.restaurant_id = r.id
+       WHERE r.owner_id = $1 
+       AND DATE(o.created_at) = CURRENT_DATE
+       AND o.status != 'cancelled'`,
+      [userId]
+    )
+
+    // 4. ⏳ Активные заказы (pending + preparing)
+    const activeOrdersResult = await query(
+      `SELECT COUNT(*) 
+       FROM orders o
+       JOIN restaurants r ON o.restaurant_id = r.id
+       WHERE r.owner_id = $1 
+       AND o.status IN ('pending', 'inprogress')`,
+      [userId]
+    )
+
+    // Парсим результаты
+    const stats = {
+      restaurants: parseInt(restaurantsResult.rows[0].count) || 0,
+      todayOrders: parseInt(todayOrdersResult.rows[0].count) || 0,
+      todayRevenue: parseFloat(todayRevenueResult.rows[0].total) || 0,
+      activeOrders: parseInt(activeOrdersResult.rows[0].count) || 0,
+    }
+
+    res.json(stats)
+  } catch (err) {
+    console.error('Dashboard stats error:', err)
+    res.status(500).json({ error: 'Server error' })
+  }
+})
 
 export default router

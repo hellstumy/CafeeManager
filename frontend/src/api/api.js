@@ -67,6 +67,9 @@ export async function getCurrentUser() {
   return request('/auth/me')
 }
 
+export async function getStats() {
+  return request('/auth/stats')
+}
 export async function updateCurrentUserProfile(userData) {
   return request('/auth/me', {
     method: 'PATCH',

@@ -1310,7 +1310,11 @@ input:checked + .slider:before {
   border-radius: 14px;
   border: 1px solid rgba(148, 163, 184, 0.15);
   background:
-    radial-gradient(circle at top right, rgba(13, 148, 136, 0.22), transparent 42%),
+    radial-gradient(
+      circle at top right,
+      rgba(13, 148, 136, 0.22),
+      transparent 42%
+    ),
     #1e293b;
   display: flex;
   align-items: center;
@@ -1534,7 +1538,6 @@ input:checked + .slider:before {
   background: #0f172a;
   border: 1px solid rgba(148, 163, 184, 0.2);
 }
-
 
 @media (max-width: 540px) {
   .auth-page {
@@ -1760,7 +1763,6 @@ input:checked + .slider:before {
   .profile-btn {
     width: 100%;
   }
-
 }
 
 @media (max-width: 576px) {

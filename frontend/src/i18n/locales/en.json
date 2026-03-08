@@ -85,9 +85,9 @@
       "title": "Dashboard",
       "subtitle": "Overview of your restaurant's performance",
       "activeOrders": "Active orders",
-      "tablesOccupied": "Tables occupied",
-      "revenueToday": "Revenue today",
-      "avgOrderValue": "Avg. order value",
+      "todayOrders": "Orders today",
+      "restaurants": "Restaurants",
+      "todayRevenue": "Today's revenue",
       "vsLastWeek": "vs last week",
       "yourRestaurants": "Your restaurants"
     },
@@ -311,9 +311,6 @@
   "loader": {
     "default": "Loading...",
     "checkingSession": "Checking session..."
-  },
-  "app": {
-    "notFound": "404 - Page Not Found"
   },
   "alerts": {
     "genericError": "An error occurred. Please try later",

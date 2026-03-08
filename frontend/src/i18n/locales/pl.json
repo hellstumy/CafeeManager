@@ -83,12 +83,12 @@
     },
     "dashboardPage": {
       "title": "Panel główny",
-      "subtitle": "Przegląd działania Twojej restauracji",
+      "subtitle": "Przegląd wyników Twojej restauracji",
       "activeOrders": "Aktywne zamówienia",
-      "tablesOccupied": "Zajęte stoły",
-      "revenueToday": "Dzisiejszy przychód",
-      "avgOrderValue": "Średni rachunek",
-      "vsLastWeek": "w porównaniu do zeszłego tygodnia",
+      "todayOrders": "Zamówienia dzisiaj",
+      "restaurants": "Restauracje",
+      "todayRevenue": "Dzisiejszy przychód",
+      "vsLastWeek": "w porównaniu z poprzednim tygodniem",
       "yourRestaurants": "Twoje restauracje"
     },
     "menuPage": {

@@ -3,13 +3,27 @@ import Restaurant from '../assets/icons/Restaurants.svg'
 import { usePages, useSelectedRest } from '../store/store'
 import { deleteRestaurant } from '../api/api'
 import { useTranslation } from 'react-i18next'
+import { getTables } from '../api/api'
+import { getMenu } from '../api/api'
 
 export default function RestCard({ r, onDeleted }) {
   const { t } = useTranslation()
+  const [tables, setTables] = useState()
+  const [menu, setMenu] = useState()
   const setSelectedRest = useSelectedRest((state) => state.setSelectedRest)
   const setSelectPage = usePages((state) => state.setSelectPage)
   const [isSettingsOpen, setIsSettingsOpen] = useState(false)
   const settingsRef = useRef(null)
+
+  useEffect(() => {
+    getMenu(r.id).then((data) => {
+      setMenu(data)
+      console.log(data)
+    })
+    getTables(r.id).then((data) => {
+      setTables(data)
+    })
+  }, [])
 
   const handleDelete = async () => {
     try {
@@ -81,10 +95,11 @@ export default function RestCard({ r, onDeleted }) {
       </div>
       <div className="rest-stats">
         <p className="rest_info-p">
-          {t('main.restaurants.card.tables')}: <span>5</span>
+          {t('main.restaurants.card.tables')}: <span>{tables.count}</span>
         </p>
         <p className="rest_info-p">
-          {t('main.restaurants.card.menuItems')}: <span>10</span>
+          {t('main.restaurants.card.menuItems')}:{' '}
+          <span>{menu.total_items}</span>
         </p>
       </div>
       <div className="rest-buttons">
