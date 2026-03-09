@@ -6,9 +6,11 @@ import Loader from '../Components/Loader'
 import { getCurrentUser } from '../api/api'
 import { useCurrentUser } from '../store/store'
 import { useTranslation } from 'react-i18next'
+import useNotification from '../context/useNotification'
 
 export default function LoginRegister() {
   const { t } = useTranslation()
+  const { notifyGood, notifyAlert, notifyBad } = useNotification()
   const setCurrentUser = useCurrentUser((state) => state.setCurrentUser)
   const [activeTab, setActiveTab] = useState('login')
   const [loginError, setLoginError] = useState('')
@@ -34,7 +36,7 @@ export default function LoginRegister() {
       const response = await loginUser(loginData)
 
       if (!response?.token) {
-        throw new Error('Token was not returned')
+        throw new Error(t('auth.tokenNotReturned'))
       }
 
       await login(response.token, response.user ?? null)
@@ -42,7 +44,7 @@ export default function LoginRegister() {
       setCurrentUser(data?.user ?? data ?? null)
       navigate('/main', { replace: true })
     } catch (err) {
-      setLoginError(err.message || 'Login failed. Please try again.')
+      setLoginError(err.message || t('auth.loginError'))
     } finally {
       setIsLoginLoading(false)
     }
@@ -52,7 +54,7 @@ export default function LoginRegister() {
     e.preventDefault()
 
     if (registerData.password !== registerData.confirmPassword) {
-      alert('Passwords do not match!')
+      notifyAlert(t('auth.passwordsNotMatch'))
       return
     }
 
@@ -62,7 +64,7 @@ export default function LoginRegister() {
         name: registerData.name,
         password: registerData.password,
       })
-      alert('Registration successful! Please log in.')
+      notifyGood(t('auth.registrationSuccess'))
       setActiveTab('login')
       setRegisterData({
         name: '',
@@ -72,7 +74,7 @@ export default function LoginRegister() {
       })
     } catch (err) {
       console.error(err)
-      alert('Registration failed. Please try again.')
+      notifyBad(t('auth.registrationFailed'))
     }
   }
 

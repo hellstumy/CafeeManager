@@ -5,9 +5,11 @@ import Cart from '../Subpages/Client/Cart'
 import ClientMenu from '../Subpages/Client/ClientMenu'
 import { createPublicOrder, getMenu, getOneTable } from '../api/api'
 import { useTranslation } from 'react-i18next'
+import useNotification from '../context/useNotification'
 
 export default function ClientPage() {
   const { t } = useTranslation()
+  const { notifyGood } = useNotification()
   const { qrToken } = useParams()
 
   const [isCartOpen, setIsCartOpen] = useState(false)
@@ -160,7 +162,7 @@ export default function ClientPage() {
 
       setCartItems({})
       setSubmitSuccess(t('client.orderCreated'))
-      alert(t('client.orderCreated'))
+      notifyGood(t('client.orderCreated'))
     } catch (err) {
       setSubmitError(err.message || t('client.orderCreateFailed'))
     } finally {

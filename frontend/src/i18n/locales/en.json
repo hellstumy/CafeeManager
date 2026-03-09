@@ -312,6 +312,14 @@
     "default": "Loading...",
     "checkingSession": "Checking session..."
   },
+  "notifications": {
+    "successTitle": "Success",
+    "warningTitle": "Warning",
+    "errorTitle": "Error",
+    "successAlt": "Success icon",
+    "warningAlt": "Warning icon",
+    "errorAlt": "Error icon"
+  },
   "alerts": {
     "genericError": "An error occurred. Please try later",
     "menuDeleteFailed": "Error. Please try later!",

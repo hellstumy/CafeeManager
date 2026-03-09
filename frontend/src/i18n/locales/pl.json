@@ -315,6 +315,14 @@
   "app": {
     "notFound": "404 - Nie znaleziono strony"
   },
+  "notifications": {
+    "successTitle": "Sukces",
+    "warningTitle": "Uwaga",
+    "errorTitle": "Błąd",
+    "successAlt": "Ikona sukcesu",
+    "warningAlt": "Ikona ostrzeżenia",
+    "errorAlt": "Ikona błędu"
+  },
   "alerts": {
     "genericError": "Wystąpił błąd. Spróbuj później",
     "menuDeleteFailed": "Błąd. Spróbuj później!",

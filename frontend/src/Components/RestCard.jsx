@@ -5,9 +5,11 @@ import { deleteRestaurant } from '../api/api'
 import { useTranslation } from 'react-i18next'
 import { getTables } from '../api/api'
 import { getMenu } from '../api/api'
+import useNotification from '../context/useNotification'
 
 export default function RestCard({ r, onDeleted }) {
   const { t } = useTranslation()
+  const { notifyBad } = useNotification()
   const [tables, setTables] = useState()
   const [menu, setMenu] = useState()
   const setSelectedRest = useSelectedRest((state) => state.setSelectedRest)
@@ -32,7 +34,7 @@ export default function RestCard({ r, onDeleted }) {
       setIsSettingsOpen(false)
     } catch (err) {
       console.log(err)
-      alert(t('alerts.restaurantDeleteFailed'))
+      notifyBad(t('alerts.restaurantDeleteFailed'))
     }
   }
   useEffect(() => {

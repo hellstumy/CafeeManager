@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { createRestaurant } from '../../api/api'
 import './Modal.css'
 import { useTranslation } from 'react-i18next'
+import useNotification from '../../context/useNotification'
 
 const DAYS = [
   { key: 'monday' },
@@ -41,6 +42,7 @@ const buildWorkingHours = (hours) =>
 
 export default function AddRestaurantModal({ isOpen, onClose, onCreated }) {
   const { t } = useTranslation()
+  const { notifyBad } = useNotification()
   const [name, setName] = useState('')
   const [description, setDescription] = useState('')
   const [logoUrl, setLogoUrl] = useState('')
@@ -90,7 +92,7 @@ export default function AddRestaurantModal({ isOpen, onClose, onCreated }) {
       onClose()
     } catch (err) {
       console.log(err)
-      alert(t('alerts.createRestaurantFailed'))
+      notifyBad(t('alerts.createRestaurantFailed'))
     } finally {
       setIsSubmitting(false)
     }

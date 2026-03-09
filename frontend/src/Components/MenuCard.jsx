@@ -4,9 +4,11 @@ import { useState } from 'react'
 import EditMenuItemModal from './Modals/EditMenuItemModal'
 import { deleteMenuItem } from '../api/api'
 import { useTranslation } from 'react-i18next'
+import useNotification from '../context/useNotification'
 
 export default function MenuCard({ item, onItemUpdated, onItemDeleted }) {
   const { t } = useTranslation()
+  const { notifyBad } = useNotification()
   const [isEditMenuItemOpen, setIsEditMenuItemOpen] = useState(false)
   const imageSrc =
     (typeof item?.image_url === 'string' && item.image_url.trim()) ||
@@ -20,7 +22,7 @@ export default function MenuCard({ item, onItemUpdated, onItemDeleted }) {
       onItemDeleted?.(item.id)
     } catch (err) {
       console.log(err)
-      alert(t('alerts.menuDeleteFailed'))
+      notifyBad(t('alerts.menuDeleteFailed'))
     }
   }
   return (

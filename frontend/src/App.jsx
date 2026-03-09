@@ -6,38 +6,30 @@ import LoginRegister from './Pages/LoginRegister'
 import Main from './Pages/Main'
 import ProtectedRoute from './Components/ProtectedRoute' // ← Для защиты роутов
 import { useTranslation } from 'react-i18next'
+import { NotificationProvider } from './context/NotificationContext'
 
 function App() {
   const { t } = useTranslation()
   return (
     <AuthProvider>
-      {' '}
-      {/* ← Оборачиваем в провайдер авторизации */}
-      <BrowserRouter>
-        <Routes>
-          {/* Публичный роут (логин/регистрация) */}
-          <Route path="/login" element={<LoginRegister />} />
-
-          {/* Публичный роут (клиентское меню по QR) */}
-          <Route path="/menu/:qrToken" element={<ClientPage />} />
-
-          {/* Защищенный роут (только для авторизованных) */}
-          <Route
-            path="/main"
-            element={
-              <ProtectedRoute>
-                <Main />
-              </ProtectedRoute>
-            }
-          />
-
-          {/* Редирект с главной страницы */}
-          <Route path="/" element={<Navigate to="/main" replace />} />
-
-          {/* 404 - Page Not Found */}
-          <Route path="*" element={<div>{t('app.notFound')}</div>} />
-        </Routes>
-      </BrowserRouter>
+      <NotificationProvider>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/login" element={<LoginRegister />} />
+            <Route path="/menu/:qrToken" element={<ClientPage />} />
+            <Route
+              path="/main"
+              element={
+                <ProtectedRoute>
+                  <Main />
+                </ProtectedRoute>
+              }
+            />
+            <Route path="/" element={<Navigate to="/main" replace />} />
+            <Route path="*" element={<div>{t('app.notFound')}</div>} />
+          </Routes>
+        </BrowserRouter>
+      </NotificationProvider>
     </AuthProvider>
   )
 }

@@ -315,6 +315,14 @@
   "app": {
     "notFound": "404 - Сторінку не знайдено"
   },
+  "notifications": {
+    "successTitle": "Успіх",
+    "warningTitle": "Увага",
+    "errorTitle": "Помилка",
+    "successAlt": "Іконка успіху",
+    "warningAlt": "Іконка попередження",
+    "errorAlt": "Іконка помилки"
+  },
   "alerts": {
     "genericError": "Сталася помилка. Спробуйте пізніше",
     "menuDeleteFailed": "Помилка. Спробуйте пізніше!",

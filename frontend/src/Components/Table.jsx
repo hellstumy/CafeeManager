@@ -5,9 +5,11 @@ import QRCodeModal from './Modals/QRCodeModal'
 import { deleteTable } from '../api/api'
 import { updateTable } from '../api/api'
 import { useTranslation } from 'react-i18next'
+import useNotification from '../context/useNotification'
 
 export default function Table({ table, onStatusChanged, onDeleted }) {
   const { t } = useTranslation()
+  const { notifyBad } = useNotification()
   const [isQRCodeOpen, setIsQRCodeOpen] = useState(false)
   const [isActive, setIsActive] = useState(table.is_active)
   const [isUpdating, setIsUpdating] = useState(false)
@@ -22,7 +24,7 @@ export default function Table({ table, onStatusChanged, onDeleted }) {
       onDeleted?.(table.id)
     } catch (err) {
       console.log(err)
-      alert(t('alerts.tableDeleteFailed'))
+      notifyBad(t('alerts.tableDeleteFailed'))
     }
   }
 
@@ -39,7 +41,7 @@ export default function Table({ table, onStatusChanged, onDeleted }) {
     } catch (err) {
       setIsActive(prevValue)
       console.log(err)
-      alert(t('alerts.tableUpdateFailed'))
+      notifyBad(t('alerts.tableUpdateFailed'))
     } finally {
       setIsUpdating(false)
     }

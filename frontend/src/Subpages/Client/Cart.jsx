@@ -1,7 +1,6 @@
 import CartCard from '../../Components/CartCard'
 import Loader from '../../Components/Loader'
 import { useTranslation } from 'react-i18next'
-
 function formatMoney(value) {
   return `$${Number(value || 0).toFixed(2)}`
 }

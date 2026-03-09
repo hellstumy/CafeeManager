@@ -3,9 +3,11 @@ import { useEffect, useState } from 'react'
 import { getCategory, updateMenuItem } from '../../api/api'
 import { useSelectedRest } from '../../store/store'
 import { useTranslation } from 'react-i18next'
+import useNotification from '../../context/useNotification'
 
 export default function EditMenuItemModal({ isOpen, onClose, item, onUpdated }) {
   const { t } = useTranslation()
+  const { notifyBad } = useNotification()
   const selectedRest = useSelectedRest((state) => state.selectedRest)
   const [categories, setCategories] = useState([])
   const [name, setName] = useState('')
@@ -51,7 +53,7 @@ export default function EditMenuItemModal({ isOpen, onClose, item, onUpdated }) 
       onClose()
     } catch (err) {
       console.log(err)
-      alert(t('modals.editMenuItem.failed'))
+      notifyBad(t('modals.editMenuItem.failed'))
     } finally {
       setIsSubmitting(false)
     }

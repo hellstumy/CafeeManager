@@ -4,6 +4,7 @@ import { getRestaurant, updateRestaurant } from '../../api/api'
 import { usePages, useSelectedRest } from '../../store/store'
 import '../../Components/Modals/Modal.css'
 import { useTranslation } from 'react-i18next'
+import useNotification from '../../context/useNotification'
 
 const DAYS = [
   { key: 'monday' },
@@ -88,6 +89,7 @@ const buildWorkingHours = (hours) =>
 
 export default function EditRestaurant() {
   const { t } = useTranslation()
+  const { notifyBad } = useNotification()
   const selectedRest = useSelectedRest((state) => state.selectedRest)
   const setSelectPage = usePages((state) => state.setSelectPage)
   const [restaurants, setRestaurants] = useState([])
@@ -149,7 +151,7 @@ export default function EditRestaurant() {
       setSelectPage('restaurants')
     } catch (err) {
       console.log(err)
-      alert(t('main.editRestaurant.failedToUpdate'))
+      notifyBad(t('main.editRestaurant.failedToUpdate'))
     } finally {
       setIsSubmitting(false)
     }

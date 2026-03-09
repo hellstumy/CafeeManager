@@ -1,0 +1,44 @@
+.notification-container {
+  position: fixed;
+  top: 24px;
+  right: 24px;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.notification {
+  position: relative;
+  display: flex;
+  gap: 12px;
+  max-width: 400px;
+  border-radius: 8px;
+  padding: 12px 24px;
+  & img {
+    max-width: 40px;
+  }
+}
+.notification-info {
+  & h4 {
+    color: #c0bfbf;
+    font-size: 24px;
+    font-weight: 600;
+  }
+  & p {
+    color: rgb(202, 200, 200);
+  }
+}
+
+.good-notification {
+  border: 1px solid rgb(25 234 25);
+  background-color: #06470696;
+}
+.alert-notification {
+  border: 1px solid rgb(234 229 25);
+  background-color: #6d7c00b3;
+}
+.bad-notification {
+  border: 1px solid rgb(177 16 32);
+  background-color: #451212b3;
+}
