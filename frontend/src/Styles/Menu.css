@@ -1,0 +1,132 @@
+/* Menu page */
+.menu-page {
+}
+
+.menu-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.menu-title_buttons {
+  display: flex;
+  gap: 16px;
+}
+.menu-title_buttons button {
+  padding: 10px 16px;
+  border-radius: 6px;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 500;
+  background: #0d9488;
+}
+.menu-title_buttons button:first-child {
+  border: 1px solid rgba(148, 163, 184, 0.12);
+  background: #0f172a;
+}
+.categoies_list {
+  display: inline-flex;
+  gap: 8px;
+  padding: 6px 12px;
+  border-radius: 12px;
+  background: #334155;
+  list-style: none;
+  margin: 0;
+  width: fit-content;
+  margin-block: 32px;
+}
+
+.category-li {
+  padding: 4px 8px;
+  color: #f8fafc;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.active-li {
+  border-radius: 12px;
+  border: 1px solid rgba(0, 0, 0, 0);
+  background: #1e293b;
+}
+
+.menu_list {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.menu-card {
+  display: flex;
+  flex-direction: column;
+  max-width: 350px;
+  border-radius: 12px;
+  border: 1px solid rgba(148, 163, 184, 0.12);
+  background: #1e293b;
+  overflow: hidden;
+}
+
+.menu-item_cover {
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+  display: block;
+}
+.menu-item-info {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  padding: 15px;
+  flex: 1;
+}
+.menu-item_name {
+  color: #f8fafc;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.menu-item_description {
+  color: #94a3b8;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.45;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.menu-price {
+  color: #f8fafc;
+  font-size: 22px;
+  font-weight: 600;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+  margin-top: auto;
+}
+.menu-price span {
+  flex-shrink: 0;
+  font-size: 12px;
+  font-weight: 500;
+  padding: 2px 8px;
+  border-radius: 6px;
+  border: 1px solid rgba(148, 163, 184, 0.12);
+}
+.menu-item_setting {
+  display: flex;
+  gap: 8px;
+  margin-top: 10px;
+}
+.menu-item_setting button {
+  color: #f8fafc;
+  font-size: 14px;
+  font-weight: 550;
+  padding: 5px 12px;
+  border-radius: 6px;
+  border: 1px solid rgba(148, 163, 184, 0.12);
+  background: #0f172a;
+}
+.menu-item_setting button:first-child {
+  flex: 1 0 0;
+}

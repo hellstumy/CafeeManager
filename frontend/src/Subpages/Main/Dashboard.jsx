@@ -1,3 +1,4 @@
+import '../../Styles/Dashboard.css'
 import DashCard from '../../Components/DashCard'
 import active from '../../assets/icons/active.svg'
 import avg from '../../assets/icons/avg.svg'

@@ -7,9 +7,15 @@ import { useEffect, useState } from 'react'
 
 export default function DashCard({ r }) {
   const { t } = useTranslation()
-  const [orders, setOrders] = useState([])
-  const [tables, setTables] = useState([])
+  const [orders, setOrders] = useState(null)
+  const [tables, setTables] = useState(null)
   const setSelectedRest = useSelectedRest((state) => state.setSelectedRest)
+
+  const getCount = (value) => {
+    if (Array.isArray(value)) return value.length
+    return value?.count ?? 0
+  }
+
   useEffect(() => {
     getOrders(r.id).then((data) => {
       setOrders(data)
@@ -17,7 +23,7 @@ export default function DashCard({ r }) {
     getTables(r.id).then((data) => {
       setTables(data)
     })
-  }, [])
+  }, [r.id])
   return (
     <div
       onClick={() => setSelectedRest(r.id)}
@@ -29,10 +35,10 @@ export default function DashCard({ r }) {
       <h3>{r.name}</h3>
       <div className="dash_restaurant-info">
         <p>
-          {t('main.dashboardPage.activeOrders')} <span>{orders.count}</span>
+          {t('main.dashboardPage.activeOrders')} <span>{getCount(orders)}</span>
         </p>
         <p>
-          {t('main.restaurants.card.tables')} <span>{tables.count}</span>
+          {t('main.restaurants.card.tables')} <span>{getCount(tables)}</span>
         </p>
       </div>
     </div>

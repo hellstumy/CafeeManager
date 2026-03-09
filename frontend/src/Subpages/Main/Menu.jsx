@@ -1,3 +1,4 @@
+import '../../Styles/Menu.css'
 import { useEffect, useState } from 'react'
 import MenuCard from '../../Components/MenuCard'
 import AddCategoryModal from '../../Components/Modals/AddCategoryModal'
@@ -24,9 +25,11 @@ export default function Menu() {
     }
 
     setIsLoading(true)
-    getMenu(selectedRest).then((data) => {
-      setCategories(data.categories || [])
-    }).finally(() => setIsLoading(false))
+    getMenu(selectedRest)
+      .then((data) => {
+        setCategories(data.categories || [])
+      })
+      .finally(() => setIsLoading(false))
   }
 
   useEffect(() => {
@@ -58,7 +61,9 @@ export default function Menu() {
     }
 
     setCategories((prev) => {
-      const hasCategory = prev.some((category) => category.id === item.category_id)
+      const hasCategory = prev.some(
+        (category) => category.id === item.category_id
+      )
       if (!hasCategory) {
         fetchMenu()
         return prev
@@ -153,7 +158,9 @@ export default function Menu() {
 
       <div className="menu_list">
         {isLoading ? (
-          Array.from({ length: 4 }).map((_, index) => <MenuLoader key={index} />)
+          Array.from({ length: 4 }).map((_, index) => (
+            <MenuLoader key={index} />
+          ))
         ) : displayedItems.length > 0 ? (
           displayedItems.map((item) => (
             <MenuCard

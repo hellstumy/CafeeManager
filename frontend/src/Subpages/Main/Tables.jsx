@@ -1,3 +1,4 @@
+import '../../Styles/Tables.css'
 import Table from '../../Components/Table'
 import { useEffect, useState } from 'react'
 import AddTableModal from '../../Components/Modals/AddTableModal'
@@ -21,9 +22,11 @@ export default function Tables() {
     }
 
     setIsLoading(true)
-    getTables(selectedRest).then((data) => {
-      setTables(data.tables || [])
-    }).finally(() => setIsLoading(false))
+    getTables(selectedRest)
+      .then((data) => {
+        setTables(data.tables || [])
+      })
+      .finally(() => setIsLoading(false))
   }
 
   useEffect(() => {
@@ -52,7 +55,9 @@ export default function Tables() {
   }
 
   const handleTableDeleted = (tableId) => {
-    setTables((prevTables) => prevTables.filter((table) => table.id !== tableId))
+    setTables((prevTables) =>
+      prevTables.filter((table) => table.id !== tableId)
+    )
   }
 
   const activeTables = tables.filter((table) => table.is_active).length
@@ -76,7 +81,9 @@ export default function Tables() {
           <h5 className="table-stat_value">{tables.length}</h5>
         </div>
         <div className="table-stat_card">
-          <p className="table-stat_title">{t('main.tablesPage.activeTables')}</p>
+          <p className="table-stat_title">
+            {t('main.tablesPage.activeTables')}
+          </p>
           <h5 className="table-stat_value">{activeTables}</h5>
         </div>
         <div className="table-stat_card">
@@ -86,7 +93,9 @@ export default function Tables() {
       </div>
       <div className="table_list">
         {isLoading ? (
-          Array.from({ length: 6 }).map((_, index) => <TableLoader key={index} />)
+          Array.from({ length: 6 }).map((_, index) => (
+            <TableLoader key={index} />
+          ))
         ) : tables.length > 0 ? (
           tables.map((table) => (
             <Table

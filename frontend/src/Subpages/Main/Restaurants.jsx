@@ -1,3 +1,4 @@
+import '../../Styles/Restaurants.css'
 import { useEffect, useState } from 'react'
 import RestCard from '../../Components/RestCard'
 import AddRestaurantModal from '../../Components/Modals/AddRestaurantModal'
@@ -13,9 +14,11 @@ export default function Restaurants() {
 
   const fetchRestaurants = () => {
     setIsLoading(true)
-    getRestaurant().then((data) => {
-      setRestaurants(data || [])
-    }).finally(() => setIsLoading(false))
+    getRestaurant()
+      .then((data) => {
+        setRestaurants(data || [])
+      })
+      .finally(() => setIsLoading(false))
   }
 
   useEffect(() => {
@@ -32,7 +35,9 @@ export default function Restaurants() {
   }
 
   const handleRestaurantDeleted = (restaurantId) => {
-    setRestaurants((prev) => prev.filter((restaurant) => restaurant.id !== restaurantId))
+    setRestaurants((prev) =>
+      prev.filter((restaurant) => restaurant.id !== restaurantId)
+    )
   }
 
   return (
@@ -46,7 +51,9 @@ export default function Restaurants() {
       <p className="subtitle">{t('main.restaurants.subtitle')}</p>
       <div className="restaurants_list">
         {isLoading ? (
-          Array.from({ length: 3 }).map((_, index) => <RestLoader key={index} />)
+          Array.from({ length: 3 }).map((_, index) => (
+            <RestLoader key={index} />
+          ))
         ) : restaurants.length > 0 ? (
           restaurants.map((r) => (
             <RestCard key={r.id} onDeleted={handleRestaurantDeleted} r={r} />

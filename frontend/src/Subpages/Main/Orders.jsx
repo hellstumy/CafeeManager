@@ -1,3 +1,4 @@
+import '../../Styles/Orders.css'
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { createSwapy } from 'swapy'
 import OrderItem from '../../Components/OrderItem'
@@ -6,11 +7,7 @@ import { useSelectedRest } from '../../store/store'
 import OrderLoader from '../../Ui/Skeleton/OrderLoader'
 import { useTranslation } from 'react-i18next'
 
-const COLUMNS = [
-  { id: 'pending' },
-  { id: 'inprogress' },
-  { id: 'completed' },
-]
+const COLUMNS = [{ id: 'pending' }, { id: 'inprogress' }, { id: 'completed' }]
 
 export default function Order() {
   const { t } = useTranslation()
@@ -70,7 +67,9 @@ export default function Order() {
 
   function buildSlotItemMapFromOrders(orderList) {
     return COLUMNS.flatMap((column) => {
-      const columnOrders = orderList.filter((order) => order.status === column.id)
+      const columnOrders = orderList.filter(
+        (order) => order.status === column.id
+      )
       const slots = columnOrders.map((order, index) => ({
         slot: `${column.id}-${index}`,
         item: String(order.order_id),
@@ -92,15 +91,17 @@ export default function Order() {
       setIsLoading(true)
     }
 
-    getOrders(selectedRest).then((data) => {
-      const list = data.orders || []
-      setOrders(list)
-      setSlotItemMap(buildSlotItemMapFromOrders(list))
-    }).finally(() => {
-      if (withLoading) {
-        setIsLoading(false)
-      }
-    })
+    getOrders(selectedRest)
+      .then((data) => {
+        const list = data.orders || []
+        setOrders(list)
+        setSlotItemMap(buildSlotItemMapFromOrders(list))
+      })
+      .finally(() => {
+        if (withLoading) {
+          setIsLoading(false)
+        }
+      })
   }
 
   useEffect(() => {
@@ -242,34 +243,35 @@ export default function Order() {
               {column.id === 'completed' && t('main.ordersPage.completed')}
             </h4>
             <div className="status-container">
-              {isLoading ? (
-                Array.from({ length: 2 }).map((_, index) => (
-                  <OrderLoader key={`${column.id}-${index}`} />
-                ))
-              ) : (
-                slotItemMap
-                  .filter((entry) => entry.slot.startsWith(`${column.id}-`))
-                  .sort((a, b) => slotIndex(a.slot) - slotIndex(b.slot))
-                  .map(({ slot: slotId, item: orderId }) => {
-                    const order = orderId ? orderById[orderId] : null
-                    return (
-                      <div
-                        className="status-slot"
-                        data-swapy-slot={slotId}
-                        key={slotId}
-                      >
-                        {order && (
-                          <div
-                            className="order-item"
-                            data-swapy-item={order.order_id}
-                          >
-                            <OrderItem order={order} onDelete={handleDelete} />
-                          </div>
-                        )}
-                      </div>
-                    )
-                  })
-              )}
+              {isLoading
+                ? Array.from({ length: 2 }).map((_, index) => (
+                    <OrderLoader key={`${column.id}-${index}`} />
+                  ))
+                : slotItemMap
+                    .filter((entry) => entry.slot.startsWith(`${column.id}-`))
+                    .sort((a, b) => slotIndex(a.slot) - slotIndex(b.slot))
+                    .map(({ slot: slotId, item: orderId }) => {
+                      const order = orderId ? orderById[orderId] : null
+                      return (
+                        <div
+                          className="status-slot"
+                          data-swapy-slot={slotId}
+                          key={slotId}
+                        >
+                          {order && (
+                            <div
+                              className="order-item"
+                              data-swapy-item={order.order_id}
+                            >
+                              <OrderItem
+                                order={order}
+                                onDelete={handleDelete}
+                              />
+                            </div>
+                          )}
+                        </div>
+                      )
+                    })}
             </div>
           </div>
         ))}

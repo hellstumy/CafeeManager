@@ -10,12 +10,17 @@ import useNotification from '../context/useNotification'
 export default function RestCard({ r, onDeleted }) {
   const { t } = useTranslation()
   const { notifyBad } = useNotification()
-  const [tables, setTables] = useState()
-  const [menu, setMenu] = useState()
+  const [tables, setTables] = useState(null)
+  const [menu, setMenu] = useState(null)
   const setSelectedRest = useSelectedRest((state) => state.setSelectedRest)
   const setSelectPage = usePages((state) => state.setSelectPage)
   const [isSettingsOpen, setIsSettingsOpen] = useState(false)
   const settingsRef = useRef(null)
+
+  const getCount = (value) => {
+    if (Array.isArray(value)) return value.length
+    return value?.count ?? 0
+  }
 
   useEffect(() => {
     getMenu(r.id).then((data) => {
@@ -25,7 +30,7 @@ export default function RestCard({ r, onDeleted }) {
     getTables(r.id).then((data) => {
       setTables(data)
     })
-  }, [])
+  }, [r.id])
 
   const handleDelete = async () => {
     try {
@@ -97,11 +102,11 @@ export default function RestCard({ r, onDeleted }) {
       </div>
       <div className="rest-stats">
         <p className="rest_info-p">
-          {t('main.restaurants.card.tables')}: <span>{tables.count}</span>
+          {t('main.restaurants.card.tables')}: <span>{getCount(tables)}</span>
         </p>
         <p className="rest_info-p">
           {t('main.restaurants.card.menuItems')}:{' '}
-          <span>{menu.total_items}</span>
+          <span>{menu?.total_items ?? 0}</span>
         </p>
       </div>
       <div className="rest-buttons">
