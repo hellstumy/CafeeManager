@@ -1,5 +1,6 @@
 import Stripe from 'stripe'
 import { Router } from 'express'
+import express from 'express'
 import { query } from '../db/db.js'
 const router = Router()
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY)
