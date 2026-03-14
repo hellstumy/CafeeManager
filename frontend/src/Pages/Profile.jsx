@@ -54,7 +54,7 @@ const plans = [
 
 async function subscribe({ userId, plan }) {
   try {
-    const res = await fetch('http://localhost:3000/create-checkout', {
+    const res = await fetch(`${API_BASE_URL}/stripe/create-checkout`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
