@@ -1,61 +1,80 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useState } from 'react'
 import Loader from '../Components/Loader'
 import { getCurrentUser, updateCurrentUserProfile } from '../api/api'
 import { useCurrentUser } from '../store/store'
 import { useTranslation } from 'react-i18next'
 import { savedLanguage } from '../i18n/i18n'
 
+const API_BASE_URL = import.meta.env.VITE_API_URL
 const plans = [
   {
     id: 'free',
     name: 'FREE',
     price: '$0',
     features: [
-      ['Рестораны', '1'],
-      ['Блюда в меню', '20'],
-      ['Столики', '15'],
-      ['QR-коды', '✅'],
-      ['Цифровое меню', '✅'],
-      ['Убрать watermark', '❌'],
-      ['Мультиязычность', '❌'],
-      ['Trial период', '-'],
+      ['Restaurants', '1'],
+      ['Menu items', '20'],
+      ['Tables', '15'],
+      ['QR codes', '✅'],
+      ['Digital menu', '✅'],
+      ['Trial period', '-'],
     ],
-    buttonText: 'Выбрать FREE',
+    buttonText: 'SELECT',
   },
   {
-    id: 'pro',
+    id: 'Pro',
     name: 'PRO',
-    price: '$19/мес',
+    price: '$15/month',
     features: [
-      ['Рестораны', '3'],
-      ['Блюда в меню', '50'],
-      ['Столики', '20'],
-      ['QR-коды', '✅'],
-      ['Цифровое меню', '✅'],
-      ['Убрать watermark', '✅'],
-      ['Мультиязычность', '❌'],
-      ['Trial период', '14 дней'],
+      ['Restaurants', '3'],
+      ['Menu items', '50'],
+      ['Tables', '20'],
+      ['QR codes', '✅'],
+      ['Digital menu', '✅'],
+      ['Trial period', '14 days'],
     ],
-    buttonText: 'Попробовать PRO',
+    buttonText: 'SELECT',
     recommended: true,
   },
   {
-    id: 'business',
+    id: 'Business',
     name: 'BUSINESS',
-    price: '$49/мес',
+    price: '$45/month',
     features: [
-      ['Рестораны', 'Unlimited'],
-      ['Блюда в меню', 'Unlimited'],
-      ['Столики', 'Unlimited'],
-      ['QR-коды', '✅'],
-      ['Цифровое меню', '✅'],
-      ['Убрать watermark', '✅'],
-      ['Мультиязычность', '✅'],
-      ['Trial период', '30 дней'],
+      ['Restaurants', 'Unlimited'],
+      ['Menu items', 'Unlimited'],
+      ['Tables', 'Unlimited'],
+      ['QR codes', '✅'],
+      ['Digital menu', '✅'],
+      ['Trial period', '30 days'],
     ],
-    buttonText: 'Выбрать BUSINESS',
+    buttonText: 'SELECT',
   },
 ]
+
+async function subscribe({ userId, plan }) {
+  try {
+    const res = await fetch('http://localhost:3000/create-checkout', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ userId, plan }),
+    })
+
+    const data = await res.json()
+
+    if (data.url) {
+      // открываем Stripe Checkout в новой вкладке
+      window.open(data.url, '_blank')
+    } else {
+      alert('You selected the free plan!')
+      // можно сразу обновить UI или базу без оплаты
+    }
+  } catch (err) {
+    console.error('Subscription error:', err)
+  }
+}
 
 function getInitials(name) {
   if (!name) return 'U'
@@ -72,6 +91,7 @@ function normalizeUser(user) {
     name: user?.name || '',
     email: user?.email || '',
     role: user?.role || 'owner',
+    plan: user?.plan?.toUpperCase() || '...',
   }
 }
 
@@ -91,11 +111,7 @@ export default function Profile() {
   const [saveError, setSaveError] = useState('')
   const [saveSuccess, setSaveSuccess] = useState('')
   const [isEditing, setIsEditing] = useState(false)
-  const [savedProfile, setSavedProfile] = useState({
-    name: '',
-    email: '',
-    role: 'owner',
-  })
+  const [savedProfile, setSavedProfile] = useState({})
   const [profileForm, setProfileForm] = useState({
     name: '',
     email: '',
@@ -119,15 +135,6 @@ export default function Profile() {
 
     loadProfile()
   }, [])
-
-  const currentPlanName = useMemo(() => {
-    const roleToPlan = {
-      owner: 'Business Plan',
-      manager: 'Starter Plan',
-      admin: 'Enterprise Plan',
-    }
-    return roleToPlan[savedProfile.role] || 'Business Plan'
-  }, [savedProfile.role])
 
   const handleChange = (field, value) => {
     setProfileForm((prev) => ({ ...prev, [field]: value }))
@@ -168,6 +175,7 @@ export default function Profile() {
       setSaveError(err.message || 'Failed to update profile')
     } finally {
       setIsSaving(false)
+      console.log(savedProfile)
     }
   }
 
@@ -192,7 +200,7 @@ export default function Profile() {
         </div>
         <div className="profile-plan_box">
           <p>{t('profile.currentPlan')}</p>
-          <span className="profile-role">{currentPlanName}</span>
+          <span className="profile-role">{savedProfile.plan}</span>
         </div>
       </article>
 
@@ -220,7 +228,16 @@ export default function Profile() {
                     </li>
                   ))}
                 </ul>
-                <button className="profile-plan_btn" type="button">
+                <button
+                  onClick={() =>
+                    subscribe({
+                      userId: savedProfile.id,
+                      plan: plan.id,
+                    })
+                  }
+                  className="profile-plan_btn"
+                  type="button"
+                >
                   {plan.buttonText}
                 </button>
               </div>

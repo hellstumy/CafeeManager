@@ -53,6 +53,7 @@
 .menu_list {
   display: flex;
   flex-wrap: wrap;
+  gap: 12px;
 }
 
 .menu-card {

@@ -252,3 +252,21 @@ export async function createPublicOrder(orderData) {
 
   return response.json()
 }
+// STRIPE
+
+export async function createCheackout(data) {
+  // Публичный заказ без авторизации
+  const response = await fetch(`${API_BASE_URL}/stripe/create-checkout`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(data),
+  })
+
+  if (!response.ok) {
+    throw new Error('Failed to create order')
+  }
+
+  return response.json()
+}

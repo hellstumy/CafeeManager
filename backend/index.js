@@ -7,6 +7,8 @@ import restaurantsRoutes from './routes/restaurants.route.js'
 import menuRoutes from './routes/menu.route.js'
 import tablesRoutes from './routes/tables.routes.js'
 import orderRoutes from './routes/orders.routes.js'
+import Stripe from './tools/StripeWebHook.js'
+
 dotenv.config()
 
 const app = express()
@@ -27,6 +29,8 @@ app.use('/restaurants', restaurantsRoutes)
 app.use('/menu', menuRoutes)
 app.use('/tables', tablesRoutes)
 app.use('/orders', orderRoutes)
+app.use('/stripe', Stripe)
+
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`)
 })
