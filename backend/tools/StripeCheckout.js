@@ -18,7 +18,8 @@ router.post('/create-checkout', async (req, res) => {
 
   const priceId =
     plan === 'Pro'
-      ? 'price_1TAyqwHDjuOSOYFPfi9Y8UgX'
+      ? // ? 'price_1TAyqwHDjuOSOYFPfi9Y8UgX'
+        'price_1TBLhwHDjuOSOYFPPDyzR3Nr'
       : 'price_1TAytkHDjuOSOYFPg4PrwOqg'
 
   try {
