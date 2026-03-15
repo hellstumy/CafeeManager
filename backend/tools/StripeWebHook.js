@@ -20,7 +20,7 @@ export const stripeWebhook = async (req, res) => {
 
   if (event.type === 'checkout.session.completed') {
     const session = event.data.object
-    const userId = Number(session.client_reference_id) // 🔹 берем ID из client_reference_id
+    const userId = Number(session.client_reference_id)
     const plan = session.metadata?.plan || 'free'
 
     if (!userId || Number.isNaN(userId)) {

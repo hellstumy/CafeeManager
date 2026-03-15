@@ -16,7 +16,6 @@ const PORT = process.env.PORT || 8080
 
 app.use(cors({ origin: true, credentials: true }))
 
-// обычные JSON API
 app.use(express.json())
 app.post(
   '/stripe/webhook',

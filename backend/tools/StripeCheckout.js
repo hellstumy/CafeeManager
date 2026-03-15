@@ -11,12 +11,9 @@ router.post('/create-checkout', async (req, res) => {
     return res.status(400).json({ error: 'userId and plan are required' })
   }
 
-  // если выбрали бесплатный план — сразу возвращаем null
   if (plan === 'free') {
     return res.json({ url: null })
   }
-
-  // выбор priceId по плану
   const priceId =
     plan === 'Pro'
       ? 'price_1TAyqwHDjuOSOYFPfi9Y8UgX'
@@ -27,12 +24,12 @@ router.post('/create-checkout', async (req, res) => {
       mode: 'subscription',
       line_items: [{ price: priceId, quantity: 1 }],
 
-      success_url: 'http://localhost:3000/success',
-      cancel_url: 'http://localhost:3000/cancel',
+      success_url: 'https://www.tablekit.uno/success',
+      cancel_url: 'https://www.tablekit.uno/cancel',
 
       metadata: {
-        userId: String(userId), // всегда строка, чтобы потом в вебхуке можно было Number()
-        plan: plan, // 'pro' или 'business'
+        userId: String(userId),
+        plan: plan,
       },
     })
 
