@@ -21,7 +21,7 @@ export const stripeWebhook = async (req, res) => {
 
   if (event.type === 'checkout.session.completed') {
     const session = event.data.object
-    const userId = session.metadata.userId
+    const userId = Number(session.metadata.userId)
     const plan = session.metadata.plan
 
     try {
