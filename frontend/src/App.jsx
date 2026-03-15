@@ -4,6 +4,8 @@ import { AuthProvider } from './context/AuthContext' // ← Добавь кон�
 import ClientPage from './Pages/ClientPage'
 import LoginRegister from './Pages/LoginRegister'
 import Main from './Pages/Main'
+import PaymentCancel from './Pages/PaymentCancel'
+import PaymentSuccess from './Pages/PaymentSuccess'
 import ProtectedRoute from './Components/ProtectedRoute' // ← Для защиты роутов
 import { useTranslation } from 'react-i18next'
 import { NotificationProvider } from './context/NotificationContext'
@@ -17,6 +19,8 @@ function App() {
           <Routes>
             <Route path="/login" element={<LoginRegister />} />
             <Route path="/menu/:qrToken" element={<ClientPage />} />
+            <Route path="/success" element={<PaymentSuccess />} />
+            <Route path="/cancel" element={<PaymentCancel />} />
             <Route
               path="/main"
               element={

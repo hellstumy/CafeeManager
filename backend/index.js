@@ -16,15 +16,13 @@ const PORT = process.env.PORT || 8080
 
 app.use(cors({ origin: true, credentials: true }))
 
+// обычные JSON API
+app.use(express.json())
 app.post(
   '/stripe/webhook',
   express.raw({ type: 'application/json' }),
   stripeWebhook
 )
-
-// обычные JSON API
-app.use(express.json())
-
 app.use('/auth', authRoutes)
 app.use('/restaurants', restaurantsRoutes)
 app.use('/menu', menuRoutes)

@@ -7,7 +7,6 @@ export const stripeWebhook = async (req, res) => {
   const sig = req.headers['stripe-signature']
 
   let event
-
   try {
     event = stripe.webhooks.constructEvent(
       req.body,
@@ -21,20 +20,26 @@ export const stripeWebhook = async (req, res) => {
 
   if (event.type === 'checkout.session.completed') {
     const session = event.data.object
-    const userId = Number(session.metadata.userId)
-    const plan = session.metadata.plan
+    const userId = Number(session.client_reference_id) // 🔹 берем ID из client_reference_id
+    const plan = session.metadata?.plan || 'free'
+
+    if (!userId || Number.isNaN(userId)) {
+      console.log('Invalid userId in webhook:', session)
+      return res.sendStatus(400)
+    }
 
     try {
       await query(
-        `UPDATE users 
+        `UPDATE users
          SET plan = $1, subscription_status = 'active'
          WHERE id = $2`,
         [plan, userId]
       )
 
-      console.log('Subscription activated')
+      console.log(`Subscription activated for user ${userId} with plan ${plan}`)
     } catch (err) {
       console.log('DB error:', err)
+      return res.sendStatus(500)
     }
   }
 

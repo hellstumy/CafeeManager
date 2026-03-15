@@ -65,11 +65,9 @@ async function subscribe({ userId, plan }) {
     const data = await res.json()
 
     if (data.url) {
-      // открываем Stripe Checkout в новой вкладке
-      window.open(data.url, '_blank')
+      window.location.href = data.url
     } else {
       alert('You selected the free plan!')
-      // можно сразу обновить UI или базу без оплаты
     }
   } catch (err) {
     console.error('Subscription error:', err)
@@ -88,6 +86,7 @@ function getInitials(name) {
 
 function normalizeUser(user) {
   return {
+    id: user?.id,
     name: user?.name || '',
     email: user?.email || '',
     role: user?.role || 'owner',
@@ -182,7 +181,7 @@ export default function Profile() {
   if (loading) {
     return <Loader label="Loading profile..." />
   }
-
+  console.log('subscribing userId:', savedProfile.id)
   return (
     <section className="profile-page">
       <header className="profile-header">
