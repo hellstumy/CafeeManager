@@ -4,10 +4,13 @@ import { query } from '../db/db.js'
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY)
 
 export const stripeWebhook = async (req, res) => {
+  console.log('⚡ Stripe webhook received')
+
   const sig = req.headers['stripe-signature']
 
   let event
   try {
+    // ⚡ используем raw body
     event = stripe.webhooks.constructEvent(
       req.body,
       sig,
@@ -15,8 +18,10 @@ export const stripeWebhook = async (req, res) => {
     )
   } catch (err) {
     console.log('Webhook error:', err.message)
-    return res.sendStatus(400)
+    return res.status(400).send(`Webhook Error: ${err.message}`)
   }
+
+  console.log('Webhook event type:', event.type)
 
   if (event.type === 'checkout.session.completed') {
     const session = event.data.object
@@ -25,7 +30,7 @@ export const stripeWebhook = async (req, res) => {
 
     if (!userId || Number.isNaN(userId)) {
       console.log('Invalid userId in webhook:', session)
-      return res.sendStatus(400)
+      return res.status(400).send('Invalid userId')
     }
 
     try {
@@ -35,11 +40,10 @@ export const stripeWebhook = async (req, res) => {
          WHERE id = $2`,
         [plan, userId]
       )
-
       console.log(`Subscription activated for user ${userId} with plan ${plan}`)
     } catch (err) {
       console.log('DB error:', err)
-      return res.sendStatus(500)
+      return res.status(500).send('Database error')
     }
   }
 

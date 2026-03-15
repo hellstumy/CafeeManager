@@ -16,19 +16,24 @@ const PORT = process.env.PORT || 8080
 
 app.use(cors({ origin: true, credentials: true }))
 
-app.use(express.json())
+// ⚡ Stripe Webhook — raw body, идёт ДО express.json()
 app.post(
   '/stripe/webhook',
   express.raw({ type: 'application/json' }),
   stripeWebhook
 )
+
+// теперь обычный JSON для других API
+app.use(express.json())
+
+// API роуты
 app.use('/auth', authRoutes)
 app.use('/restaurants', restaurantsRoutes)
 app.use('/menu', menuRoutes)
 app.use('/tables', tablesRoutes)
 app.use('/orders', orderRoutes)
 
-// Stripe checkout
+// Stripe Checkout
 app.use('/stripe', StripeCheckout)
 
 app.get('/', (req, res) => {
