@@ -1,6 +1,7 @@
 import { Router } from 'express'
 import { query } from '../db/db.js'
 import authMiddleware from '../tools/authMiddleWare.js'
+import subscribeMiddleWare from '../tools/subscribeMiddleWare.js'
 const router = Router()
 
 // Menu
@@ -118,7 +119,11 @@ router.delete('/category/:id', async (req, res) => {
   }
 })
 // Menu Items
-router.post('/menuItem', async (req, res) => {
+router.post(
+  '/menuItem',
+  authMiddleware,
+  subscribeMiddleWare('menuItems'),
+  async (req, res) => {
   const {
     restaurant_id,
     category_id,

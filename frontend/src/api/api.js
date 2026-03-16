@@ -25,7 +25,11 @@ async function request(url, options = {}) {
   }
 
   if (!response.ok) {
-    throw new Error(data?.message || 'Server error')
+    const error = new Error(data?.message || data?.error || 'Server error')
+    if (data?.code) {
+      error.code = data.code
+    }
+    throw error
   }
 
   return data

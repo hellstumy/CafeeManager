@@ -327,6 +327,9 @@
     "tableUpdateFailed": "Failed to update table status. Please try again.",
     "restaurantDeleteFailed": "An error occurred. Please try later",
     "createRestaurantFailed": "Failed to create restaurant",
-    "updateRestaurantFailed": "Failed to update restaurant"
+    "updateRestaurantFailed": "Failed to update restaurant",
+    "subscriptionLimitReached": "Your plan limit has been reached",
+    "tableCreateFailed": "Failed to create table",
+    "menuItemCreateFailed": "Failed to create menu item"
   }
 }

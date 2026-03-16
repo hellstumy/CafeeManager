@@ -92,7 +92,14 @@ export default function AddRestaurantModal({ isOpen, onClose, onCreated }) {
       onClose()
     } catch (err) {
       console.log(err)
-      notifyBad(t('alerts.createRestaurantFailed'))
+      if (
+        err?.code === 'SUBSCRIPTION_LIMIT_REACHED' ||
+        err?.message === 'SUBSCRIPTION_LIMIT_REACHED'
+      ) {
+        notifyBad(t('alerts.subscriptionLimitReached'))
+      } else {
+        notifyBad(err?.message || t('alerts.createRestaurantFailed'))
+      }
     } finally {
       setIsSubmitting(false)
     }

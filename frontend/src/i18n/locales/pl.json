@@ -330,6 +330,9 @@
     "tableUpdateFailed": "Nie udało się zaktualizować statusu stołu. Spróbuj ponownie.",
     "restaurantDeleteFailed": "Wystąpił błąd. Spróbuj później",
     "createRestaurantFailed": "Nie udało się utworzyć restauracji",
-    "updateRestaurantFailed": "Nie udało się zaktualizować restauracji"
+    "updateRestaurantFailed": "Nie udało się zaktualizować restauracji",
+    "subscriptionLimitReached": "Osiągnięto limit planu",
+    "tableCreateFailed": "Nie udało się utworzyć stolika",
+    "menuItemCreateFailed": "Nie udało się utworzyć pozycji menu"
   }
 }

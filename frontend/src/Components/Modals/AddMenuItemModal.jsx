@@ -3,9 +3,11 @@ import './Modal.css'
 import { createMenuItem, getCategory } from '../../api/api'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import useNotification from '../../context/useNotification'
 
 export default function AddMenuItemModal({ isOpen, onClose, onCreated }) {
   const { t } = useTranslation()
+  const { notifyBad } = useNotification()
   const [categories, setCategories] = useState([])
   const selectedRest = useSelectedRest((state) => state.selectedRest)
 
@@ -47,6 +49,14 @@ export default function AddMenuItemModal({ isOpen, onClose, onCreated }) {
       onClose()
     } catch (err) {
       console.log(err)
+      if (
+        err?.code === 'SUBSCRIPTION_LIMIT_REACHED' ||
+        err?.message === 'SUBSCRIPTION_LIMIT_REACHED'
+      ) {
+        notifyBad(t('alerts.subscriptionLimitReached'))
+      } else {
+        notifyBad(t('alerts.menuItemCreateFailed'))
+      }
     }
   }
 

@@ -330,6 +330,9 @@
     "tableUpdateFailed": "Не вдалося оновити статус столу. Спробуйте ще раз.",
     "restaurantDeleteFailed": "Сталася помилка. Спробуйте пізніше",
     "createRestaurantFailed": "Не вдалося створити ресторан",
-    "updateRestaurantFailed": "Не вдалося оновити ресторан"
+    "updateRestaurantFailed": "Не вдалося оновити ресторан",
+    "subscriptionLimitReached": "Досягнуто ліміт підписки",
+    "tableCreateFailed": "Не вдалося створити столик",
+    "menuItemCreateFailed": "Не вдалося створити позицію меню"
   }
 }

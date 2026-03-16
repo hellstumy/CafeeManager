@@ -3,9 +3,11 @@ import { useSelectedRest } from '../../store/store'
 import './Modal.css'
 import { createTable } from '../../api/api'
 import { useTranslation } from 'react-i18next'
+import useNotification from '../../context/useNotification'
 
 export default function AddTableModal({ isOpen, onClose, onCreated }) {
   const { t } = useTranslation()
+  const { notifyBad } = useNotification()
   const selectedRest = useSelectedRest((state) => state.selectedRest)
   const [table_number, setTableNumber] = useState('')
   const [seats, setSeats] = useState('')
@@ -24,6 +26,14 @@ export default function AddTableModal({ isOpen, onClose, onCreated }) {
       onClose()
     } catch (err) {
       console.log(err)
+      if (
+        err?.code === 'SUBSCRIPTION_LIMIT_REACHED' ||
+        err?.message === 'SUBSCRIPTION_LIMIT_REACHED'
+      ) {
+        notifyBad(t('alerts.subscriptionLimitReached'))
+      } else {
+        notifyBad(t('alerts.tableCreateFailed'))
+      }
     }
   }
   return (

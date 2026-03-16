@@ -1,6 +1,7 @@
 import { Router } from 'express'
 import { query } from '../db/db.js'
 import authMiddleware from '../tools/authMiddleWare.js'
+import subscribeMiddleWare from '../tools/subscribeMiddleWare.js'
 const router = Router()
 
 router.get('/', authMiddleware, async (req, res) => {
@@ -15,7 +16,7 @@ router.get('/', authMiddleware, async (req, res) => {
     res.status(500).json({ error: 'Failed to fetch restaurants' })
   }
 })
-router.post('/', authMiddleware, async (req, res) => {
+router.post('/', authMiddleware, subscribeMiddleWare('restaurants'), async (req, res) => {
   const { name, description, logo_url, address, phone, working_hours } =
     req.body
   try {

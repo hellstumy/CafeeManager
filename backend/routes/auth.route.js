@@ -110,6 +110,20 @@ router.patch('/me', authMiddleware, async (req, res) => {
     res.status(500).json({ error: 'Failed to update user data' })
   }
 })
+router.delete('/deleteAccount', authMiddleware, async (req, res) => {
+  try {
+    const result = await query(
+      `DELETE FROM users WHERE id = $1
+      DELERE FROM restaurants WHERE owner_id = $1
+      `,
+      [req.user.id]
+    )
+    res.status(200).send('User deleted')
+  } catch (err) {
+    console.log(err)
+    res.status(400)
+  }
+})
 //DASHBOARD
 router.get('/stats', authMiddleware, async (req, res) => {
   try {

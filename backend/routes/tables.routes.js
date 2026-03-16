@@ -1,6 +1,7 @@
 import { Router } from 'express'
 import { query } from '../db/db.js'
 import authMiddleware from '../tools/authMiddleWare.js'
+import subscribeMiddleWare from '../tools/subscribeMiddleWare.js'
 import QRCode from 'qrcode'
 import crypto from 'crypto'
 
@@ -55,7 +56,7 @@ router.get('/table/:qr', async (req, res) => {
   }
 })
 // POST создать столик с QR-кодом
-router.post('/', authMiddleware, async (req, res) => {
+router.post('/', authMiddleware, subscribeMiddleWare('tables'), async (req, res) => {
   const { restaurant_id, table_number, seats } = req.body
 
   try {
