@@ -250,6 +250,7 @@
     "subtitle": "Manage account data and subscription",
     "userFallback": "User",
     "currentPlan": "Current plan",
+    "activeUntil": "Active until",
     "subscriptionPlans": "Subscription plans",
     "profileDetails": "Profile details",
     "editProfile": "Edit profile",

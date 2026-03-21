@@ -91,7 +91,19 @@ function normalizeUser(user) {
     email: user?.email || '',
     role: user?.role || 'owner',
     plan: user?.plan?.toUpperCase() || '...',
+    subscriptionEnd: user?.subscription_end || null,
   }
+}
+
+function formatSubscriptionEnd(value, locale) {
+  if (!value) return '-'
+  const date = new Date(value)
+  if (Number.isNaN(date.getTime())) return '-'
+  return new Intl.DateTimeFormat(locale, {
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+  }).format(date)
 }
 
 export default function Profile() {
@@ -182,6 +194,10 @@ export default function Profile() {
     return <Loader label="Loading profile..." />
   }
   console.log('subscribing userId:', savedProfile.id)
+  const formattedSubscriptionEnd = formatSubscriptionEnd(
+    savedProfile.subscriptionEnd,
+    i18n.language
+  )
   return (
     <section className="profile-page">
       <header className="profile-header">
@@ -200,6 +216,11 @@ export default function Profile() {
         <div className="profile-plan_box">
           <p>{t('profile.currentPlan')}</p>
           <span className="profile-role">{savedProfile.plan}</span>
+          {savedProfile.plan !== 'FREE' && savedProfile.subscriptionEnd ? (
+            <p className="profile-plan_until">
+              {t('profile.activeUntil')}: {formattedSubscriptionEnd}
+            </p>
+          ) : null}
         </div>
       </article>
 

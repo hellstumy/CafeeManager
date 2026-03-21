@@ -250,6 +250,7 @@
     "subtitle": "Zarządzaj danymi konta i subskrypcją",
     "userFallback": "Użytkownik",
     "currentPlan": "Obecny plan",
+    "activeUntil": "Aktywny do",
     "subscriptionPlans": "Plany subskrypcji",
     "profileDetails": "Szczegóły profilu",
     "editProfile": "Edytuj profil",

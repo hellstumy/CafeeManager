@@ -250,6 +250,7 @@
     "subtitle": "Керуйте даними акаунта та підпискою",
     "userFallback": "Користувач",
     "currentPlan": "Поточний план",
+    "activeUntil": "Активно до",
     "subscriptionPlans": "Плани підписки",
     "profileDetails": "Деталі профілю",
     "editProfile": "Редагувати профіль",

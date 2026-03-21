@@ -15,6 +15,9 @@ router.post('/register', async (req, res) => {
     )
     res.status(201).json(result.rows[0])
   } catch (err) {
+    if (err?.code === '23505') {
+      return res.status(409).json({ message: 'Email already in use' })
+    }
     console.error(err)
     res.status(500).json({ error: 'Registration failed' })
   }
@@ -66,7 +69,7 @@ router.post('/login', async (req, res) => {
 router.get('/me', authMiddleware, async (req, res) => {
   try {
     const result = await query(
-      'SELECT id, email, name, role, plan FROM users WHERE id = $1',
+      'SELECT id, email, name, role, plan, subscription_end FROM users WHERE id = $1',
       [req.user.id]
     )
     const user = result.rows[0]
@@ -92,7 +95,7 @@ router.patch('/me', authMiddleware, async (req, res) => {
       `UPDATE users
        SET name = COALESCE($1, name), email = COALESCE($2, email)
        WHERE id = $3
-       RETURNING id, email, name, role`,
+       RETURNING id, email, name, role, plan, subscription_end`,
       [name, email, req.user.id]
     )
 

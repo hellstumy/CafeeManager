@@ -19,10 +19,25 @@ const subscribeMiddleWare = (resource) => async (req, res, next) => {
       return res.status(401).json({ message: 'Unauthorized' })
     }
 
-    const planResult = await query('SELECT plan FROM users WHERE id = $1', [
-      req.user.id,
-    ])
-    const plan = normalizePlan(planResult.rows?.[0]?.plan)
+    const planResult = await query(
+      'SELECT plan, subscription_end FROM users WHERE id = $1',
+      [req.user.id]
+    )
+    const rawPlan = planResult.rows?.[0]?.plan
+    const subscriptionEnd = planResult.rows?.[0]?.subscription_end
+    let plan = normalizePlan(rawPlan)
+
+    if (subscriptionEnd && new Date(subscriptionEnd) <= new Date()) {
+      if (plan !== 'free') {
+        await query(
+          `UPDATE users
+           SET plan = 'free', subscription_status = 'expired', subscription_end = NULL
+           WHERE id = $1`,
+          [req.user.id]
+        )
+      }
+      plan = 'free'
+    }
     const limits = PLAN_LIMITS[plan] || PLAN_LIMITS.free
     const limit = limits?.[resource]
 
