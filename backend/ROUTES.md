@@ -1,193 +1,151 @@
-# API Routes Documentation
+# API End Points
 
-Base URL: `http://localhost:8080`
+API Link: https://cafeemanager-production.up.railway.app
 
-All JSON responses are standard JSON unless noted.
+- ### AUTH
+  - `/auth/register` (POST)
+  ```json
+  {
+    "email": "new@mail.com",
+    "name": "New Name",
+    "password": "111",
+    "role": "owner"
+  }
+  ```
+  - `/auth/login` (POST)
+  ```json
+  {
+    "email": "test@mail.com",
+    "password": "111"
+  }
+  ```
+  - `/auth/me` (GET)
+  - `/auth/me` (PATCH)
+  ```json
+  {
+    "name": "New Name",
+    "email": "new@mail.com"
+  }
+  ```
+  - `/auth/stats` (GET)
+  - `/auth/deleteAccount` (DELETE)
 
-## Auth (`/auth`)
-### `POST /auth/register`
-Creates a user.
-Request JSON:
-```json
-{
-  "email": "owner@example.com",
-  "name": "John",
-  "password": "secret123",
-  "role": "owner"
-}
-```
-Success `201` returns user row.
-Error `409` if email already exists.
+- ### Restaurants
+  - `/restaurants` (POST)
+  ```json
+  {
+    "name": "Japan Sushi and Ramen",
+    "description": "Самые лучшие суши в городе",
+    "address": "123 Street, Katowice",
+    "phone": "11222333",
+    "working_hours": {
+      "monday": "9:00-22:00",
+      "tuesday": "9:00-22:00",
+      "wednesday": "9:00-22:00",
+      "thursday": "9:00-22:00",
+      "friday": "9:00-23:00",
+      "saturday": "10:00-23:00",
+      "sunday": "Closed"
+    }
+  }
+  ```
+  - `/restaurants` (GET)
+  - `/restaurants/:id` (PATCH)
+  - `/restaurants/:id` (DELETE)
 
-### `POST /auth/login`
-Login and get JWT.
-Request JSON:
-```json
-{
-  "email": "owner@example.com",
-  "password": "secret123"
-}
-```
-Success `200`:
-```json
-{
-  "message": "Login successful",
-  "token": "<JWT_TOKEN>"
-}
-```
+- ### Menu
+  - `/menu?restaurant_id=:id` (GET)
+  - `/menu/category/:restID` (GET)
+  - `/menu/category` (POST)
+  ```json
+  {
+    "restaurant_id": 1,
+    "name": "Desserts",
+    "position": 2
+  }
+  ```
+  - `/menu/category/:id` (PATCH)
+  ```json
+  {
+    "name": "Desserts Updated",
+    "position": 3,
+    "is_active": true
+  }
+  ```
+  - `/menu/category/:id` (DELETE)
+  - `/menu/menuItem` (POST)
+  ```json
+  {
+    "restaurant_id": 1,
+    "category_id": 10,
+    "name": "Cheesecake",
+    "description": "Classic",
+    "price": 6.5,
+    "img_url": "https://example.com/cake.jpg",
+    "tags": ["sweet", "cake"]
+  }
+  ```
+  - `/menu/menuItem/:id` (PATCH)
+  ```json
+  {
+    "category_id": 11,
+    "name": "Cheesecake New",
+    "description": "Updated",
+    "price": 7,
+    "img_url": "https://example.com/cake-new.jpg",
+    "tags": ["sweet"]
+  }
+  ```
+  - `/menu/menuItem/:id` (DELETE)
 
-### `GET /auth/me`
-Requires header: `Authorization: Bearer <JWT_TOKEN>`
-Success `200`:
-```json
-{
-  "id": 1,
-  "email": "owner@example.com",
-  "name": "John",
-  "role": "owner",
-  "plan": "pro",
-  "subscription_end": "2026-04-01T00:00:00.000Z"
-}
-```
+- ### Tables
+  - `/tables?restaurant_id=:id` (GET)
+  - `/tables/table/:qr` (GET)
+  - `/tables` (POST)
+  ```json
+  {
+    "restaurant_id": 1,
+    "table_number": 5,
+    "seats": 4
+  }
+  ```
+  - `/tables/:id` (PATCH)
+  ```json
+  {
+    "table_number": 6,
+    "seats": 2,
+    "is_active": true
+  }
+  ```
+  - `/tables/:id` (DELETE)
 
-### `PATCH /auth/me`
-Requires header: `Authorization: Bearer <JWT_TOKEN>`
-Updates `name` and/or `email`.
+- ### Orders
+  - `/orders` (POST)
+  ```json
+  {
+    "table_id": 10,
+    "notes": "No onion",
+    "items": [
+      { "menu_item_id": 100, "quantity": 2, "notes": "Extra sauce" }
+    ]
+  }
+  ```
+  - `/orders/:restaurantId` (GET)
+  - `/orders/:orderId` (PATCH)
+  ```json
+  {
+    "notes": "Without salt",
+    "status": "completed"
+  }
+  ```
+  - `/orders/:orderId` (DELETE)
 
-### `DELETE /auth/deleteAccount`
-Requires header: `Authorization: Bearer <JWT_TOKEN>`
-Deletes current user.
-
-### `GET /auth/stats`
-Requires header: `Authorization: Bearer <JWT_TOKEN>`
-Returns restaurant and order stats for the owner.
-
-## Restaurants (`/restaurants`)
-All routes require `Authorization: Bearer <JWT_TOKEN>`.
-
-### `GET /restaurants`
-Returns all restaurants for current user.
-
-### `POST /restaurants`
-Creates a restaurant.
-Uses subscription limits.
-Request JSON:
-```json
-{
-  "name": "Cafe One",
-  "description": "Family cafe",
-  "logo_url": "https://example.com/logo.png",
-  "address": "New York, ...",
-  "phone": "+123456789",
-  "working_hours": {"monday": "9:00-22:00"}
-}
-```
-
-### `PATCH /restaurants/:id`
-Updates restaurant fields.
-
-### `DELETE /restaurants/:id`
-Deletes restaurant.
-
-## Menu (`/menu`)
-
-### `GET /menu?restaurant_id=<id>`
-Public. Returns categories and available menu items for restaurant.
-
-### `GET /menu/category/:restID`
-Public. Returns categories for restaurant.
-
-### `POST /menu/category`
-Public. Creates category.
-
-### `PATCH /menu/category/:id`
-Public. Updates category.
-
-### `DELETE /menu/category/:id`
-Public. Deletes category.
-
-### `POST /menu/menuItem`
-Requires header: `Authorization: Bearer <JWT_TOKEN>`
-Uses subscription limits.
-Creates menu item.
-
-### `PATCH /menu/menuItem/:id`
-Public. Updates menu item.
-
-### `DELETE /menu/menuItem/:id`
-Public. Deletes menu item.
-
-## Tables (`/tables`)
-
-### `GET /tables?restaurant_id=<id>`
-Requires header: `Authorization: Bearer <JWT_TOKEN>`
-Returns tables for restaurant.
-
-### `GET /tables/table/:qr`
-Public. Returns table by QR token.
-
-### `POST /tables`
-Requires header: `Authorization: Bearer <JWT_TOKEN>`
-Uses subscription limits.
-Creates table and QR code.
-
-### `PATCH /tables/:id`
-Requires header: `Authorization: Bearer <JWT_TOKEN>`
-Updates table.
-
-### `DELETE /tables/:id`
-Requires header: `Authorization: Bearer <JWT_TOKEN>`
-Deletes table.
-
-## Orders (`/orders`)
-
-### `POST /orders`
-Public. Creates order.
-Request JSON:
-```json
-{
-  "table_id": 10,
-  "notes": "No onion",
-  "items": [
-    { "menu_item_id": 100, "quantity": 2, "notes": "Extra sauce" }
-  ]
-}
-```
-
-### `GET /orders/:restaurantId`
-Public. Returns all orders for restaurant.
-
-### `PATCH /orders/:orderId`
-Public. Updates order `status` and/or `notes`.
-
-### `DELETE /orders/:orderId`
-Public. Deletes order and order items.
-
-## Stripe (`/stripe`)
-
-### `POST /stripe/create-checkout`
-Creates Stripe Checkout session for subscription.
-Request JSON:
-```json
-{
-  "userId": 1,
-  "plan": "Pro"
-}
-```
-Success `200`:
-```json
-{
-  "url": "https://checkout.stripe.com/..."
-}
-```
-
-### `POST /stripe/webhook`
-Stripe webhook endpoint.
-Listens for `checkout.session.completed`, `customer.subscription.updated`, `customer.subscription.deleted`.
-
-## Common Errors
-- `400` invalid input
-- `401` unauthorized
-- `403` access denied
-- `404` not found
-- `500` server error
+- ### Stripe
+  - `/stripe/create-checkout` (POST)
+  ```json
+  {
+    "userId": 1,
+    "plan": "Pro"
+  }
+  ```
+  - `/stripe/webhook` (POST)
