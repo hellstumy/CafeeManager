@@ -724,6 +724,19 @@
   background: #0d9488;
 }
 
+.profile-plan_btn-disabled {
+  background: #0b1426;
+  border-color: rgba(148, 163, 184, 0.15);
+  color: #94a3b8;
+  cursor: not-allowed;
+  opacity: 0.85;
+}
+
+.profile-plan_btn-disabled:hover {
+  background: #0b1426;
+  border-color: rgba(148, 163, 184, 0.15);
+}
+
 .profile-form {
   display: flex;
   flex-direction: column;

@@ -1,14 +1,14 @@
 import './App.css'
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
-import { AuthProvider } from './context/AuthContext' // ← Добавь контекст
-import ClientPage from './Pages/ClientPage'
-import LoginRegister from './Pages/LoginRegister'
-import Main from './Pages/Main'
-import PaymentCancel from './Pages/PaymentCancel'
-import PaymentSuccess from './Pages/PaymentSuccess'
-import ProtectedRoute from './Components/ProtectedRoute' // ← Для защиты роутов
+import { AuthProvider } from './context/AuthContext.jsx' // ← Добавь контекст
+import ClientPage from './Pages/ClientPage.jsx'
+import LoginRegister from './Pages/LoginRegister.jsx'
+import Main from './Pages/Main.jsx'
+import PaymentCancel from './Pages/PaymentCancel.jsx'
+import PaymentSuccess from './Pages/PaymentSuccess.jsx'
+import ProtectedRoute from './Components/ProtectedRoute.jsx' // ← Для защиты роутов
 import { useTranslation } from 'react-i18next'
-import { NotificationProvider } from './context/NotificationContext'
+import { NotificationProvider } from './context/NotificationContext.jsx'
 
 function App() {
   const { t } = useTranslation()

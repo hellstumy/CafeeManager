@@ -3,7 +3,61 @@ import { query } from '../db/db.js'
 import bcrypt from 'bcrypt'
 import authMiddleware from '../tools/authMiddleWare.js'
 import jwt from 'jsonwebtoken'
+import Stripe from 'stripe'
 const router = Router()
+const stripe =
+  process.env.STRIPE_SECRET_KEY
+    ? new Stripe(process.env.STRIPE_SECRET_KEY)
+    : null
+
+const normalizePlan = (plan) => {
+  const normalized = (plan || 'free').toString().toLowerCase()
+  if (normalized === 'bussines') return 'business'
+  return normalized
+}
+
+const shapeUserResponse = (user) => ({
+  id: user?.id,
+  email: user?.email,
+  name: user?.name,
+  role: user?.role,
+  plan: user?.plan,
+  subscription_end: user?.subscription_end ?? null,
+})
+
+const ensureSubscriptionEnd = async (user) => {
+  if (!user) return user
+  const plan = normalizePlan(user.plan)
+  if (plan === 'free') return user
+  if (user.subscription_end) return user
+  if (!user.stripe_subscription_id || !stripe) return user
+
+  try {
+    const subscription = await stripe.subscriptions.retrieve(
+      user.stripe_subscription_id
+    )
+    const subscriptionEnd = subscription?.current_period_end
+      ? new Date(Number(subscription.current_period_end) * 1000)
+      : null
+    const subscriptionStatus = subscription?.status || user.subscription_status
+
+    if (!subscriptionEnd) return user
+
+    const result = await query(
+      `UPDATE users
+       SET subscription_end = $1,
+           subscription_status = COALESCE($2, subscription_status)
+       WHERE id = $3
+       RETURNING id, email, name, role, plan, subscription_end`,
+      [subscriptionEnd, subscriptionStatus, user.id]
+    )
+
+    return result.rows[0] || user
+  } catch (err) {
+    console.log('Stripe subscription refresh error:', err)
+    return user
+  }
+}
 
 router.post('/register', async (req, res) => {
   const { email, name, password, role } = req.body
@@ -69,14 +123,14 @@ router.post('/login', async (req, res) => {
 router.get('/me', authMiddleware, async (req, res) => {
   try {
     const result = await query(
-      'SELECT id, email, name, role, plan, subscription_end FROM users WHERE id = $1',
+      'SELECT id, email, name, role, plan, subscription_end, stripe_subscription_id, subscription_status FROM users WHERE id = $1',
       [req.user.id]
     )
-    const user = result.rows[0]
+    const user = await ensureSubscriptionEnd(result.rows[0])
     if (!user) {
       return res.status(404).json({ message: 'User not found' })
     }
-    res.json(user)
+    res.json(shapeUserResponse(user))
   } catch (err) {
     console.error('Error fetching user data:', err)
     res.status(500).json({ error: 'Failed to fetch user data' })

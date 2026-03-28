@@ -91,7 +91,7 @@ function normalizeUser(user) {
     email: user?.email || '',
     role: user?.role || 'owner',
     plan: user?.plan?.toUpperCase() || '...',
-    subscriptionEnd: user?.subscription_end || null,
+    subscriptionEnd: user?.subscription_end ?? user?.subscriptionEnd ?? null,
   }
 }
 
@@ -216,7 +216,7 @@ export default function Profile() {
         <div className="profile-plan_box">
           <p>{t('profile.currentPlan')}</p>
           <span className="profile-role">{savedProfile.plan}</span>
-          {savedProfile.plan !== 'FREE' && savedProfile.subscriptionEnd ? (
+          {savedProfile.plan !== 'FREE' ? (
             <p className="profile-plan_until">
               {t('profile.activeUntil')}: {formattedSubscriptionEnd}
             </p>
@@ -248,18 +248,28 @@ export default function Profile() {
                     </li>
                   ))}
                 </ul>
-                <button
-                  onClick={() =>
-                    subscribe({
-                      userId: savedProfile.id,
-                      plan: plan.id,
-                    })
-                  }
-                  className="profile-plan_btn"
-                  type="button"
-                >
-                  {plan.buttonText}
-                </button>
+                {plan.id.toUpperCase() === savedProfile.plan ? (
+                  <button
+                    className="profile-plan_btn profile-plan_btn-disabled"
+                    disabled
+                    type="button"
+                  >
+                    {t('profile.currentPlan')}
+                  </button>
+                ) : (
+                  <button
+                    onClick={() =>
+                      subscribe({
+                        userId: savedProfile.id,
+                        plan: plan.id,
+                      })
+                    }
+                    className="profile-plan_btn"
+                    type="button"
+                  >
+                    {plan.buttonText}
+                  </button>
+                )}
               </div>
             ))}
           </div>
