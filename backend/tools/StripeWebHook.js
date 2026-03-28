@@ -14,6 +14,24 @@ const epochToDate = (epochSeconds) => {
   return new Date(Number(epochSeconds) * 1000)
 }
 
+const addInterval = (date, interval, count = 1) => {
+  if (!date || !interval) return null
+  const result = new Date(date.getTime())
+  const safeCount = Number(count) || 1
+  if (interval === 'day') {
+    result.setDate(result.getDate() + safeCount)
+  } else if (interval === 'week') {
+    result.setDate(result.getDate() + safeCount * 7)
+  } else if (interval === 'month') {
+    result.setMonth(result.getMonth() + safeCount)
+  } else if (interval === 'year') {
+    result.setFullYear(result.getFullYear() + safeCount)
+  } else {
+    return null
+  }
+  return result
+}
+
 const findUserIdByStripeIds = async (subscriptionId, customerId) => {
   if (!subscriptionId && !customerId) return null
   const result = await query(
@@ -65,7 +83,20 @@ export const stripeWebhook = async (req, res) => {
     }
 
     const subscriptionStatus = subscription?.status || 'active'
-    const subscriptionEnd = epochToDate(subscription?.current_period_end)
+    let subscriptionEnd = epochToDate(subscription?.current_period_end)
+    if (!subscriptionEnd) {
+      subscriptionEnd = epochToDate(subscription?.trial_end)
+    }
+    if (!subscriptionEnd) {
+      const interval =
+        subscription?.items?.data?.[0]?.price?.recurring?.interval || null
+      const intervalCount =
+        subscription?.items?.data?.[0]?.price?.recurring?.interval_count || 1
+      const startEpoch =
+        subscription?.current_period_start || subscription?.start_date || null
+      const startDate = epochToDate(startEpoch)
+      subscriptionEnd = addInterval(startDate, interval, intervalCount)
+    }
 
     try {
       await query(
@@ -97,7 +128,20 @@ export const stripeWebhook = async (req, res) => {
     const subscriptionId = subscription?.id || null
     const customerId = subscription?.customer || null
     const subscriptionStatus = subscription?.status || 'active'
-    const subscriptionEnd = epochToDate(subscription?.current_period_end)
+    let subscriptionEnd = epochToDate(subscription?.current_period_end)
+    if (!subscriptionEnd) {
+      subscriptionEnd = epochToDate(subscription?.trial_end)
+    }
+    if (!subscriptionEnd) {
+      const interval =
+        subscription?.items?.data?.[0]?.price?.recurring?.interval || null
+      const intervalCount =
+        subscription?.items?.data?.[0]?.price?.recurring?.interval_count || 1
+      const startEpoch =
+        subscription?.current_period_start || subscription?.start_date || null
+      const startDate = epochToDate(startEpoch)
+      subscriptionEnd = addInterval(startDate, interval, intervalCount)
+    }
 
     try {
       const userId = await findUserIdByStripeIds(subscriptionId, customerId)

@@ -22,7 +22,7 @@ const plans = [
     buttonText: 'SELECT',
   },
   {
-    id: 'Pro',
+    id: 'pro',
     name: 'PRO',
     price: '$15/month',
     features: [
@@ -37,7 +37,7 @@ const plans = [
     recommended: true,
   },
   {
-    id: 'Business',
+    id: 'business',
     name: 'BUSINESS',
     price: '$45/month',
     features: [
